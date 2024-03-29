@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">BaseMVVM</string>
+    <string name="msg_loading">Please wait...</string>
+
+    <!--Network error-->
+    <string name="newtwork_error">No internet connection, please check your connection.</string>
+    <string name="newtwork_error_button_retry">Retry</string>
+    <string name="newtwork_error_button_exit">Exit</string>
+
+    <!--Login form-->
+    <string name="login_title">Sign In</string>
+    <string name="login_username_hint">Enter email or phone number</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_forgot_password">Recovery password</string>
+    <string name="login_button_sign_in">Sign In</string>
+    <string name="login_success">Login success!</string>
+    <string name="login_error">Login error!</string>
+    <string name="no_internet">Không có kết nối Internet</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.base.mvvm.ui.login.LoginViewModel" />
+
+        <variable name="a"
+            type="com.base.mvvm.ui.login.LoginActivity" />
+
+        <variable name="loginForm"
+            type="com.base.mvvm.ui.form.LoginForm" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:visibility="@{vm.isShowSplashScreen?View.GONE:View.VISIBLE}">
+
+            <ImageView
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_logo"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign In"
+                android:id="@+id/signin"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:textSize="@dimen/_20ssp"
+                android:textStyle="bold"
+                android:textColor="#4E5D78"
+                android:gravity="center"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+
+                android:focusable="true"
+                android:clickable="true">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:hint="@string/login_username_hint"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:background="@drawable/login_editext_background"
+                    android:textSize="@dimen/_13ssp"
+                    android:id="@+id/loginUsername"
+                    android:singleLine="true"
+                    android:text="@={loginForm.username}"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:focusable="true"
+                android:clickable="true">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:hint="@string/login_password_hint"
+                    android:textSize="@dimen/_13ssp"
+                    android:id="@+id/loginPwd"
+                    android:inputType="textVisiblePassword"
+                    android:singleLine="true"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:background="@drawable/login_editext_background"
+                    android:text="@={loginForm.password}"/>
+            </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/login_forgot_password"
+                android:id="@+id/loginForgotPwd"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="#B0B7C3"
+                android:onClick="@{(v)-> a.onClick(v)}"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:background="@drawable/login_button_background"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:text="@string/login_button_sign_in"
+                android:gravity="center"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:clickable="true"
+                android:id="@+id/loginButtonLogin"
+                android:onClick="@{(v)-> a.onClick(v)}"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F8F8F8"
+            android:visibility="@{!vm.isShowSplashScreen?View.GONE:View.VISIBLE}"/>
+    </FrameLayout>
+
+
+</layout>
