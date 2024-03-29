@@ -24,7 +24,7 @@ public class Option extends AbstractFlexibleItem<Option.OptionViewHolder> implem
     String title;
 
 
-    public Option(String title, Boolean status) {
+    public Option(String title) {
         this.title = title;
     }
 

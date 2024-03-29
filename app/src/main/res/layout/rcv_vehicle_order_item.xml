@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/_8sdp"
     android:background="@color/white"
+    android:layout_marginTop="@dimen/_5sdp"
     >
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -19,6 +20,7 @@
             android:textStyle="bold"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginStart="@dimen/_5sdp"
+
             />
         <RelativeLayout
             android:layout_width="match_parent"
@@ -46,20 +48,24 @@
                 >
 
                 <TextView
+                    android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Masteri Thảo Điền"
                     android:fontFamily="@font/roboto_500"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
+                    android:textStyle="bold"
                     />
                 <TextView
+                    android:id="@+id/tv_address_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thảo điền, Thủ Đức, Hồ Chí Minh"
                     android:fontFamily="@font/roboto_500"
                     android:textSize="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:textStyle="bold"
                     />
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -83,7 +89,7 @@
                         android:fontFamily="@font/roboto_500"
                         android:textColor="#0FA958"
                         android:textSize="@dimen/_11sdp"
-
+                        android:textStyle="bold"
                         />
                 </RelativeLayout>
 
@@ -99,6 +105,7 @@
                 android:fontFamily="@font/roboto_500"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
+                android:textStyle="bold"
                 />
 
         </RelativeLayout>

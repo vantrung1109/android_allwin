@@ -41,8 +41,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mActivityMainBinding.viewPager2.setAdapter(mMyViewPager2Adapter);
 
 
-        mActivityMainBinding.viewPager2.setCurrentItem(3);
-        mActivityMainBinding.bottomNavigation.getMenu().getItem(3).setChecked(true);
+        mActivityMainBinding.viewPager2.setCurrentItem(1);
+        mActivityMainBinding.bottomNavigation.getMenu().getItem(1).setChecked(true);
         mActivityMainBinding.viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
