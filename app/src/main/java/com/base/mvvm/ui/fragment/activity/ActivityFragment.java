@@ -19,10 +19,16 @@ import com.base.mvvm.ui.base.BaseFragment;
 import com.base.mvvm.ui.fragment.home.HomeFragmentViewModel;
 import com.base.mvvm.ui.model.Option;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 
 
-public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityFragmentViewModel>{
+public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityFragmentViewModel>
+        implements FlexibleAdapter.OnItemClickListener
+{
     FragmentActivityBinding mFragmentActivityBinding;
     FlexibleAdapter mFlexibleAdapterOption;
     FlexibleAdapter mFlexibleAdapterVehicleOrder;
@@ -60,5 +66,34 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         return mFragmentActivityBinding.getRoot();
+    }
+
+    @Override
+    public boolean onItemClick(View view, int i) {
+        IFlexible flexibleItem = mFlexibleAdapterOption.getItem(i);
+        if (flexibleItem instanceof Option) {
+            Option option = (Option) flexibleItem;
+            switch (option.getTitle()) {
+                case "Đặt xe": {
+
+                    mFlexibleAdapterVehicleOrder = new FlexibleAdapter<>(DatabaseService.getInstance().getVehicleOrdersList(), this);
+                    mFragmentActivityBinding.rcvVehicleOrder.setAdapter(mFlexibleAdapterVehicleOrder);
+                    mFragmentActivityBinding.rcvVehicleOrder.setLayoutManager(
+                            new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                    return true;
+
+                }
+                case "Giao hàng": {
+
+                    return true;
+                }
+                case "Đi chợ": {
+
+                    return true;
+                }
+
+            }
+        }
+        return false;
     }
 }

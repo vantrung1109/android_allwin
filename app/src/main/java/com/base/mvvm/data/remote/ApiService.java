@@ -2,8 +2,10 @@ package com.base.mvvm.data.remote;
 
 import com.base.mvvm.data.model.api.ResponseWrapper;
 import com.base.mvvm.data.model.api.request.LoginRequest;
+import com.base.mvvm.data.model.api.request.SignUpRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
 import com.base.mvvm.data.model.api.response.LoginResponse;
+import com.base.mvvm.data.model.api.response.SignUpResponse;
 import com.base.mvvm.data.model.api.response.SigninResponse;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -23,5 +25,9 @@ public interface ApiService {
     @POST("v1/customer/login")
     @Headers({"IgnoreAuth: 1"})
     Observable<ResponseWrapper<SigninResponse>> login2(@Body SigninRequest request);
+
+    @POST("v1/customer/registerr")
+    @Headers({"IgnoreAuth: 1"})
+    Observable<ResponseWrapper<SignUpResponse>> signup(@Body SignUpRequest request);
 
 }

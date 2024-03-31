@@ -13,6 +13,7 @@ import com.base.mvvm.ui.base.BaseActivity;
 import com.base.mvvm.ui.login.LoginViewModel;
 import com.base.mvvm.ui.main.MainViewModel;
 import com.base.mvvm.ui.signin.SignInViewModel;
+import com.base.mvvm.ui.signup.SignUpViewModel;
 
 import javax.inject.Named;
 
@@ -55,5 +56,13 @@ public class ActivityModule {
         Supplier<SignInViewModel> supplier = () -> new SignInViewModel(repository, (MVVMApplication)application);
         ViewModelProviderFactory<SignInViewModel> factory = new ViewModelProviderFactory<>(SignInViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(SignInViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    SignUpViewModel provideSignUpViewModel(Repository repository, Context application) {
+        Supplier<SignUpViewModel> supplier = () -> new SignUpViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<SignUpViewModel> factory = new ViewModelProviderFactory<>(SignUpViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(SignUpViewModel.class);
     }
 }

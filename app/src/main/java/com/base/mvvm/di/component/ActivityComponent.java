@@ -5,6 +5,7 @@ import com.base.mvvm.di.scope.ActivityScope;
 import com.base.mvvm.ui.login.LoginActivity;
 import com.base.mvvm.ui.main.MainActivity;
 import com.base.mvvm.ui.signin.SignInActivity;
+import com.base.mvvm.ui.signup.SignUpActivity;
 
 import dagger.Component;
 
@@ -16,5 +17,6 @@ public interface ActivityComponent {
 
     void inject(MainActivity activity);
     void inject(SignInActivity activity);
+    void inject(SignUpActivity activity);
 }
 

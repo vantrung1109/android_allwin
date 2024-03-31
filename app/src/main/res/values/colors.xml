@@ -8,9 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="btn_Enable">#FF2BA6A4</color>
-
+    <color name="background_option">#FF7EA567</color>
     <color name="title_brown">#FF969696</color>
-    <color name="button_disable">#FF62BDBB</color>
+    <color name="button_disable">#FFC0C0C0</color>
     <color name="test_stroke">#FFB6B6B6</color>
     <color name="blue_edit_txt_focus">#4596F8</color>
     <color name="brown_edit_txt_non_focus">#C4C4C4</color>

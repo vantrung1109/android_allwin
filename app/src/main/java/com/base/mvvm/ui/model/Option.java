@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+
 import com.base.mvvm.R;
 
 import java.io.Serializable;
@@ -22,7 +24,7 @@ public class Option extends AbstractFlexibleItem<Option.OptionViewHolder> implem
 
     int id;
     String title;
-
+    private int selectedItem = -1;
 
     public Option(String title) {
         this.title = title;
@@ -67,6 +69,14 @@ public class Option extends AbstractFlexibleItem<Option.OptionViewHolder> implem
     @Override
     public void bindViewHolder(FlexibleAdapter<IFlexible> flexibleAdapter, OptionViewHolder optionViewHolder, int i, List<Object> list) {
         optionViewHolder.title.setText(title);
+        optionViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedItem = i;
+                optionViewHolder.cardView.setCardBackgroundColor(optionViewHolder.itemView.getResources().getColor(R.color.background_option, null));
+                optionViewHolder.title.setTextColor(optionViewHolder.itemView.getResources().getColor(R.color.white, null));
+            }
+        });
     }
 
     @Override
@@ -82,10 +92,17 @@ public class Option extends AbstractFlexibleItem<Option.OptionViewHolder> implem
 
     public static class OptionViewHolder extends FlexibleViewHolder {
         TextView title;
+        CardView cardView;
 
         public OptionViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             title = view.findViewById(R.id.tv_title);
+            cardView = view.findViewById(R.id.cart_view);
+
+
         }
+
     }
+
+
 }

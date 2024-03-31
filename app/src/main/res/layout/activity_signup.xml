@@ -6,10 +6,10 @@
     <data>
         <variable
             name="vm"
-            type="com.base.mvvm.ui.signin.SignInViewModel" />
+            type="com.base.mvvm.ui.signup.SignUpViewModel" />
 
         <variable name="a"
-            type="com.base.mvvm.ui.signin.SignInActivity" />
+            type="com.base.mvvm.ui.signup.SignUpActivity" />
 
     </data>
 
@@ -25,11 +25,81 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_30sdp"
-            android:text="Đăng nhập"
+            android:text="Đăng ký"
             android:textColor="@color/black"
             android:textSize="@dimen/_30sdp"
             android:fontFamily="@font/roboto_medium"
             android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_below="@+id/tv_title"
+            android:text="Họ và tên"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_below="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_33sdp"
+            android:hint="Nhập họ và tên"
+            android:paddingStart="@dimen/_7sdp"
+            android:background="@drawable/edit_txt_custom"
+            android:textSize="@dimen/_12ssp"
+            android:singleLine="true"
+            android:text="@={vm.name}"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:clickable="true"
+            android:textStyle="bold"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_name"
+            android:text="Email"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/edit_email"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_below="@+id/tv_email"
+            android:focusable="true"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_33sdp"
+            android:hint="Nhập địa chỉ email"
+            android:textSize="@dimen/_12ssp"
+            android:singleLine="true"
+            android:paddingLeft="@dimen/_7sdp"
+            android:background="@drawable/edit_txt_custom"
+            android:text="@={vm.email}"
+            android:fontFamily="@font/roboto_medium"
+            android:textStyle="bold"
+
             />
 
         <TextView
@@ -39,7 +109,7 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_18sdp"
-            android:layout_below="@+id/tv_title"
+            android:layout_below="@+id/edit_email"
             android:text="Số điện thoại"
             android:fontFamily="@font/roboto_medium"
             android:textSize="@dimen/_10sdp"
@@ -69,7 +139,7 @@
 
 
         <TextView
-            android:id="@+id/tv_email"
+            android:id="@+id/tv_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/edit_phone"
@@ -87,7 +157,7 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_12sdp"
-            android:layout_below="@+id/tv_email"
+            android:layout_below="@+id/tv_password"
             android:focusable="true"
             android:clickable="true"
             android:layout_width="match_parent"
@@ -104,43 +174,27 @@
 
             />
 
-
-        <TextView
-            android:id="@+id/tv_forgot_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_password"
-            android:text="Quên mật khẩu"
-            android:fontFamily="@font/roboto_medium"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/_14sdp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            />
-
         <TextView
 
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:layout_below="@+id/tv_forgot_password"
+            android:layout_below="@+id/edit_password"
             android:background="@drawable/btn_custom_enable"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="Đăng nhập"
+            android:text="Đăng ký"
             android:gravity="center"
             android:textSize="@dimen/_15ssp"
             android:textColor="#FFFFFF"
             android:clickable="true"
-            android:id="@+id/btn_signin"
-            android:onClick="@{(v)-> vm.doLogin()}"
+            android:id="@+id/btn_signup"
+            android:onClick="@{(v)-> vm.doSignup()}"
             android:fontFamily="@font/roboto_bold"
             android:textStyle="bold"
 
             />
+
     </RelativeLayout>
 
 </layout>
