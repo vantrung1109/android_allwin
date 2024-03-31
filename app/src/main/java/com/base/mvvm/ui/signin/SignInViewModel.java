@@ -13,6 +13,7 @@ import com.base.mvvm.data.model.api.request.SigninRequest;
 import com.base.mvvm.ui.base.BaseViewModel;
 import com.base.mvvm.ui.login.LoginCallback;
 import com.base.mvvm.ui.main.MainActivity;
+import com.base.mvvm.ui.signup.SignUpActivity;
 import com.base.mvvm.utils.NetworkUtils;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -64,7 +65,11 @@ public class SignInViewModel extends BaseViewModel {
                     hideLoading();
                 }));
     }
-
+    public void doSignup(){
+        Intent intent = new Intent(application, SignUpActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        application.startActivity(intent);
+    }
     public SignInViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
     }

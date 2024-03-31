@@ -66,6 +66,8 @@ public class SignUpViewModel extends BaseViewModel {
                 }));
     }
 
+
+
     public SignUpViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
     }

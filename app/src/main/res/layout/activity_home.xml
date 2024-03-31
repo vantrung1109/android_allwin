@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.base.mvvm.ui.home.HomeViewModel" />
+
+        <variable name="a"
+            type="com.base.mvvm.ui.home.HomeActivity" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/background_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/background_home"
+            android:layout_marginTop="@dimen/_30sdp" />
+
+        <TextView
+            android:id="@+id/tv_xinchao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/background_home"
+            android:textSize="@dimen/_28sdp"
+            android:text="Xin chào, "
+            android:fontFamily="@font/roboto_500"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_20sdp" />
+
+        <TextView
+            android:id="@+id/tv_introduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_xinchao"
+            android:textSize="@dimen/_11sdp"
+            android:text="Chào mừng bạn đã đến với Allwin "
+            android:fontFamily="@font/roboto_500"
+            android:textColor="#9F9696"
+            android:layout_marginStart="@dimen/_20sdp" />
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_below="@+id/tv_introduce"
+            android:background="@drawable/btn_custom_enable"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="Đăng nhập"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#FFFFFF"
+            android:clickable="true"
+            android:id="@+id/btn_signin"
+            android:onClick="@{(v)-> vm.doSignin()}"
+            android:fontFamily="@font/roboto_bold"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_below="@+id/btn_signin"
+            android:background="@drawable/btn_custom_enable_no_background"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="Đăng ký"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="@color/btn_login"
+            android:clickable="true"
+            android:id="@+id/btn_signup"
+            android:onClick="@{(v)-> vm.doSignup()}"
+            android:fontFamily="@font/roboto_bold"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</layout>

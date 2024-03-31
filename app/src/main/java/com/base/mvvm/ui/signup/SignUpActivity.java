@@ -30,17 +30,17 @@ public class SignUpActivity extends BaseActivity<ActivitySignupBinding, SignUpVi
         buildComponent.inject(this);
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mActivitySignupBinding = ActivitySignupBinding.inflate(getLayoutInflater());
-
-//        mActivitySignupBinding.btnSignin.setOnClickListener(v -> {
-//            if (!checkRequiredField()) return;
-//        });
-
-        setContentView(mActivitySignupBinding.getRoot());
-    }
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        mActivitySignupBinding = ActivitySignupBinding.inflate(getLayoutInflater());
+//
+////        mActivitySignupBinding.btnSignin.setOnClickListener(v -> {
+////            if (!checkRequiredField()) return;
+////        });
+//
+//        setContentView(mActivitySignupBinding.getRoot());
+//    }
 
 //    private boolean checkRequiredField() {
 //
