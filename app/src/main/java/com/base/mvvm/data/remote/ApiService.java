@@ -22,12 +22,15 @@ public interface ApiService {
     @GET("v1/account/profile")
     Observable<ResponseWrapper<LoginResponse>> profile();
 
+    @GET("v1/account/profile")
+    Observable<ResponseWrapper<LoginResponse>> profile2();
+
     @POST("v1/customer/login")
     @Headers({"IgnoreAuth: 1"})
     Observable<ResponseWrapper<SigninResponse>> login2(@Body SigninRequest request);
 
-    @POST("v1/customer/registerr")
+    @POST("v1/customer/register")
     @Headers({"IgnoreAuth: 1"})
-    Observable<ResponseWrapper<SignUpResponse>> signup(@Body SignUpRequest request);
+    Observable<ResponseWrapper> signup(@Body SignUpRequest request);
 
 }
