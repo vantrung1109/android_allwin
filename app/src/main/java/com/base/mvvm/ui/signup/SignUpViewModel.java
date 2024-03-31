@@ -11,6 +11,7 @@ import com.base.mvvm.data.model.api.request.SignUpRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
 import com.base.mvvm.ui.base.BaseViewModel;
 import com.base.mvvm.ui.main.MainActivity;
+import com.base.mvvm.ui.signin.SignInActivity;
 import com.base.mvvm.utils.NetworkUtils;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -28,6 +29,28 @@ public class SignUpViewModel extends BaseViewModel {
 
 
     public void doSignup(){
+        if (name.get() == null ||  name.get().isEmpty()) {
+            showErrorMessage("Tên không được để trốngg");
+            return;
+        }
+        if (email.get() == null ||  email.get().isEmpty()) {
+            showErrorMessage("Email không được để trống");
+            return;
+        }
+        if (email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()).matches()) {
+            showErrorMessage("Email không đúng định dạng");
+            return;
+        }
+
+        if (phone.get() == null || phone.get().isEmpty()) {
+            showErrorMessage("Số điện thoại không được để trống");
+            return;
+        }
+        if (password.get() == null || password.get().isEmpty()) {
+            showErrorMessage("Mật khẩu không được để trống");
+            return;
+        }
+
         showLoading();
         SignUpRequest request = new SignUpRequest(
                 String.valueOf(name.get()),
@@ -53,7 +76,7 @@ public class SignUpViewModel extends BaseViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
                         showSuccessMessage("Đăng ký thành công");
-                        Intent intent = new Intent(application, MainActivity.class);
+                        Intent intent = new Intent(application, SignInActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         application.startActivity(intent);
                     }else{

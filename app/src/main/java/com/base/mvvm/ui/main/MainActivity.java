@@ -59,6 +59,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             } else if (item.getItemId() == R.id.menu_favourite) {
                 mActivityMainBinding.viewPager2.setCurrentItem(2);
             } else if (item.getItemId() == R.id.menu_account) {
+
                 mActivityMainBinding.viewPager2.setCurrentItem(3);
             }
             return true;

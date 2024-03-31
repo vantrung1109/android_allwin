@@ -2,6 +2,8 @@ package com.base.mvvm.ui.fragment.account;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -36,5 +38,13 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding, Accoun
     @Override
     protected void performDependencyInjection(FragmentComponent buildComponent) {
         buildComponent.inject(this);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+
+        // goi api
     }
 }

@@ -17,20 +17,18 @@
         <ImageView
             android:id="@+id/background_home"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_250sdp"
             android:src="@drawable/background_home"
-            android:layout_marginTop="@dimen/_30sdp" />
+            android:layout_marginTop="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/tv_xinchao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/background_home"
-            android:textSize="@dimen/_28sdp"
+            style="@style/AppTextTitle"
             android:text="Xin chào, "
-            android:fontFamily="@font/roboto_500"
-            android:textStyle="bold"
-            android:textColor="@color/black"
+
             android:layout_marginStart="@dimen/_20sdp" />
 
         <TextView
@@ -39,10 +37,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_xinchao"
             android:textSize="@dimen/_11sdp"
-            android:text="Chào mừng bạn đã đến với Allwin "
+            android:text="@string/introduce_app"
             android:fontFamily="@font/roboto_500"
             android:textColor="#9F9696"
-            android:layout_marginStart="@dimen/_20sdp" />
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_5sdp"/>
 
         <TextView
 

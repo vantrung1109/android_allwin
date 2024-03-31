@@ -1,6 +1,10 @@
 package com.base.mvvm.ui.signin;
 
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.databinding.ObservableField;
@@ -10,6 +14,7 @@ import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
+import com.base.mvvm.databinding.ActivitySigninBinding;
 import com.base.mvvm.ui.base.BaseViewModel;
 import com.base.mvvm.ui.login.LoginCallback;
 import com.base.mvvm.ui.main.MainActivity;
@@ -24,10 +29,21 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SignInViewModel extends BaseViewModel {
 
+    public ObservableField<Boolean> isShowPassWord = new ObservableField<>(false);
     public ObservableField<String> phone = new ObservableField<>();
     public ObservableField<String> password = new ObservableField<>();
 
     public void doLogin(){
+
+        if (phone.get() == null || phone.get().isEmpty()){
+            showErrorMessage("Số điện thoại không được để trống");
+            return;
+        }
+        if (password.get()== null || password.get().isEmpty()){
+            showErrorMessage("Mật khẩu không được để trống");
+            return;
+        }
+
         showLoading();
         SigninRequest request = new SigninRequest(String.valueOf(phone.get()), String.valueOf(password.get()));
 
@@ -50,9 +66,6 @@ public class SignInViewModel extends BaseViewModel {
                     if(response.isResult()){
                         repository.setToken(response.getData().getAccess_token());
                         showSuccessMessage(application.getResources().getString(R.string.login_success));
-
-
-
                         Intent intent = new Intent(application, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         application.startActivity(intent);
@@ -70,7 +83,15 @@ public class SignInViewModel extends BaseViewModel {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         application.startActivity(intent);
     }
+
+    public void showPassword(){
+        isShowPassWord.set(!isShowPassWord.get());
+    }
+
     public SignInViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
+
+
+
     }
 }
