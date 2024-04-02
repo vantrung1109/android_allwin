@@ -15,7 +15,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+
+        buildConfigField "String", "MEDIA_URL", "\"https://org-media-template.developteam.net\""
         buildConfigField "String", "BASE_URL", "\"https://ww-user-api.developteam.net/\""
+
     }
 
     buildTypes {

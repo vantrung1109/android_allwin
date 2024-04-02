@@ -15,6 +15,7 @@ import com.base.mvvm.ui.login.LoginViewModel;
 import com.base.mvvm.ui.main.MainViewModel;
 import com.base.mvvm.ui.signin.SignInViewModel;
 import com.base.mvvm.ui.signup.SignUpViewModel;
+import com.base.mvvm.ui.update_account.UpdateAccountViewModel;
 
 import javax.inject.Named;
 
@@ -73,5 +74,12 @@ public class ActivityModule {
         Supplier<HomeViewModel> supplier = () -> new HomeViewModel(repository, (MVVMApplication)application);
         ViewModelProviderFactory<HomeViewModel> factory = new ViewModelProviderFactory<>(HomeViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(HomeViewModel.class);
+    }
+    @Provides
+    @ActivityScope
+    UpdateAccountViewModel provideUpdateAccountViewModel(Repository repository, Context application) {
+        Supplier<UpdateAccountViewModel> supplier = () -> new UpdateAccountViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<UpdateAccountViewModel> factory = new ViewModelProviderFactory<>(UpdateAccountViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(UpdateAccountViewModel.class);
     }
 }

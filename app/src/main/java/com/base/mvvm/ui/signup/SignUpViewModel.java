@@ -26,7 +26,7 @@ public class SignUpViewModel extends BaseViewModel {
     public ObservableField<String> email = new ObservableField<>();
     public ObservableField<String> phone = new ObservableField<>();
     public ObservableField<String> password = new ObservableField<>();
-
+    public ObservableField<Boolean> isShowPassWord = new ObservableField<>(false);
 
     public void doSignup(){
         if (name.get() == null ||  name.get().isEmpty()) {
@@ -89,7 +89,9 @@ public class SignUpViewModel extends BaseViewModel {
                 }));
     }
 
-
+    public void showPassword(){
+        isShowPassWord.set(!isShowPassWord.get());
+    }
 
     public SignUpViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);

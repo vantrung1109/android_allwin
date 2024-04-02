@@ -48,6 +48,9 @@
         <activity android:name=".ui.home.HomeActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.update_account.UpdateAccountActivity"
+            android:exported="true"
+            />
 
     </application>
 

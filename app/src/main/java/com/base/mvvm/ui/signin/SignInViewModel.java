@@ -1,8 +1,10 @@
 package com.base.mvvm.ui.signin;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
 import com.base.mvvm.databinding.ActivitySigninBinding;
 import com.base.mvvm.ui.base.BaseViewModel;
+import com.base.mvvm.ui.fragment.account.AccountFragment;
 import com.base.mvvm.ui.login.LoginCallback;
 import com.base.mvvm.ui.main.MainActivity;
 import com.base.mvvm.ui.signup.SignUpActivity;
@@ -65,10 +68,14 @@ public class SignInViewModel extends BaseViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
                         repository.setToken(response.getData().getAccess_token());
+                        Log.d("token", response.getData().getAccess_token());
                         showSuccessMessage(application.getResources().getString(R.string.login_success));
                         Intent intent = new Intent(application, MainActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("access_token", response.getData().getAccess_token());
+                        intent.putExtras(bundle);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        application.startActivity(intent);
+                        application.startActivity(intent, bundle);
                     }else{
                         showErrorMessage(response.getMessage());
                     }

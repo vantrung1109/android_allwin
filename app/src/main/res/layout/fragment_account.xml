@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -24,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/background_account"/>
             <RelativeLayout
+                android:id="@+id/layout_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
@@ -31,32 +33,44 @@
                 android:background="@drawable/background_account_profile"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
-                android:layout_gravity="bottom">
-                <ImageView
-                    android:id="@+id/img_account_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/user_ic"
-                    android:layout_marginStart="@dimen/_15sdp"/>
+                android:layout_gravity="bottom"
+                android:onClick="@{(v) -> vm.goToUpdateAccount()}">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cart_view_account_icon"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:cardCornerRadius="@dimen/_25sdp">
+                    <ImageView
+                        android:id="@+id/img_account_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@{vm.profile.avatar , default = @drawable/background_account}"
+                        android:scaleType="fitXY"
+                        />
+                </androidx.cardview.widget.CardView>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/img_account_icon"
+                    android:layout_toEndOf="@id/cart_view_account_icon"
                     android:orientation="vertical"
                     android:layout_marginStart="@dimen/_10sdp">
                     <TextView
+                        android:id="@+id/tv_account_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Đang cập nhật"
+                        android:text="@{vm.profile.name ,default = Username}"
                         android:textColor="@color/black"
                         android:fontFamily="@font/roboto_bold"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
                         />
                     <TextView
+                        android:id="@+id/tv_account_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thêm email"
+                        android:text="@{vm.profile.email ,default = Email}"
                         android:textSize="@dimen/_10ssp"
                         android:textStyle="bold"
                         />

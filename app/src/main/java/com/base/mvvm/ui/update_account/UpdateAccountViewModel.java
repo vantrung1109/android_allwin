@@ -1,18 +1,21 @@
-package com.base.mvvm.ui.fragment.account;
+package com.base.mvvm.ui.update_account;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
+import com.base.mvvm.data.model.api.request.SigninRequest;
 import com.base.mvvm.data.model.api.response.AccountResponse;
-import com.base.mvvm.ui.base.BaseFragmentViewModel;
-import com.base.mvvm.ui.update_account.UpdateAccountActivity;
+import com.base.mvvm.data.model.db.AccountEntity;
+import com.base.mvvm.ui.base.BaseViewModel;
+import com.base.mvvm.ui.main.MainActivity;
+import com.base.mvvm.ui.signup.SignUpActivity;
 import com.base.mvvm.utils.NetworkUtils;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -20,17 +23,23 @@ import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class AccountFragmentViewModel extends BaseFragmentViewModel {
-
+public class UpdateAccountViewModel extends BaseViewModel {
+    public ObservableField<Boolean> isShowPassWord = new ObservableField<>(false);
+    public ObservableField<String> password = new ObservableField<>();
     public ObservableField<AccountResponse> profile = new ObservableField<>(new AccountResponse());
-    public AccountFragmentViewModel(Repository repository, MVVMApplication application) {
+
+    public UpdateAccountViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-        callApiGetProfile();
+        doUpdateAccount();
     }
-    public void callApiGetProfile(){
+
+    public void doUpdateAccount(){
+//        if (password.get() == null || password.get().isEmpty()){
+//            showErrorMessage("Mật khẩu không được để trống");
+//            return;
+//        }
 
         showLoading();
-
         compositeDisposable.add(repository.getApiService().profile2()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -61,9 +70,13 @@ public class AccountFragmentViewModel extends BaseFragmentViewModel {
                     hideLoading();
                 }));
     }
-    public void goToUpdateAccount(){
-        Intent intent = new Intent(application, UpdateAccountActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        application.startActivity(intent);
+
+    public void showPassword(){
+        isShowPassWord.set(!isShowPassWord.get());
     }
+
+    public void onBack(){
+        application.startActivity(new Intent(application, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+
 }

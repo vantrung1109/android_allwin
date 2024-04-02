@@ -24,8 +24,11 @@ import com.base.mvvm.utils.DialogUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-public abstract class BaseFragment<B extends ViewDataBinding, V extends BaseFragmentViewModel> extends Fragment {
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
+public abstract class BaseFragment<B extends ViewDataBinding, V extends BaseFragmentViewModel> extends Fragment {
+    protected CompositeDisposable compositeDisposable;
     protected B binding;
     @Inject
     protected V viewModel;

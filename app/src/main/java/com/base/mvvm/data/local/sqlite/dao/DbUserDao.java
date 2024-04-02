@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.base.mvvm.data.model.db.AccountEntity;
 import com.base.mvvm.data.model.db.UserEntity;
 
 import java.util.List;
@@ -16,6 +17,9 @@ public interface DbUserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(UserEntity userEntity);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Long insertAccount(AccountEntity accountEntity);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<UserEntity> userEntities);

@@ -1,6 +1,7 @@
 package com.base.mvvm.ui.main;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -9,6 +10,7 @@ import com.base.mvvm.R;
 import com.base.mvvm.databinding.ActivityMainBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
+import com.base.mvvm.ui.fragment.account.AccountFragment;
 import com.base.mvvm.utils.MyViewPager2Adapter;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
@@ -34,6 +36,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         mActivityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mActivityMainBinding.getRoot());
 
@@ -59,7 +64,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             } else if (item.getItemId() == R.id.menu_favourite) {
                 mActivityMainBinding.viewPager2.setCurrentItem(2);
             } else if (item.getItemId() == R.id.menu_account) {
-
+//                    String accessToken = getIntent().getStringExtra("access_token");
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("access_token", accessToken);
+//                    mActivityMainBinding.viewPager2.setAdapter(
+//                            new MyViewPager2Adapter(this, bundle)
+//                    );
                 mActivityMainBinding.viewPager2.setCurrentItem(3);
             }
             return true;

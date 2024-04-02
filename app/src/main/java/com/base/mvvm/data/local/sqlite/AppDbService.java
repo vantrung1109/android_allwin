@@ -2,6 +2,7 @@ package com.base.mvvm.data.local.sqlite;
 
 import androidx.lifecycle.LiveData;
 
+import com.base.mvvm.data.model.db.AccountEntity;
 import com.base.mvvm.data.model.db.UserEntity;
 
 import java.util.List;
@@ -36,6 +37,16 @@ public class AppDbService implements DbService {
             @Override
             public Long call() throws Exception {
                 return mAppDatabase.getDbUserDao().insert(user);
+            }
+        });
+    }
+
+    @Override
+    public Observable<Long> insertAccount(AccountEntity account) {
+        return Observable.fromCallable(new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                return mAppDatabase.getDbUserDao().insertAccount(account);
             }
         });
     }

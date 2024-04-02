@@ -1,7 +1,10 @@
 package com.base.mvvm.data.local.sqlite;
 
+import android.accounts.Account;
+
 import androidx.lifecycle.LiveData;
 
+import com.base.mvvm.data.model.db.AccountEntity;
 import com.base.mvvm.data.model.db.UserEntity;
 
 import java.util.List;
@@ -15,6 +18,8 @@ public interface DbService {
     LiveData<List<UserEntity>> loadAllToLiveData();
 
     Observable<Long> insertUser(UserEntity user);
+
+    Observable<Long> insertAccount(AccountEntity account);
 
     Observable<Boolean> deleteUser(UserEntity user);
 

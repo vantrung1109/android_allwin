@@ -86,7 +86,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@{ vm.isShowPassWord ? @drawable/eyeban : @drawable/see_password}"
+                android:src="@{ vm.isShowPassWord ? @drawable/eyeban : @drawable/see_password, default = @drawable/see_password}"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="@dimen/_30sdp"
                 android:onClick="@{(v)-> vm.showPassword()}"

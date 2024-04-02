@@ -7,6 +7,7 @@ import com.base.mvvm.ui.login.LoginActivity;
 import com.base.mvvm.ui.main.MainActivity;
 import com.base.mvvm.ui.signin.SignInActivity;
 import com.base.mvvm.ui.signup.SignUpActivity;
+import com.base.mvvm.ui.update_account.UpdateAccountActivity;
 
 import dagger.Component;
 
@@ -20,5 +21,6 @@ public interface ActivityComponent {
     void inject(SignInActivity activity);
     void inject(SignUpActivity activity);
     void inject(HomeActivity activity);
+    void inject(UpdateAccountActivity activity);
 }
 

@@ -16,4 +16,5 @@ public interface FragmentComponent {
     void inject(ActivityFragment fragment);
     void inject(FavouriteFragment fragment);
     void inject(AccountFragment fragment);
+
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SigninRequest {
+public class SigninRequest extends  BaseRequest{
     private String phone;
     private String password;
 }
