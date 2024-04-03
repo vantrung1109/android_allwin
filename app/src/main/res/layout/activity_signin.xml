@@ -96,16 +96,13 @@
         </FrameLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/layout_lost_password_signup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_password">
+
             <TextView
+
                 android:id="@+id/tv_forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_below="@+id/layout_password"
                 android:text="Quên mật khẩu"
                 android:fontFamily="@font/roboto_medium"
                 android:layout_marginStart="@dimen/_20sdp"
@@ -116,16 +113,13 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 />
-        </RelativeLayout>
-
 
         <TextView
-
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginLeft="@dimen/_12sdp"
             android:layout_marginRight="@dimen/_12sdp"
-            android:layout_below="@+id/layout_lost_password_signup"
+            android:layout_below="@+id/tv_forgot_password"
             android:background="@{!TextUtils.isEmpty(vm.phone) || !TextUtils.isEmpty(vm.password)?@drawable/btn_custom_enable:@drawable/btn_custom_disable}"
             android:enabled="@{!TextUtils.isEmpty(vm.phone) || !TextUtils.isEmpty(vm.password)}"
             android:layout_marginTop="@dimen/_20sdp"
@@ -138,7 +132,6 @@
             android:onClick="@{(v)-> vm.doLogin()}"
             android:fontFamily="@font/roboto_bold"
             android:textStyle="bold"
-
             />
     </RelativeLayout>
 

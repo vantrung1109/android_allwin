@@ -41,12 +41,10 @@ public class UpdateAccountViewModel extends BaseViewModel {
     public void updateProfile(){
         showLoading();
         UpdateProfileRequest request = new UpdateProfileRequest();
-        request.setId(profile.get().getId());
         request.setName(profile.get().getName());
         request.setEmail(profile.get().getEmail());
-        request.setPhone(profile.get().getPhone());
-        request.setAvatar(profile.get().getAvatar());
-        request.setStatus(profile.get().getStatus());
+        request.setPassword(password.get());
+        request.setNewPassword(password.get());
         compositeDisposable.add(repository.getApiService().updateProfile(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
