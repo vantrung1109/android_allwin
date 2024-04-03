@@ -2,6 +2,7 @@ package com.base.mvvm.ui.update_account;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
@@ -43,23 +44,36 @@ public class UpdateAccountViewModel extends BaseViewModel {
         UpdateProfileRequest request = new UpdateProfileRequest();
         request.setName(profile.get().getName());
         request.setEmail(profile.get().getEmail());
-        request.setPassword(password.get());
         request.setNewPassword(password.get());
+        request.setOldPassword(password.get());
+        Log.e("updateProfile: ", request.toString());
         compositeDisposable.add(repository.getApiService().updateProfile(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(throwable ->
+                        throwable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+                            @Override
+                            public ObservableSource<?> apply(Throwable throwable) throws Throwable {
+                                if (NetworkUtils.checkNetworkError(throwable)) {
+                                    return application.showDialogNoInternetAccess();
+                                }else{
+                                    return Observable.error(throwable);
+                                }
+                            }
+                        })
+                )
                 .subscribe(response -> {
-                    // render the avatar
-                    if (response.isResult()) {
-                        showSuccessMessage(application.getString(R.string.update_profile_success));
-                    } else {
+                    if(response.isResult()){
+
+                        showSuccessMessage(application.getString(R.string.update_profile_successfully));
+
+                    }else{
                         showErrorMessage(response.getMessage());
                     }
                     hideLoading();
-
-                }, err -> {
+                }, throwable -> {
+                    showErrorMessage(application.getResources().getString(R.string.no_internet));
                     hideLoading();
-                    showErrorMessage(application.getString(R.string.newtwork_error));
                 }));
     }
 
