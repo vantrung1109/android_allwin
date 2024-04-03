@@ -4,17 +4,18 @@ import com.base.mvvm.data.model.api.ResponseWrapper;
 import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SignUpRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
+import com.base.mvvm.data.model.api.request.UpdateProfileRequest;
 import com.base.mvvm.data.model.api.response.AccountResponse;
 import com.base.mvvm.data.model.api.response.LoginResponse;
-import com.base.mvvm.data.model.api.response.SignUpResponse;
 import com.base.mvvm.data.model.api.response.SigninResponse;
 
 import io.reactivex.rxjava3.core.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface ApiService {
 
@@ -24,8 +25,17 @@ public interface ApiService {
     @GET("v1/account/profile")
     Observable<ResponseWrapper<LoginResponse>> profile();
 
+
     @GET("v1/customer/profile")
     Observable<ResponseWrapper<AccountResponse>> profile2();
+    @GET("v1/customer/profile")
+    Observable<ResponseWrapper<AccountResponse>> getProfile();
+    @PUT("/v1/customer/update-profile")
+    Observable<ResponseWrapper<String>> updateProfile(@Body UpdateProfileRequest request);
+
+    @POST("/v1/file/upload")
+    @Headers({"isMedia:1"})
+    Observable<ResponseWrapper<AccountResponse>> uploadFile(@Body RequestBody requestBody);
 
     @POST("v1/customer/login")
     @Headers({"IgnoreAuth: 1"})

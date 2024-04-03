@@ -44,7 +44,7 @@
             android:id="@+id/edit_phone"
             android:layout_below="@+id/tv_phone"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_33sdp"
+            android:layout_height="@dimen/_35sdp"
             style="@style/AppEditTextInfo"
             android:hint="@string/phone_hint_str"
             android:text="@={vm.phone}"
@@ -74,7 +74,7 @@
             <EditText
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_33sdp"
+                android:layout_height="@dimen/_35sdp"
                 style="@style/AppEditTextInfo"
                 android:layout_marginTop="0dp"
                 android:hint="Nhập mật khẩu"
@@ -123,8 +123,8 @@
 
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginRight="@dimen/_12sdp"
             android:layout_below="@+id/layout_lost_password_signup"
             android:background="@{!TextUtils.isEmpty(vm.phone) || !TextUtils.isEmpty(vm.password)?@drawable/btn_custom_enable:@drawable/btn_custom_disable}"
             android:enabled="@{!TextUtils.isEmpty(vm.phone) || !TextUtils.isEmpty(vm.password)}"

@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.base.mvvm.BuildConfig;
 import com.base.mvvm.constant.Constants;
 import com.base.mvvm.data.local.prefs.PreferencesService;
 import com.base.mvvm.utils.LogService;
@@ -51,6 +52,17 @@ public class AuthInterceptor implements Interceptor {
             Intent intent = new Intent();
             intent.setAction(Constants.ACTION_EXPIRED_TOKEN);
             LocalBroadcastManager.getInstance(application.getApplicationContext()).sendBroadcast(intent);
+        }
+
+
+        String isMediaKind = chain.request().header("isMedia");
+        if(isMediaKind != null && isMediaKind.equals("1")){
+            StringBuilder builder = new StringBuilder(BuildConfig.MEDIA_URL);
+            for (String seg: chain.request().url().pathSegments()) {
+                builder.append(seg).append('/');
+            }
+            newRequest.removeHeader("isMedia");
+            return chain.proceed(newRequest.url(builder.toString()).build());
         }
         return origResponse;
     }

@@ -1,20 +1,18 @@
 package com.base.mvvm.ui.update_account;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
-import com.base.mvvm.data.model.api.request.SigninRequest;
+import com.base.mvvm.data.model.api.ResponseWrapper;
+import com.base.mvvm.data.model.api.request.UpdateProfileRequest;
 import com.base.mvvm.data.model.api.response.AccountResponse;
-import com.base.mvvm.data.model.db.AccountEntity;
 import com.base.mvvm.ui.base.BaseViewModel;
 import com.base.mvvm.ui.main.MainActivity;
-import com.base.mvvm.ui.signup.SignUpActivity;
 import com.base.mvvm.utils.NetworkUtils;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -22,6 +20,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.RequestBody;
 
 public class UpdateAccountViewModel extends BaseViewModel {
     public ObservableField<Boolean> isShowPassWord = new ObservableField<>(false);
@@ -30,17 +29,57 @@ public class UpdateAccountViewModel extends BaseViewModel {
 
     public UpdateAccountViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-        doUpdateAccount();
+        getProfileFromApi();
     }
 
-    public void doUpdateAccount(){
-//        if (password.get() == null || password.get().isEmpty()){
-//            showErrorMessage("Mật khẩu không được để trống");
-//            return;
-//        }
-
+//    public Observable<ResponseWrapper<AccountResponse>> getProfile(){
+//        return repository.getApiService().getProfile()
+//                .doOnNext(response -> {
+//                    profile.set(response.getData());
+//                });
+//    }
+    public void updateProfile(){
         showLoading();
-        compositeDisposable.add(repository.getApiService().profile2()
+        UpdateProfileRequest request = new UpdateProfileRequest();
+        request.setId(profile.get().getId());
+        request.setName(profile.get().getName());
+        request.setEmail(profile.get().getEmail());
+        request.setPhone(profile.get().getPhone());
+        request.setAvatar(profile.get().getAvatar());
+        request.setStatus(profile.get().getStatus());
+        compositeDisposable.add(repository.getApiService().updateProfile(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    // render the avatar
+                    if (response.isResult()) {
+                        showSuccessMessage(application.getString(R.string.update_profile_success));
+                    } else {
+                        showErrorMessage(response.getMessage());
+                    }
+                    hideLoading();
+
+                }, err -> {
+                    hideLoading();
+                    showErrorMessage(application.getString(R.string.newtwork_error));
+                }));
+    }
+
+    public Observable<ResponseWrapper<AccountResponse>> uploadAvatar(RequestBody requestBody){
+        return repository.getApiService().uploadFile(requestBody);
+    }
+
+
+    public void showPassword(){
+        isShowPassWord.set(!isShowPassWord.get());
+    }
+
+    public void onBack(){
+        application.startActivity(new Intent(application, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+    public void getProfileFromApi(){
+        showLoading();
+        compositeDisposable.add(repository.getApiService().getProfile()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(throwable ->
@@ -58,7 +97,6 @@ public class UpdateAccountViewModel extends BaseViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
                         profile.set(response.getData());
-                        //repository.getSqliteService().insertAccount(profile.get());
                         showSuccessMessage("Get Profile Information Successfully");
 
                     }else{
@@ -69,14 +107,6 @@ public class UpdateAccountViewModel extends BaseViewModel {
                     showErrorMessage(application.getResources().getString(R.string.no_internet));
                     hideLoading();
                 }));
-    }
-
-    public void showPassword(){
-        isShowPassWord.set(!isShowPassWord.get());
-    }
-
-    public void onBack(){
-        application.startActivity(new Intent(application, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
 }
