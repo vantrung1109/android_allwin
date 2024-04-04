@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -31,15 +32,35 @@ public class AuthInterceptor implements Interceptor {
     @NotNull
     @Override
     public Response intercept(@NotNull Interceptor.Chain chain) throws IOException {
+        Request.Builder newRequest = chain.request().newBuilder();
+        String isTenant = chain.request().header("isTenant");
+        if(isTenant != null && isTenant.equals("1")){
+            newRequest.addHeader("X-tenant", appPreferences.getStringVal(Constants.TENANT_ID));
+            newRequest.removeHeader("isTenant");
+
+            StringBuilder builder = new StringBuilder(appPreferences.getStringVal(Constants.TENANT_URL));
+            builder.append('/');
+            String query = chain.request().url().query();
+            for (String seg: chain.request().url().pathSegments()) {
+                builder.append(seg).append('/');
+            }
+            builder.deleteCharAt(builder.lastIndexOf("/"));
+            if(query != null && !query.isEmpty()) {
+                builder.append("?").append(query);
+            }
+
+            newRequest.url(builder.toString());
+        }
+
         String isIgnore = chain.request().header("IgnoreAuth");
         if (isIgnore != null && isIgnore.equals("1")) {
-            Request.Builder newRequest = chain.request().newBuilder();
+            newRequest = chain.request().newBuilder();
             newRequest.removeHeader("IgnoreAuth");
             return chain.proceed(newRequest.build());
         }
 
         //Add Authentication
-        Request.Builder newRequest = chain.request().newBuilder();
+        newRequest = chain.request().newBuilder();
         String token = appPreferences.getToken();
         if (token != null && !token.equals("")) {
             newRequest.addHeader("Authorization", "Bearer " + token);

@@ -13,6 +13,7 @@
     </data>
 
     <RelativeLayout
+        android:onClick="@{()->a.hideKeyboard()}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -52,15 +53,15 @@
             android:layout_below="@+id/layout_title"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_20sdp"
-            app:cardCornerRadius="@dimen/_50sdp">
-
+            app:cardCornerRadius="@dimen/_50sdp"
+            android:onClickListener="@{(v)-> a.getNewAvatar()}"
+            >
             <ImageView
                 android:id="@+id/imgAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@{vm.profile.avatar, default = @drawable/background_account}"
                 android:scaleType="fitXY"
-
 
                 />
         </androidx.cardview.widget.CardView>
@@ -238,9 +239,10 @@
             android:textColor="#FFFFFF"
             android:clickable="true"
             android:id="@+id/btn_update"
-            android:onClick="@{(v)-> vm.updateProfile()}"
+            android:onClick="@{(v)-> a.updateProfile()}"
             android:fontFamily="@font/roboto_bold"
             android:textStyle="bold"
+
             />
 
     </RelativeLayout>

@@ -9,10 +9,12 @@ import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.other.ToastMessage;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import lombok.Getter;
 import lombok.Setter;
 
 public class BaseViewModel extends ViewModel {
-    protected CompositeDisposable compositeDisposable;
+
+    public CompositeDisposable compositeDisposable;
     protected final ObservableBoolean mIsLoading = new ObservableBoolean();
     protected final MutableLiveData<ToastMessage> mErrorMessage = new MutableLiveData<>();
 

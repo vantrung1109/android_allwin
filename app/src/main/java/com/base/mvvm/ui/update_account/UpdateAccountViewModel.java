@@ -12,6 +12,7 @@ import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.ResponseWrapper;
 import com.base.mvvm.data.model.api.request.UpdateProfileRequest;
 import com.base.mvvm.data.model.api.response.AccountResponse;
+import com.base.mvvm.data.model.api.response.UploadFileResponse;
 import com.base.mvvm.ui.base.BaseViewModel;
 import com.base.mvvm.ui.main.MainActivity;
 import com.base.mvvm.utils.NetworkUtils;
@@ -27,7 +28,7 @@ public class UpdateAccountViewModel extends BaseViewModel {
     public ObservableField<Boolean> isShowPassWord = new ObservableField<>(false);
     public ObservableField<String> password = new ObservableField<>();
     public ObservableField<AccountResponse> profile = new ObservableField<>(new AccountResponse());
-
+    public ObservableField<String> avatar = new ObservableField<>();
     public UpdateAccountViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
         getProfileFromApi();
@@ -39,45 +40,49 @@ public class UpdateAccountViewModel extends BaseViewModel {
 //                    profile.set(response.getData());
 //                });
 //    }
-    public void updateProfile(){
-        showLoading();
-        UpdateProfileRequest request = new UpdateProfileRequest();
-        request.setName(profile.get().getName());
-        request.setEmail(profile.get().getEmail());
-        request.setNewPassword(password.get());
-        request.setOldPassword(password.get());
-        Log.e("updateProfile: ", request.toString());
-        compositeDisposable.add(repository.getApiService().updateProfile(request)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(throwable ->
-                        throwable.flatMap(new Function<Throwable, ObservableSource<?>>() {
-                            @Override
-                            public ObservableSource<?> apply(Throwable throwable) throws Throwable {
-                                if (NetworkUtils.checkNetworkError(throwable)) {
-                                    return application.showDialogNoInternetAccess();
-                                }else{
-                                    return Observable.error(throwable);
-                                }
-                            }
-                        })
-                )
-                .subscribe(response -> {
-                    if(response.isResult()){
+//    public void updateProfile( ){
+//        showLoading();
+//        UpdateProfileRequest request = new UpdateProfileRequest();
+//        request.setName(profile.get().getName());
+//        request.setEmail(profile.get().getEmail());
+//        request.setNewPassword(password.get());
+//        request.setOldPassword(password.get());
+//        Log.e("updateProfile: ", request.toString());
+//        compositeDisposable.add(repository.getApiService().updateProfile(request)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .retryWhen(throwable ->
+//                        throwable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+//                            @Override
+//                            public ObservableSource<?> apply(Throwable throwable) throws Throwable {
+//                                if (NetworkUtils.checkNetworkError(throwable)) {
+//                                    return application.showDialogNoInternetAccess();
+//                                }else{
+//                                    return Observable.error(throwable);
+//                                }
+//                            }
+//                        })
+//                )
+//                .subscribe(response -> {
+//                    if(response.isResult()){
+//
+//                        showSuccessMessage(application.getString(R.string.update_profile_successfully));
+//
+//                    }else{
+//                        showErrorMessage(response.getMessage());
+//                    }
+//                    hideLoading();
+//                }, throwable -> {
+//                    showErrorMessage(application.getResources().getString(R.string.no_internet));
+//                    hideLoading();
+//                }));
+//    }
 
-                        showSuccessMessage(application.getString(R.string.update_profile_successfully));
 
-                    }else{
-                        showErrorMessage(response.getMessage());
-                    }
-                    hideLoading();
-                }, throwable -> {
-                    showErrorMessage(application.getResources().getString(R.string.no_internet));
-                    hideLoading();
-                }));
+    public Observable<ResponseWrapper<String>> updateProfile(UpdateProfileRequest request){
+        return repository.getApiService().updateProfile(request);
     }
-
-    public Observable<ResponseWrapper<AccountResponse>> uploadAvatar(RequestBody requestBody){
+    public Observable<ResponseWrapper<UploadFileResponse>> uploadAvatar(RequestBody requestBody){
         return repository.getApiService().uploadFile(requestBody);
     }
 
@@ -120,5 +125,8 @@ public class UpdateAccountViewModel extends BaseViewModel {
                     hideLoading();
                 }));
     }
+
+
+
 
 }

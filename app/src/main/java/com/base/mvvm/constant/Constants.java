@@ -9,6 +9,25 @@ public class Constants {
     //Local Action manager
     public static final String ACTION_EXPIRED_TOKEN ="ACTION_EXPIRED_TOKEN";
 
+    public static final String TENANT_ID = "TENANT_ID";
+    public static final String TENANT_URL = "TENANT_URL";
+
+    //Local Action manager
+    public static final String INSTAGRAM_LOGIN_URL = "https://www.instagram.com/accounts/login/";
+    public static final String INSTAGRAM_URL = "https://www.instagram.com/";
+    public static final String FILE_TYPE_AVATAR = "AVATAR";
+    public static final String TOKEN = "KEY_BEARER_TOKEN";
+
+    public static final String KEY_STORE_SETTING = "KEY_STORE_SETTING";
+    public static final String KEY_USER_ADDRESSES = "userAddresses";
+    public static final String KEY_USER_ADDRESS_POS = "userAddressPos";
+    public static final String BLANK_FRAGMENT = "blank fragment";
+    public static final String ACCOUNT_FRAGMENT = "account fragment";
+    public static final String TENANT_FRAGMENT = "tenant fragment";
+    public static final String ONLINE_PAYPAL = "ONLINE_PAYPAL";
+    public static final String OFFLINE_CARD = "OFFLINE_CARD";
+    public static final String OFFLINE_CASH = "OFFLINE_CASH";
+
     private Constants(){
 
     }

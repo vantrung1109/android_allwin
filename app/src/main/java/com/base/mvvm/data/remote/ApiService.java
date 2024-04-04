@@ -8,6 +8,7 @@ import com.base.mvvm.data.model.api.request.UpdateProfileRequest;
 import com.base.mvvm.data.model.api.response.AccountResponse;
 import com.base.mvvm.data.model.api.response.LoginResponse;
 import com.base.mvvm.data.model.api.response.SigninResponse;
+import com.base.mvvm.data.model.api.response.UploadFileResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.RequestBody;
@@ -30,12 +31,11 @@ public interface ApiService {
     Observable<ResponseWrapper<AccountResponse>> profile2();
     @GET("v1/customer/profile")
     Observable<ResponseWrapper<AccountResponse>> getProfile();
-    @PUT("/v1/customer/update-profile")
+    @PUT("v1/customer/update-profile")
     Observable<ResponseWrapper<String>> updateProfile(@Body UpdateProfileRequest request);
-
     @POST("/v1/file/upload")
     @Headers({"isMedia:1"})
-    Observable<ResponseWrapper<AccountResponse>> uploadFile(@Body RequestBody requestBody);
+    Observable<ResponseWrapper<UploadFileResponse>> uploadFile(@Body RequestBody requestBody);
 
     @POST("v1/customer/login")
     @Headers({"IgnoreAuth: 1"})

@@ -16,7 +16,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
-        buildConfigField "String", "MEDIA_URL", "\"https://org-media-template.developteam.net\""
+        buildConfigField "String", "MEDIA_URL", "\"https://org-media-template.developteam.net/\""
         buildConfigField "String", "BASE_URL", "\"https://ww-user-api.developteam.net/\""
 
     }
@@ -47,13 +47,15 @@ android {
 }
 
 dependencies {
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+
 //FlexibleAdapter
     implementation ("com.github.ddB0515.FlexibleAdapter:flexible-adapter:5.1.1")
     implementation("com.github.ddB0515.FlexibleAdapter:flexible-adapter-databinding:5.1.1")
     implementation("com.github.ddB0515.FlexibleAdapter:flexible-adapter-ui:5.1.1")
     implementation("com.github.ddB0515.FlexibleAdapter:flexible-adapter-livedata:5.1.1")
     implementation ("com.github.davideas:FlipView:1.2.0")
-
+    implementation("de.hdodenhof:circleimageview:3.1.0")
     // lombok
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'

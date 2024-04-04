@@ -8,10 +8,9 @@ import lombok.Data;
 public class UpdateProfileRequest {
     private String name;
     private String email;
-
     private String newPassword;
     private String oldPassword;
-
+    private String imgAvar;
 
     @Override
     public String toString() {
@@ -20,6 +19,7 @@ public class UpdateProfileRequest {
                 ", email='" + email + '\'' +
                 ", newPassword='" + newPassword + '\'' +
                 ", oldPassword='" + oldPassword + '\'' +
+                ", imgAvar='" + imgAvar + '\'' +
                 '}';
     }
 }
