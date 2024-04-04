@@ -59,7 +59,9 @@
         <activity android:name=".ui.update_account.UpdateAccountActivity"
             android:exported="true"
             />
-
+        <activity android:name=".ui.home_first.HomeFirstActivity"
+            android:exported="true"
+            />
     </application>
 
 </manifest>

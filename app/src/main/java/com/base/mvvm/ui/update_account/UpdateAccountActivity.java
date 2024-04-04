@@ -10,14 +10,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.Observable;
 
 import com.base.mvvm.BuildConfig;
 import com.base.mvvm.R;
@@ -36,14 +34,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 import eu.davidea.flexibleadapter.databinding.BR;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import timber.log.Timber;
 
 public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBinding, UpdateAccountViewModel> {
     private Bitmap updatedAvatar;
@@ -77,8 +78,7 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
         AccountResponse profile = new AccountResponse();
         profile = viewModel.profile.get();
 
-        if (profile.getAvatar() != null && !profile.getAvatar().trim().equals("")) {
-            viewModel.avatar.set(profile.getAvatar());
+        if (profile != null) {
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .placeholder(R.mipmap.ic_launcher_round)
@@ -87,16 +87,16 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
         }
 
 
-        viewModel.isShowPassWord.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable sender, int propertyId) {
-                if(!viewModel.isShowPassWord.get()){
-                    viewBinding.editPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }else {
-                    viewBinding.editPassword.setTransformationMethod(null);;
-                }
-            }
-        });
+//        viewModel.isShowPassWord.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+//            @Override
+//            public void onPropertyChanged(Observable sender, int propertyId) {
+//                if(!viewModel.isShowPassWord.get()){
+//                    viewBinding.editPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+//                }else {
+//                    viewBinding.editPassword.setTransformationMethod(null);;
+//                }
+//            }
+//        });
 //        viewBinding.editPassword.addTextChangedListener(new TextWatcher() {
 //            @Override
 //            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -117,10 +117,54 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
 
     }
 
-    public void updateProfile(){
-        if(viewModel.profile.get() == null || Objects.equals(viewModel.profile.get().getName(), "")){
-            viewModel.showErrorMessage("Pls fill name");
+    public void uploadFile(){
+        viewModel.showLoading();
+        // Upload image if necessary
+        if (updatedAvatar != null) {
+            // Upload avatar then update profile
+            // Convert the Bitmap to a byte array
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            updatedAvatar.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+
+            // Create a request body for the image
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageByteArray);
+
+            // Create a multipart request builder
+            MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM);
+            requestBodyBuilder.addFormDataPart("file", "image.jpg", requestFile);
+            requestBodyBuilder.addFormDataPart("type", Constants.FILE_TYPE_AVATAR);
+            MultipartBody responseBody = requestBodyBuilder.build();
+            UpdateProfileRequest request = prepareRequest();
+
+            viewModel.compositeDisposable.add(viewModel.uploadAvatar(responseBody)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(response -> {
+                                if (response.isResult()) {
+                                    if (response.getData().getFilePath() != null) {
+                                        request.setAvatar(response.getData().getFilePath());
+                                    }
+                                    viewModel.showSuccessMessage("Update File successfully");
+                                } else {
+                                    viewModel.showErrorMessage(response.getMessage());
+                                }
+                                viewModel.hideLoading();
+                                setResult(Activity.RESULT_OK);
+                                finish();
+                            }, err -> {
+                                Timber.tag("uploadFile: ").e(err);
+                                viewModel.hideLoading();
+                                viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
+                            }));
         }
+    }
+
+    public void updateProfile(){
+//        if(viewModel.profile.get() == null || Objects.equals(viewModel.profile.get().getName(), "")){
+//            viewModel.showErrorMessage("Pls fill name");
+//        }
 
         viewModel.showLoading();
         // Upload image if necessary
@@ -139,14 +183,19 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
                     .setType(MultipartBody.FORM);
             requestBodyBuilder.addFormDataPart("file", "image.jpg", requestFile);
             requestBodyBuilder.addFormDataPart("type", Constants.FILE_TYPE_AVATAR);
-            Log.e("updateProfile: ", "request" + requestBodyBuilder.build().toString());
+
             UpdateProfileRequest request = prepareRequest();
-            io.reactivex.rxjava3.core.Observable<ResponseWrapper<String>> uploadAndProfileUpdateObservable = viewModel.uploadAvatar(requestBodyBuilder.build())
-                    .subscribeOn(Schedulers.io())
+            AtomicReference<String> check = new AtomicReference<>("hehehe");
+            Observable<ResponseWrapper<String>>
+                    uploadAndProfileUpdateObservable = viewModel.uploadAvatar(requestBodyBuilder.build())
                     .observeOn(AndroidSchedulers.mainThread())
                     .flatMap(uploadResponse -> {
+                        if (uploadResponse.isResult()) {
+                            check.set("kaka");
+                        }
+                        else check.set(uploadResponse.getData().getFilePath());
                         if (uploadResponse.isResult() && uploadResponse.getData().getFilePath() != null) {
-                            request.setImgAvar(uploadResponse.getData().getFilePath());
+                            request.setAvatar(uploadResponse.getData().getFilePath());
                         }
                         return viewModel.updateProfile(request)
                                 .subscribeOn(Schedulers.io());
@@ -159,6 +208,7 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
                         if (response.isResult()) {
                             viewModel.showSuccessMessage(application.getString(R.string.update_profile_success));
                         } else {
+
                             viewModel.showErrorMessage(response.getMessage());
                         }
                         viewModel.hideLoading();
@@ -166,9 +216,12 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
                         setResult(Activity.RESULT_OK);
                         finish();
                     }, err -> {
+                        Log.e("updateProfile: ", check.get());
                         viewModel.hideLoading();
-                        viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
+                        viewModel.showErrorMessage("updateProfile: " + check.get());
+//                        viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
                     }));
+
         } else {
             // Update profile only
             handleUpdateProfile();
@@ -189,7 +242,6 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
                         viewModel.showErrorMessage(response.getMessage());
                     }
                     viewModel.hideLoading();
-
                     setResult(Activity.RESULT_OK);
                     finish();
                 }, err -> {
@@ -204,12 +256,14 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
         Log.e("prepareRequest", "email" + viewModel.profile.get().getEmail());
         Log.e("prepareRequest", "password" + viewModel.password.get());
         Log.e("prepareRequest", "avatar" + viewModel.avatar.get());
-        request.setName(viewModel.profile.get().getName());
+        request.setUsername(viewModel.profile.get().getName());
+        request.setFullName(viewModel.profile.get().getName());
         request.setEmail(viewModel.profile.get().getEmail());
-
+        request.setPhone("0365817754");
+        request.setUserOfficeName(viewModel.profile.get().getName());
         request.setNewPassword(viewModel.password.get());
-        request.setOldPassword(viewModel.password.get());
-        request.setImgAvar(viewModel.avatar.get());
+        request.setPassword(viewModel.password.get());
+        request.setAvatar(viewModel.avatar.get());
         return request;
     }
 

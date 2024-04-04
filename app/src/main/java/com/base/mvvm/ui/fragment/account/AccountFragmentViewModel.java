@@ -1,5 +1,7 @@
 package com.base.mvvm.ui.fragment.account;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import androidx.databinding.ObservableField;
@@ -7,8 +9,11 @@ import androidx.databinding.ObservableField;
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
+import com.base.mvvm.data.local.prefs.PreferencesService;
 import com.base.mvvm.data.model.api.response.AccountResponse;
 import com.base.mvvm.ui.base.BaseFragmentViewModel;
+import com.base.mvvm.ui.home.HomeActivity;
+import com.base.mvvm.ui.main.MainActivity;
 import com.base.mvvm.ui.update_account.UpdateAccountActivity;
 import com.base.mvvm.utils.NetworkUtils;
 
@@ -65,5 +70,32 @@ public class AccountFragmentViewModel extends BaseFragmentViewModel {
         Intent intent = new Intent(application, UpdateAccountActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         application.startActivity(intent);
+    }
+    public void clearToken(){
+        repository.getSharedPreferences().removeKey(PreferencesService.KEY_BEARER_TOKEN);
+        repository.setToken(null);
+    }
+    public void doSignout(){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Intent intent = new Intent(application.getCurrentActivity(), HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        clearToken();
+                        application.getCurrentActivity().startActivity(intent);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(application.getCurrentActivity());
+        builder.setMessage("Bạn muốn đăng xuất?").setPositiveButton(application.getCurrentActivity().getString(R.string.confirm), dialogClickListener)
+                .setNegativeButton(application.getCurrentActivity().getString(R.string.cancel), dialogClickListener).show();
     }
 }

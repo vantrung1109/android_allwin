@@ -7,6 +7,7 @@
     app:cardCornerRadius="@dimen/_8sdp"
     app:cardBackgroundColor="#E9E9E9"
     android:layout_marginRight="@dimen/_8sdp"
+
     >
     <TextView
         android:id="@+id/tv_title"

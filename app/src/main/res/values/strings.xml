@@ -26,4 +26,6 @@
     <string name="update_str">Cập nhật</string>
     <string name="update_profile_success">Cập nhật thông tin tài khoản thành công!</string>
     <string name="update_profile_successfully">Update profile Successfully</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="cancel">Hủy</string>
 </resources>

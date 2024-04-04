@@ -6,20 +6,12 @@ import lombok.Data;
 
 @Data
 public class UpdateProfileRequest {
-    private String name;
+    private String username;
+    private String fullName;
+    private String avatar;
     private String email;
+    private String userOfficeName;
+    private String phone;
+    private String password;
     private String newPassword;
-    private String oldPassword;
-    private String imgAvar;
-
-    @Override
-    public String toString() {
-        return "UpdateProfileRequest{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", newPassword='" + newPassword + '\'' +
-                ", oldPassword='" + oldPassword + '\'' +
-                ", imgAvar='" + imgAvar + '\'' +
-                '}';
-    }
 }

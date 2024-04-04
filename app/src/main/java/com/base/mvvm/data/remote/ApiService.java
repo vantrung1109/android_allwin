@@ -11,6 +11,7 @@ import com.base.mvvm.data.model.api.response.SigninResponse;
 import com.base.mvvm.data.model.api.response.UploadFileResponse;
 
 import io.reactivex.rxjava3.core.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -35,7 +36,7 @@ public interface ApiService {
     Observable<ResponseWrapper<String>> updateProfile(@Body UpdateProfileRequest request);
     @POST("/v1/file/upload")
     @Headers({"isMedia:1"})
-    Observable<ResponseWrapper<UploadFileResponse>> uploadFile(@Body RequestBody requestBody);
+    Observable<ResponseWrapper<UploadFileResponse>> uploadFile(@Body MultipartBody requestBody);
 
     @POST("v1/customer/login")
     @Headers({"IgnoreAuth: 1"})

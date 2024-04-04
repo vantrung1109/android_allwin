@@ -11,6 +11,7 @@ import com.base.mvvm.data.Repository;
 import com.base.mvvm.di.scope.ActivityScope;
 import com.base.mvvm.ui.base.BaseActivity;
 import com.base.mvvm.ui.home.HomeViewModel;
+import com.base.mvvm.ui.home_first.HomeFirstViewModel;
 import com.base.mvvm.ui.login.LoginViewModel;
 import com.base.mvvm.ui.main.MainViewModel;
 import com.base.mvvm.ui.signin.SignInViewModel;
@@ -81,5 +82,12 @@ public class ActivityModule {
         Supplier<UpdateAccountViewModel> supplier = () -> new UpdateAccountViewModel(repository, (MVVMApplication)application);
         ViewModelProviderFactory<UpdateAccountViewModel> factory = new ViewModelProviderFactory<>(UpdateAccountViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(UpdateAccountViewModel.class);
+    }
+    @Provides
+    @ActivityScope
+    HomeFirstViewModel provideHomeFirstViewModel(Repository repository, Context application) {
+        Supplier<HomeFirstViewModel> supplier = () -> new HomeFirstViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<HomeFirstViewModel> factory = new ViewModelProviderFactory<>(HomeFirstViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(HomeFirstViewModel.class);
     }
 }

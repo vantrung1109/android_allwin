@@ -22,6 +22,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class UpdateAccountViewModel extends BaseViewModel {
@@ -82,7 +83,7 @@ public class UpdateAccountViewModel extends BaseViewModel {
     public Observable<ResponseWrapper<String>> updateProfile(UpdateProfileRequest request){
         return repository.getApiService().updateProfile(request);
     }
-    public Observable<ResponseWrapper<UploadFileResponse>> uploadAvatar(RequestBody requestBody){
+    public Observable<ResponseWrapper<UploadFileResponse>> uploadAvatar(MultipartBody requestBody){
         return repository.getApiService().uploadFile(requestBody);
     }
 

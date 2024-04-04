@@ -19,6 +19,7 @@
             android:id="@+id/background_account"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_200sdp"
+            android:background="@color/white"
             >
             <ImageView
                 android:layout_width="wrap_content"
@@ -45,7 +46,7 @@
                         android:id="@+id/img_account_icon"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@{vm.profile.avatar , default = @drawable/background_account}"
+                        android:src="@{vm.profile.avatar , default = @drawable/ic_launcher_background}"
                         android:scaleType="fitXY"
                         />
                 </androidx.cardview.widget.CardView>
@@ -88,84 +89,94 @@
         </FrameLayout>
 
         <RelativeLayout
-            android:id="@+id/layout_change_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:background="@drawable/background_account_profile"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            android:layout_gravity="bottom"
             android:layout_below="@+id/background_account"
-            android:layout_marginTop="@dimen/_10sdp">
-            <ImageView
-                android:id="@+id/img_signin"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:src="@drawable/change_password_again"
-                android:layout_marginStart="@dimen/_15sdp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đặt lại mật khẩu"
-                android:textColor="@color/black"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="@dimen/_10ssp"
-                android:layout_toEndOf="@id/img_signin"
-                android:orientation="vertical"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_centerVertical="true"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/detail"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_centerVertical="true"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@drawable/background_account_profile"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:background="@drawable/background_account_profile"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            android:layout_gravity="bottom"
-            android:layout_below="@+id/layout_change_password"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             >
-            <ImageView
-                android:id="@+id/img_signout"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:src="@drawable/signout"
-                android:layout_marginStart="@dimen/_15sdp"/>
-            <TextView
+            <RelativeLayout
+                android:id="@+id/layout_change_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đăng xuất"
-                android:textColor="@color/black"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="@dimen/_10ssp"
-                android:layout_toEndOf="@id/img_signout"
-                android:orientation="vertical"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_centerVertical="true"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:layout_gravity="bottom"
+                >
+                <ImageView
+                    android:id="@+id/img_signin"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/change_password_again"
+                    android:layout_marginStart="@dimen/_15sdp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đặt lại mật khẩu"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_10ssp"
+                    android:layout_toEndOf="@id/img_signin"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/detail"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="#F3F2F2"
+                android:layout_below="@+id/layout_change_password"
                 />
-            <ImageView
+            <RelativeLayout
+                android:id="@+id/layout_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/detail"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_centerVertical="true"
-                />
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:layout_gravity="bottom"
+                android:layout_below="@+id/layout_change_password"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:onClick="@{(v) -> vm.doSignout()}"
+                >
+                <ImageView
+                    android:id="@+id/img_signout"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/signout"
+                    android:layout_marginStart="@dimen/_15sdp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng xuất"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_10ssp"
+                    android:layout_toEndOf="@id/img_signout"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/detail"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
         </RelativeLayout>
+
     </RelativeLayout>
 </layout>

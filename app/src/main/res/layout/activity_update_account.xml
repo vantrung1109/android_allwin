@@ -16,6 +16,7 @@
         android:onClick="@{()->a.hideKeyboard()}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         >
         <RelativeLayout
             android:id="@+id/layout_title"
@@ -239,7 +240,7 @@
             android:textColor="#FFFFFF"
             android:clickable="true"
             android:id="@+id/btn_update"
-            android:onClick="@{(v)-> a.updateProfile()}"
+            android:onClick="@{(v)-> a.uploadFile()}"
             android:fontFamily="@font/roboto_bold"
             android:textStyle="bold"
 
