@@ -59,7 +59,7 @@
         <activity android:name=".ui.update_account.UpdateAccountActivity"
             android:exported="true"
             />
-        <activity android:name=".ui.home_first.HomeFirstActivity"
+        <activity android:name=".ui.home_splash.HomeSplashActivity"
             android:exported="true"
             />
     </application>

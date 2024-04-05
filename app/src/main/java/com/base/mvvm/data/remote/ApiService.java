@@ -5,14 +5,13 @@ import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SignUpRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
 import com.base.mvvm.data.model.api.request.UpdateProfileRequest;
-import com.base.mvvm.data.model.api.response.AccountResponse;
-import com.base.mvvm.data.model.api.response.LoginResponse;
-import com.base.mvvm.data.model.api.response.SigninResponse;
-import com.base.mvvm.data.model.api.response.UploadFileResponse;
+import com.base.mvvm.data.model.api.response.customer.AccountResponse;
+import com.base.mvvm.data.model.api.response.customer.LoginResponse;
+import com.base.mvvm.data.model.api.response.customer.SigninResponse;
+import com.base.mvvm.data.model.api.response.customer.UploadFileResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

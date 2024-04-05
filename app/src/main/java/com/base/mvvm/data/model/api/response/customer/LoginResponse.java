@@ -1,11 +1,13 @@
-package com.base.mvvm.data.model.api.response;
+package com.base.mvvm.data.model.api.response.customer;
+
+import com.base.mvvm.data.model.api.response.BaseResponse;
 
 import java.util.Date;
 
 import lombok.Data;
 
 @Data
-public class LoginResponse extends BaseResponse{
+public class LoginResponse extends BaseResponse {
     private String username;
     private String token;
     private String fullName;

@@ -1,4 +1,4 @@
-package com.base.mvvm.data.model.api.response;
+package com.base.mvvm.data.model.api.response.customer;
 
 import lombok.Data;
 

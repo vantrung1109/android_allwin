@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -22,7 +21,7 @@ import com.base.mvvm.R;
 import com.base.mvvm.constant.Constants;
 import com.base.mvvm.data.model.api.ResponseWrapper;
 import com.base.mvvm.data.model.api.request.UpdateProfileRequest;
-import com.base.mvvm.data.model.api.response.AccountResponse;
+import com.base.mvvm.data.model.api.response.customer.AccountResponse;
 import com.base.mvvm.databinding.ActivityUpdateAccountBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
@@ -33,7 +32,6 @@ import com.github.dhaval2404.imagepicker.ImagePicker;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import eu.davidea.flexibleadapter.databinding.BR;
@@ -43,7 +41,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import timber.log.Timber;
 
 public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBinding, UpdateAccountViewModel> {

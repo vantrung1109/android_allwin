@@ -3,7 +3,7 @@ package com.base.mvvm.di.component;
 import com.base.mvvm.di.module.ActivityModule;
 import com.base.mvvm.di.scope.ActivityScope;
 import com.base.mvvm.ui.home.HomeActivity;
-import com.base.mvvm.ui.home_first.HomeFirstActivity;
+import com.base.mvvm.ui.home_splash.HomeSplashActivity;
 import com.base.mvvm.ui.login.LoginActivity;
 import com.base.mvvm.ui.main.MainActivity;
 import com.base.mvvm.ui.signin.SignInActivity;
@@ -23,6 +23,6 @@ public interface ActivityComponent {
     void inject(SignUpActivity activity);
     void inject(HomeActivity activity);
     void inject(UpdateAccountActivity activity);
-    void inject(HomeFirstActivity activity);
+    void inject(HomeSplashActivity activity);
 }
 

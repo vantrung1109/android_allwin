@@ -10,14 +10,11 @@ import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.local.prefs.PreferencesService;
-import com.base.mvvm.data.model.api.response.AccountResponse;
+import com.base.mvvm.data.model.api.response.customer.AccountResponse;
 import com.base.mvvm.ui.base.BaseFragmentViewModel;
 import com.base.mvvm.ui.home.HomeActivity;
-import com.base.mvvm.ui.main.MainActivity;
 import com.base.mvvm.ui.update_account.UpdateAccountActivity;
 import com.base.mvvm.utils.NetworkUtils;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;

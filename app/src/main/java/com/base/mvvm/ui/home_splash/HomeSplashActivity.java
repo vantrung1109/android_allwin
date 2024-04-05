@@ -1,4 +1,4 @@
-package com.base.mvvm.ui.home_first;
+package com.base.mvvm.ui.home_splash;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import com.base.mvvm.ui.main.MainActivity;
 
 import eu.davidea.flexibleadapter.databinding.BR;
 
-public class HomeFirstActivity extends BaseActivity<ActivityHomeFirstBinding, HomeFirstViewModel> {
+public class HomeSplashActivity extends BaseActivity<ActivityHomeFirstBinding, HomeSplashViewModel> {
     @Override
     public int getLayoutId() {
-        return R.layout.activity_home_first;
+        return R.layout.activity_splash_home;
     }
 
     @Override
@@ -40,10 +40,10 @@ public class HomeFirstActivity extends BaseActivity<ActivityHomeFirstBinding, Ho
             public void run() {
                 Intent intent;
                 if (viewModel.isHaveToken()){
-                    intent = new Intent(HomeFirstActivity.this, MainActivity.class);
+                    intent = new Intent(HomeSplashActivity.this, MainActivity.class);
                 }
                 else {
-                    intent = new Intent(HomeFirstActivity.this, HomeActivity.class);
+                    intent = new Intent(HomeSplashActivity.this, HomeActivity.class);
                 }
                 startActivity(intent);
                 finish();

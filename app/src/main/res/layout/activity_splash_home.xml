@@ -4,10 +4,10 @@
     <data>
         <variable
             name="vm"
-            type="com.base.mvvm.ui.home_first.HomeFirstViewModel" />
+            type="com.base.mvvm.ui.home_splash.HomeSplashViewModel" />
 
         <variable name="a"
-            type="com.base.mvvm.ui.home_first.HomeFirstActivity" />
+            type="com.base.mvvm.ui.home_splash.HomeSplashActivity" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
