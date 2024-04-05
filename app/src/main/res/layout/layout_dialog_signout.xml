@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_conner_16"
+    android:layout_margin="@dimen/_12sdp"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng xuất"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16sdp"
+        android:fontFamily="@font/roboto_bold"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bạn muốn đăng xuất khỏi ứng dụng?"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:textColor="@color/black"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        >
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_cancel"
+            android:text="Hủy"
+            android:textColor="@color/btn_login"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/roboto_bold">
+        </Button>
+        <Button
+            android:id="@+id/btn_signout"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_custom_enable"
+            android:textColor="@color/white"
+            android:text="Đăng xuất"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_alignParentEnd="true"
+            >
+        </Button>
+    </RelativeLayout>
+
+
+</LinearLayout>

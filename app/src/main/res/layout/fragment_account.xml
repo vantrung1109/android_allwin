@@ -22,13 +22,16 @@
             android:background="@color/white"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/background_account"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/background_account"
+                android:scaleType="fitXY"
+                android:layout_marginBottom="@dimen/_27sdp"
+                />
             <RelativeLayout
                 android:id="@+id/layout_profile"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_55sdp"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@drawable/background_account_profile"
@@ -100,7 +103,7 @@
             <RelativeLayout
                 android:id="@+id/layout_change_password"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_35sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:layout_gravity="bottom"
@@ -117,10 +120,10 @@
                     android:text="Đặt lại mật khẩu"
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_medium"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_11ssp"
                     android:layout_toEndOf="@id/img_signin"
                     android:orientation="vertical"
-                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:layout_centerVertical="true"
                     />
                 <ImageView
@@ -141,7 +144,7 @@
             <RelativeLayout
                 android:id="@+id/layout_logout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_35sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:layout_gravity="bottom"
@@ -161,10 +164,10 @@
                     android:text="Đăng xuất"
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_medium"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_11ssp"
                     android:layout_toEndOf="@id/img_signout"
                     android:orientation="vertical"
-                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:layout_centerVertical="true"
                     />
                 <ImageView

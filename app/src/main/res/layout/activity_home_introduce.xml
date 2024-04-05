@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.base.mvvm.ui.home_introduce.HomeIntroduceViewModel" />
+
+        <variable name="a"
+            type="com.base.mvvm.ui.home_introduce.HomeIntroduceActivity" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/home_introduce"
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="@dimen/_220sdp"
+            android:src="@drawable/home_introduce"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_instruct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_introduce"
+            style="@style/AppTextTitle"
+            android:textSize="@dimen/_15sdp"
+            android:text="Sử dụng vị trí của bạn và cho phép nhận thông báo "
+            android:layout_marginTop="@dimen/_60sdp"
+
+            android:layout_marginStart="@dimen/_20sdp" />
+
+        <TextView
+            android:id="@+id/tv_introduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_instruct"
+            android:textSize="@dimen/_11sdp"
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+            android:fontFamily="@font/roboto_500"
+            android:textColor="#9F9696"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"/>
+
+        <TextView
+            android:id="@+id/btn_continue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_below="@+id/tv_introduce"
+            android:background="@drawable/btn_custom_enable"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:text="Tiếp tục"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#FFFFFF"
+            android:clickable="true"
+
+            android:onClick="@{(v)-> vm.doContinue()}"
+            android:fontFamily="@font/roboto_bold"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</layout>

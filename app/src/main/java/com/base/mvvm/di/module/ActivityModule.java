@@ -11,6 +11,7 @@ import com.base.mvvm.data.Repository;
 import com.base.mvvm.di.scope.ActivityScope;
 import com.base.mvvm.ui.base.BaseActivity;
 import com.base.mvvm.ui.home.HomeViewModel;
+import com.base.mvvm.ui.home_introduce.HomeIntroduceViewModel;
 import com.base.mvvm.ui.home_splash.HomeSplashViewModel;
 import com.base.mvvm.ui.login.LoginViewModel;
 import com.base.mvvm.ui.main.MainViewModel;
@@ -89,5 +90,12 @@ public class ActivityModule {
         Supplier<HomeSplashViewModel> supplier = () -> new HomeSplashViewModel(repository, (MVVMApplication)application);
         ViewModelProviderFactory<HomeSplashViewModel> factory = new ViewModelProviderFactory<>(HomeSplashViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(HomeSplashViewModel.class);
+    }
+    @Provides
+    @ActivityScope
+    HomeIntroduceViewModel provideHomeIntroduceViewModel(Repository repository, Context application) {
+        Supplier<HomeIntroduceViewModel> supplier = () -> new HomeIntroduceViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<HomeIntroduceViewModel> factory = new ViewModelProviderFactory<>(HomeIntroduceViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(HomeIntroduceViewModel.class);
     }
 }
