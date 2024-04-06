@@ -37,22 +37,14 @@ public class HomeSplashActivity extends BaseActivity<ActivitySplashHomeBinding, 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent;
-                Log.e("HomeSplashActivity", "isHaveToken:" + viewModel.isHaveToken());
-                if (viewModel.isHaveToken()){
-
-                    intent = new Intent(HomeSplashActivity.this, MainActivity.class);
-                }
-                else {
-                    intent = new Intent(HomeSplashActivity.this, HomeIntroduceActivity.class);
-                }
-                startActivity(intent);
-                finish();
-            }
-        }, 2500);
+        Intent intent;
+        if (viewModel.isHaveToken()){
+            intent = new Intent(HomeSplashActivity.this, MainActivity.class);
+        }
+        else {
+            intent = new Intent(HomeSplashActivity.this, HomeIntroduceActivity.class);
+        }
+        startActivity(intent);
+        finish();
     }
 }

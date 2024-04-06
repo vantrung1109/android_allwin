@@ -1,22 +1,21 @@
-package com.base.mvvm.ui.model;
+package com.base.mvvm.ui.fragment.activity.adapter;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.mvvm.R;
+import com.base.mvvm.databinding.RcvBookingDetailItemBinding;
 
-import java.util.Calendar;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
-import lombok.Data;
 
-@Data
-public class VehicleOrder extends AbstractFlexibleItem<VehicleOrder.VehicleOrderViewholder>{
+
+public class BookingDetail extends AbstractFlexibleItem<BookingDetail.BookingDetailViewHolder> {
 
     int id;
     String address;
@@ -26,7 +25,7 @@ public class VehicleOrder extends AbstractFlexibleItem<VehicleOrder.VehicleOrder
     String date;
     int resourceId;
 
-    public VehicleOrder(String address, String address_detail, long price, Boolean status, String date, int resourceId) {
+    public BookingDetail(String address, String address_detail, long price, Boolean status, String date, int resourceId) {
         this.address = address;
         this.address_detail = address_detail;
         this.price = price;
@@ -42,28 +41,30 @@ public class VehicleOrder extends AbstractFlexibleItem<VehicleOrder.VehicleOrder
 
     @Override
     public int getLayoutRes() {
-        return R.layout.rcv_vehicle_order_item;
+        return R.layout.rcv_booking_detail_item;
     }
 
     @Override
-    public VehicleOrderViewholder createViewHolder(View view, FlexibleAdapter<IFlexible> flexibleAdapter) {
-        return new VehicleOrderViewholder(view, flexibleAdapter);
+    public BookingDetailViewHolder createViewHolder(View view, FlexibleAdapter<IFlexible> flexibleAdapter) {
+        return new BookingDetailViewHolder(view, flexibleAdapter);
     }
 
     @Override
-    public void bindViewHolder(FlexibleAdapter<IFlexible> flexibleAdapter, VehicleOrderViewholder vehicleOrderViewholder, int i, List<Object> list) {
-        vehicleOrderViewholder.address.setText(address);
-        vehicleOrderViewholder.address_detail.setText(address_detail);
-        vehicleOrderViewholder.price.setText(String.valueOf(price) + "đ");
-        vehicleOrderViewholder.status.setText(status ? "Hoàn thành" : "Đã hủy");
-        vehicleOrderViewholder.date.setText(date);
-        vehicleOrderViewholder.image.setImageResource(resourceId);
+    public void bindViewHolder(FlexibleAdapter<IFlexible> flexibleAdapter, BookingDetailViewHolder bookingDetailViewHolder, int i, List<Object> list) {
+        bookingDetailViewHolder.address.setText(address);
+        bookingDetailViewHolder.address_detail.setText(address_detail);
+        bookingDetailViewHolder.price.setText(String.valueOf(price) + "đ");
+        bookingDetailViewHolder.status.setText(status ? "Hoàn thành" : "Đã hủy");
+        bookingDetailViewHolder.date.setText(date);
+        bookingDetailViewHolder.image.setImageResource(resourceId);
     }
 
-    public static class VehicleOrderViewholder extends FlexibleViewHolder {
+    public static class BookingDetailViewHolder extends FlexibleViewHolder {
+
+        RcvBookingDetailItemBinding binding;
         TextView address, address_detail, price, status, date;
         ImageView image;
-        public VehicleOrderViewholder(View view, FlexibleAdapter adapter) {
+        public BookingDetailViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             address = view.findViewById(R.id.tv_address);
             address_detail = view.findViewById(R.id.tv_address_detail);

@@ -1,10 +1,13 @@
 package com.base.mvvm.data.remote;
 
+import com.base.mvvm.data.model.api.ResponseListObj;
 import com.base.mvvm.data.model.api.ResponseWrapper;
 import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SignUpRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
 import com.base.mvvm.data.model.api.request.UpdateProfileRequest;
+import com.base.mvvm.data.model.api.response.booking.BookingDetail;
+import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 import com.base.mvvm.data.model.api.response.customer.AccountResponse;
 import com.base.mvvm.data.model.api.response.customer.LoginResponse;
 import com.base.mvvm.data.model.api.response.customer.SigninResponse;
@@ -17,6 +20,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -44,5 +48,12 @@ public interface ApiService {
     @POST("v1/customer/register")
     @Headers({"IgnoreAuth: 1"})
     Observable<ResponseWrapper> signup(@Body SignUpRequest request);
+
+    @GET("/v1/booking/my-booking")
+    Observable<ResponseWrapper<ResponseListObj<MyBookingResponse>>> getMyBooking(@Query("endDate") String endDate,
+                                                                                 @Query("startDate") String startDate,
+                                                                                 @Query("page") Integer pageNumber,
+                                                                                 @Query("size") Integer pageSize,
+                                                                                 @Query("state") Integer state);
 
 }

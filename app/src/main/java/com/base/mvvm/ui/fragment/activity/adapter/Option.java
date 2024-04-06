@@ -1,9 +1,8 @@
-package com.base.mvvm.ui.model;
+package com.base.mvvm.ui.fragment.activity.adapter;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;

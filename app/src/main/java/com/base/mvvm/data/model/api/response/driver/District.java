@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class District {
-    private Integer id;
+    private Long id;
     private Integer kind;
     private String name;
     private Parent parent;

@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DriverVehicle {
+    private Long id;
     private Brand brand;
     private String CreatedDate;
     private DriverProfileResponse driver;
-    private Long id;
     private String image;
     private String licenseNo;
     private String modifiedDate;

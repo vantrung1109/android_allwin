@@ -75,9 +75,9 @@ public class AccountFragmentViewModel extends BaseFragmentViewModel {
         application.startActivity(intent);
     }
     public void clearToken(){
-        repository.getSharedPreferences().removeKey(PreferencesService.KEY_BEARER_TOKEN);
         repository.setToken(null);
     }
+
     public void doSignout(){
         final Dialog dialog = new Dialog(application.getCurrentActivity());
         dialog.setContentView(R.layout.layout_dialog_signout);

@@ -13,7 +13,7 @@ public class DriverProfileResponse {
     private Integer averageRating;
     private District district;
     private String fullName;
-    private String id;
+    private Long id;
     private String phone;
     private Province province;
     private Integer status;

@@ -16,11 +16,7 @@ import com.base.mvvm.data.service.DatabaseService;
 import com.base.mvvm.databinding.FragmentActivityBinding;
 import com.base.mvvm.di.component.FragmentComponent;
 import com.base.mvvm.ui.base.BaseFragment;
-import com.base.mvvm.ui.fragment.home.HomeFragmentViewModel;
-import com.base.mvvm.ui.model.Option;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.base.mvvm.ui.fragment.activity.adapter.Option;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -55,8 +51,12 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mFragmentActivityBinding = FragmentActivityBinding.inflate(inflater);
+
         mFlexibleAdapterOption = new FlexibleAdapter<>(DatabaseService.getInstance().getOptionsList(), this);
+
+
         mFragmentActivityBinding.rcvOption.setAdapter(mFlexibleAdapterOption);
+
         mFragmentActivityBinding.rcvOption.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 

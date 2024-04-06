@@ -19,8 +19,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MyBookingResponse {
+    private Long id;
     private Integer averageRating;
-    private List<BookingDetails> bookingDetailsList;
+    private List<BookingDetail> bookingDetails;
     private Integer codPrice;
     private String code;
     private String consigneeName;
@@ -33,7 +34,6 @@ public class MyBookingResponse {
     private Double distance;
     private DriverProfileResponse driver;
     private DriverVehicle driverVehicle;
-    private Long id;
     private String idCod;
     private Double money;
     private String pickupAddress;
