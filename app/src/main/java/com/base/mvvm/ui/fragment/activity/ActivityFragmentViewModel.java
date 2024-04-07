@@ -37,6 +37,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
 
     public void callApiGetMyBooking(){
 
+
         compositeDisposable.add(repository.getApiService().getMyBooking(
                         null,
                         null,

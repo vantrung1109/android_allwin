@@ -46,7 +46,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     @Override
     protected void performDataBinding() {
 
-
+        viewModel.showLoading();
 
         MutableLiveData<List<BookingDetail>> liveDataListBooking = new MutableLiveData<>();
         List<BookingDetail> listBookingDetails = new ArrayList<>();

@@ -98,7 +98,7 @@ public class BookingDetail extends AbstractFlexibleItem<BookingDetail.BookingDet
             }
             custom_money = custom_money / 1000;
         }
-        custom_money_string = String.valueOf(custom_money) + custom_money_string + " đ";
+        custom_money_string = String.valueOf(custom_money) + custom_money_string + "đ";
         return custom_money_string;
     }
 }
