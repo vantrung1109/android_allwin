@@ -16,4 +16,6 @@
     <color name="brown_edit_txt_non_focus">#C4C4C4</color>
     <color name="btn_login">#FF7EA567</color>
     <color name="red">#E80B24</color>
+    <color name="completed_booking">#0FA958</color>
+    <color name="processing_booking">#E3CF23</color>
 </resources>

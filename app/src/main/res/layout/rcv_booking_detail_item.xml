@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_8sdp"
         android:background="@color/white"
-        android:layout_marginTop="@dimen/_5sdp">
+        android:layout_marginTop="@dimen/_10sdp"
+        >
 
 
         <RelativeLayout
@@ -26,36 +27,52 @@
                 android:layout_height="wrap_content"
                 android:text="@{ivm.createDate, default = @string/created_date_default}"
                 android:layout_gravity="center"
-                android:textSize="@dimen/_8sdp"
+                android:textSize="@dimen/_8ssp"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_5sdp"
-
                 />
-
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_create_date"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_7sdp">
-
+                android:layout_toStartOf="@+id/layout_address"
+                android:layout_alignParentStart="true"
+                >
                 <ImageView
                     android:id="@+id/img_vehicle"
                     android:layout_width="@dimen/_43sdp"
                     android:layout_height="@dimen/_32sdp"
                     android:src="@drawable/motorbike"
-
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     />
+            </RelativeLayout>
+
+
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/layout_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/tv_create_date"
+                android:layout_below="@+id/tv_create_date"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_7sdp">
+
+
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_140sdp"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/img_vehicle"
                     android:orientation="vertical"
-                    android:layout_marginStart="@dimen/_25sdp"
 
+                    android:layout_alignParentTop="true"
                     >
 
                     <TextView
@@ -65,8 +82,11 @@
                         android:text="@{ivm.pickupAddress, default = @string/pickup_address_default}"
                         android:fontFamily="@font/roboto_500"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_11sdp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/_11ssp"
+                        android:textStyle="bold"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        />
 
                     <TextView
                         android:id="@+id/tv_destination_address"
@@ -74,9 +94,12 @@
                         android:layout_height="wrap_content"
                         android:text="@{ivm.destinationaAddress, default = @string/destination_address_default}"
                         android:fontFamily="@font/roboto_500"
-                        android:textSize="@dimen/_8sdp"
+                        android:textSize="@dimen/_8ssp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -84,24 +107,14 @@
                         android:layout_marginTop="@dimen/_5sdp">
 
                         <TextView
-                            android:id="@+id/tv_dot"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="•"
-                            android:textSize="@dimen/_15sdp"
-                            android:textColor="#0FA958" />
-
-                        <TextView
                             android:id="@+id/tv_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hoàn thành"
-                            android:layout_toEndOf="@id/tv_dot"
+                            android:text="@string/str_completed_booking"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_5sdp"
                             android:fontFamily="@font/roboto_500"
-                            android:textColor="#0FA958"
-                            android:textSize="@dimen/_11sdp"
+                            android:textColor="@color/completed_booking"
+                            android:textSize="@dimen/_11ssp"
                             android:textStyle="bold"
 
                             />
@@ -115,11 +128,13 @@
                     android:layout_height="wrap_content"
                     android:text="@{String.valueOf(ivm.money), default = @string/money_default}"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:fontFamily="@font/roboto_500"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"
+                    />
 
             </RelativeLayout>
         </RelativeLayout>
