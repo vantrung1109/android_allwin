@@ -1,9 +1,9 @@
 package com.base.mvvm.ui.fragment.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.base.mvvm.MVVMApplication;
@@ -11,12 +11,13 @@ import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 import com.base.mvvm.ui.base.BaseFragmentViewModel;
-import com.base.mvvm.ui.fragment.activity.adapter.BookingDetail;
-import com.base.mvvm.ui.main.MainActivity;
+import com.base.mvvm.ui.fragment.activity.model.BookingDetail;
 import com.base.mvvm.utils.NetworkUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableSource;
@@ -26,14 +27,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     public ActivityFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
+        callApiGetMyBooking();
     }
+    FlexibleAdapter mFlexibleAdapterOption;
+    FlexibleAdapter mFlexibleAdapterBookingDetail;
+    MutableLiveData<List<MyBookingResponse>> listMyBookings = new MutableLiveData<>();
 
-    MutableLiveData<List<MyBookingResponse>> listBooking = new MutableLiveData<>();
 
-    public void haha() {
-        //do something
-        System.out.println("ActivityFragmentViewModel");
-    }
 
     public void callApiGetMyBooking(){
 
@@ -59,8 +59,11 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                 )
                 .subscribe(response -> {
                     if(response.isResult()){
-                        listBooking.setValue(response.getData().getContent());
-                        showSuccessMessage(application.getResources().getString(R.string.login_success));
+                        showSuccessMessage("Call Api Get My Booking Successfully");
+                       //listBooking.setValue(response.getData().getContent());
+                        listMyBookings.setValue(response.getData().getContent());
+                        Log.d("TAG", "callApiGetMyBooking: " + response.getData().getContent());
+                        Log.e("TAG", "callApiGetMyBooking: " + listMyBookings );
                     }else{
                         showErrorMessage(response.getMessage());
                     }
@@ -69,5 +72,9 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                     showErrorMessage(application.getResources().getString(R.string.no_internet));
                     hideLoading();
                 }));
+    }
+    public List<MyBookingResponse> getBookingDetailList() {
+        callApiGetMyBooking();
+        return listMyBookings.getValue();
     }
 }

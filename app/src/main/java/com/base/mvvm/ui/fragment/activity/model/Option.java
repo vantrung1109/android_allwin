@@ -1,4 +1,4 @@
-package com.base.mvvm.ui.fragment.activity.adapter;
+package com.base.mvvm.ui.fragment.activity.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

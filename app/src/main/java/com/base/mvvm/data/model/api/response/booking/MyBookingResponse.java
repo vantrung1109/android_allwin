@@ -1,12 +1,10 @@
 package com.base.mvvm.data.model.api.response.booking;
 
-import android.media.Rating;
-
-import androidx.room.Room;
-
 import com.base.mvvm.data.model.api.response.customer.CustomerProfileResponse;
 import com.base.mvvm.data.model.api.response.driver.DriverProfileResponse;
 import com.base.mvvm.data.model.api.response.driver_vehicle.DriverVehicle;
+import com.base.mvvm.data.model.api.response.rating.Rating;
+import com.base.mvvm.data.model.api.response.room.Room;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 
 import java.util.List;
@@ -20,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MyBookingResponse {
     private Long id;
-    private Integer averageRating;
+    private Double averageRating;
     private List<BookingDetail> bookingDetails;
     private Integer codPrice;
     private String code;

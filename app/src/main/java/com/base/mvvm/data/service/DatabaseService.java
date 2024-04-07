@@ -1,8 +1,8 @@
 package com.base.mvvm.data.service;
 
 import com.base.mvvm.R;
-import com.base.mvvm.ui.fragment.activity.adapter.Option;
-import com.base.mvvm.ui.fragment.activity.adapter.BookingDetail;
+import com.base.mvvm.ui.fragment.activity.model.Option;
+import com.base.mvvm.ui.fragment.activity.model.BookingDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +40,6 @@ public class DatabaseService {
         return items;
     }
 
-    public List<AbstractFlexibleItem> getVehicleOrdersList() {
-        List<AbstractFlexibleItem>  items = new ArrayList<>();
-        items.add(new BookingDetail("Masteri Thảo Điền", "Thảo điền, Thủ Đức, Hồ Chí Minh", 50000, true, "25/09/2023 15:00", R.drawable.motorbike));
-        items.add(new BookingDetail("Masteri Thảo Điền", "Thảo điền, Thủ Đức, Hồ Chí Minh", 50000, true, "25/09/2023 15:00", R.drawable.motorbike));
-        items.add(new BookingDetail("Masteri Thảo Điền", "Thảo điền, Thủ Đức, Hồ Chí Minh", 50000, true, "25/09/2023 15:00", R.drawable.motorbike));
-        return items;
-    }
+
 
 }

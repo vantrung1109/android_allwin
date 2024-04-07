@@ -28,4 +28,8 @@
     <string name="update_profile_successfully">Update profile Successfully</string>
     <string name="confirm">Xác nhận</string>
     <string name="cancel">Hủy</string>
+    <string name="created_date_default">25/09/2023 15:00</string>
+    <string name="pickup_address_default">Masteri Thảo Điền</string>
+    <string name="destination_address_default">Thảo điền, Thủ Đức, Hồ Chí Minh</string>
+    <string name="money_default">50.000đ</string>
 </resources>
