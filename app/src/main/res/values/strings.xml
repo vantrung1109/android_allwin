@@ -33,4 +33,5 @@
     <string name="destination_address_default">Thảo điền, Thủ Đức, Hồ Chí Minh</string>
     <string name="money_default">50.000đ</string>
     <string name="str_completed_booking">• Hoàn thành</string>
+    <string name="str_safe">Lái xe an toàn, phương tiện sạch sẽ</string>
 </resources>

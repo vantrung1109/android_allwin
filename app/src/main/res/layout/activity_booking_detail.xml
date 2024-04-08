@@ -56,13 +56,13 @@
             android:layout_marginTop="@dimen/_20sdp">
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_avatar"
-                android:layout_width="@dimen/_45sdp"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="@dimen/_20sdp"
                 app:cardCornerRadius="@dimen/_45sdp"
                 android:onClickListener="@{(v)-> a.getNewAvatar()}"
-                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_30sdp"
                 >
                 <ImageView
                     android:id="@+id/imgAvatar"
@@ -72,7 +72,7 @@
                     android:scaleType="fitXY"
                     />
             </androidx.cardview.widget.CardView>
-            
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,8 +80,8 @@
                 android:layout_alignParentEnd="true"
                 android:gravity="center"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_20sdp">
-                
+                android:layout_marginEnd="@dimen/_30sdp">
+
                 <TextView
                     android:id="@+id/tv_driver_name"
                     android:layout_width="wrap_content"
@@ -110,189 +110,344 @@
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_medium"
                     android:layout_marginTop="@dimen/_3sdp"/>
-                
+
             </LinearLayout>
         </RelativeLayout>
 
-
-
-
         <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_driver_rate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_25sdp"
+            android:text="Đánh giá tài xế"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="@color/black"
+            android:gravity="center"
             android:layout_below="@+id/layout_driver"
-            android:text="Họ và tên "
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/_10sdp"
-            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_15sdp"/>
 
-            />
-        <TextView
-            android:id="@+id/tv_name_mandatory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_18sdp"
-            android:layout_toEndOf="@+id/tv_name"
-            android:layout_below="@+id/card_avatar"
-            android:text="*"
-            android:textColor="@color/red"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/_10sdp"
-            android:textStyle="bold"
-            />
-        <EditText
-            android:id="@+id/edit_name"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_below="@+id/tv_name"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
-            android:hint="Nhập họ và tên"
-            android:paddingStart="@dimen/_7sdp"
-            android:background="@drawable/edit_txt_custom"
-            android:textSize="@dimen/_12ssp"
-            android:singleLine="true"
-            android:text="@={vm.profile.name, default = Username}"
-            android:focusable="true"
-            android:fontFamily="@font/roboto_medium"
-            android:clickable="true"
-            android:textStyle="bold"
-            />
-
-
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_name"
-            android:text="Email"
-            android:layout_marginStart="@dimen/_20sdp"
-
-            android:layout_marginTop="@dimen/_12sdp"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/_10sdp"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:id="@+id/tv_email_mandatory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_toEndOf="@+id/tv_email"
-            android:layout_below="@+id/edit_name"
-            android:text=" *"
-            android:textColor="@color/red"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/_10sdp"
-            android:textStyle="bold"
-            />
-        <EditText
-            android:id="@+id/edit_email"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_below="@+id/tv_email"
-            android:focusable="true"
-            android:clickable="true"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
-            android:hint="Nhập địa chỉ email"
-            android:textSize="@dimen/_12ssp"
-            android:singleLine="true"
-            android:paddingLeft="@dimen/_7sdp"
-            android:background="@drawable/edit_txt_custom"
-            android:text="@={vm.profile.email, default = Email}"
-            android:fontFamily="@font/roboto_medium"
-            android:textStyle="bold"
-            />
-
-
-        <TextView
-            android:id="@+id/tv_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_email"
-            android:text="Mật khẩu"
-            android:layout_marginStart="@dimen/_20sdp"
-
-            android:layout_marginTop="@dimen/_12sdp"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/_10sdp"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:id="@+id/tv_password_mandatory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_toEndOf="@+id/tv_password"
-            android:layout_below="@+id/edit_email"
-            android:text=" *"
-            android:textColor="@color/red"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/_10sdp"
-            android:textStyle="bold"
-            />
-        <FrameLayout
-            android:id="@+id/layout_password"
+        <LinearLayout
+            android:id="@+id/layout_star"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_password"
-            android:layout_marginTop="@dimen/_12sdp"
-            >
-
-            <EditText
-                android:id="@+id/edit_password"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
-                style="@style/AppEditTextInfo"
-                android:layout_marginTop="0dp"
-                android:hint="Nhập mật khẩu"
-                android:inputType="textPassword"
-                android:text="@={vm.password}"
-                />
-
+            android:layout_below="@+id/tv_driver_rate"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center">
+            
             <ImageView
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/star"
+                android:layout_marginEnd="@dimen/_10sdp"/>
+            <ImageView
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/star"
+                android:layout_marginEnd="@dimen/_10sdp"/>
+            <ImageView
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/star"
+                android:layout_marginEnd="@dimen/_10sdp"/>
+            <ImageView
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/star"
+                android:layout_marginEnd="@dimen/_10sdp"/>
+            <ImageView
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/star"
+                android:layout_marginEnd="@dimen/_10sdp"/>
+
+            
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_safe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/str_safe"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/black"
+            android:layout_below="@+id/layout_star"
+            android:layout_marginTop="@dimen/_15sdp"
+            />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp"
+            android:background="#EEF2F5"
+            android:layout_below="@+id/tv_safe"
+            android:layout_marginTop="@dimen/_15sdp"
+            />
+
+        <LinearLayout
+            android:id="@+id/layout_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            >
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@{ vm.isShowPassWord ? @drawable/eyeban : @drawable/see_password, default = @drawable/see_password}"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginEnd="@dimen/_30sdp"
-                android:onClick="@{(v)-> vm.showPassword()}"
-                android:id="@+id/img_show_password"
+                android:text="Thanh toán"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                />
+
+            <RelativeLayout
+                android:id="@+id/layout_money"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cước phí"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/black"
+                    />
+                <TextView
+                    android:id="@+id/tv_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50.000đ"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/black"
+                    android:layout_alignParentEnd="true"
+                    />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/layout_discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Khuyến mãi"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/black"
+                    />
+                <TextView
+                    android:id="@+id/tv_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.000đ"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/black"
+                    android:layout_alignParentEnd="true"
+                    />
+
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="#000000"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <RelativeLayout
+                android:id="@+id/layout_payment_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thanh toán tiền mặt"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:layout_centerVertical="true"
+                    />
+                <TextView
+                    android:id="@+id/tv_sum_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50.000đ"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/black"
+                    android:layout_alignParentEnd="true"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider_2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp"
+            android:background="#EEF2F5"
+            android:layout_below="@+id/layout_payment"
+            android:layout_marginTop="@dimen/_10sdp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider_2"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chi tiết chuyến đi"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
 
                 />
-        </FrameLayout>
+            <RelativeLayout
+                android:id="@+id/layout_code"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+            <TextView
+                android:id="@+id/tv_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã: 73570"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/tv_create_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/created_date_default"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/black"
+                android:layout_toEndOf="@id/tv_code"
+                android:layout_marginStart="@dimen/_15sdp"
+                />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_pickup_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/image_plane"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/plane"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/tv_address_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Điểm đón"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_8ssp"
+                    android:textColor="#898A8D"
+                    android:layout_toEndOf="@id/image_plane"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    />
+                <TextView
+                    android:id="@+id/tv_pickup_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="150/17 Đinh Tiên Hoàng, Phường 26, Quận 3"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/black"
+                    android:layout_toEndOf="@id/image_plane"
+                    android:layout_below="@+id/tv_address_text"
+                    android:layout_marginStart="@dimen/_10sdp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_destination_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/image_flag"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/flag"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/tv_destination_address_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Điểm đón"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_8ssp"
+                    android:textColor="#898A8D"
+                    android:layout_toEndOf="@id/image_flag"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    />
+                <TextView
+                    android:id="@+id/tv_destination_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="150/17 Đinh Tiên Hoàng, Phường 26, Quận 3"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/black"
+                    android:layout_toEndOf="@id/image_flag"
+                    android:layout_below="@+id/tv_destination_address_text"
+                    android:layout_marginStart="@dimen/_10sdp"/>
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginLeft="@dimen/_12sdp"
             android:layout_marginRight="@dimen/_12sdp"
-            android:layout_below="@+id/layout_password"
-            android:background="@{!TextUtils.isEmpty(vm.profile.name) || !TextUtils.isEmpty(vm.profile.email) ?@drawable/btn_custom_enable:@drawable/btn_custom_disable, default = @drawable/btn_custom_disable}"
-            android:enabled="@{!TextUtils.isEmpty(vm.profile.name) || !TextUtils.isEmpty(vm.profile.email)}"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/btn_completed_booking"
+            android:enabled="true"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="@string/update_str"
+            android:text="Đã hoàn thành"
             android:gravity="center"
             android:textSize="@dimen/_15ssp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/btn_completed_booking"
             android:clickable="true"
             android:id="@+id/btn_update"
             android:onClick="@{(v)-> a.uploadFile()}"
             android:fontFamily="@font/roboto_bold"
             android:textStyle="bold"
-
+            android:layout_marginBottom="@dimen/_20sdp"
             />
 
     </RelativeLayout>
