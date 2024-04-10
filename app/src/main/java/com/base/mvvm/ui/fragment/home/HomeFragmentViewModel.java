@@ -8,4 +8,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
     public HomeFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
     }
+    public void onBackClick() {
+        application.getCurrentActivity().finish();
+    }
 }

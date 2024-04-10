@@ -18,6 +18,6 @@
     <color name="red">#E80B24</color>
     <color name="completed_booking">#0FA958</color>
     <color name="processing_booking">#E3CF23</color>
-    <color name="background_booking_completed">#DCFFED</color>
-    <color name="btn_completed_booking">#0FA958</color>
+    <color name="btn_completed_booking">#DCFFED</color>
+    <color name="text_completed_booking">#0FA958</color>
 </resources>

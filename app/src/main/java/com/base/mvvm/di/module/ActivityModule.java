@@ -15,6 +15,7 @@ import com.base.mvvm.ui.home_introduce.HomeIntroduceViewModel;
 import com.base.mvvm.ui.home_splash.HomeSplashViewModel;
 import com.base.mvvm.ui.login.LoginViewModel;
 import com.base.mvvm.ui.main.MainViewModel;
+import com.base.mvvm.ui.my_booking_detail.MyBookingDetailViewModel;
 import com.base.mvvm.ui.signin.SignInViewModel;
 import com.base.mvvm.ui.signup.SignUpViewModel;
 import com.base.mvvm.ui.update_account.UpdateAccountViewModel;
@@ -97,5 +98,13 @@ public class ActivityModule {
         Supplier<HomeIntroduceViewModel> supplier = () -> new HomeIntroduceViewModel(repository, (MVVMApplication)application);
         ViewModelProviderFactory<HomeIntroduceViewModel> factory = new ViewModelProviderFactory<>(HomeIntroduceViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(HomeIntroduceViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    MyBookingDetailViewModel provideMyBookingDetailViewModel(Repository repository, Context application) {
+        Supplier<MyBookingDetailViewModel> supplier = () -> new MyBookingDetailViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<MyBookingDetailViewModel> factory = new ViewModelProviderFactory<>(MyBookingDetailViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(MyBookingDetailViewModel.class);
     }
 }

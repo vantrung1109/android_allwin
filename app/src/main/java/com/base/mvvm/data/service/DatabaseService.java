@@ -1,8 +1,9 @@
 package com.base.mvvm.data.service;
 
 import com.base.mvvm.R;
-import com.base.mvvm.ui.fragment.activity.model.Option;
-import com.base.mvvm.ui.fragment.activity.model.BookingDetail;
+
+import com.base.mvvm.ui.fragment.home.model.AddressSaveItem;
+import com.base.mvvm.ui.fragment.home.model.TitleAddressSave;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,14 +33,21 @@ public class DatabaseService {
     public List<AbstractFlexibleItem> getDatabaseList() {
         return mItems;
     }
-    public List<AbstractFlexibleItem> getOptionsList() {
+    public List<AbstractFlexibleItem> getTitleAddressSave() {
         List<AbstractFlexibleItem>  items = new ArrayList<>();
-        items.add(new Option("Đặt xe"));
-        items.add(new Option("Giao hàng"));
-        items.add(new Option("Đi chợ"));
+        items.add(new TitleAddressSave(R.drawable.private_home, "Nhà riêng"));
+        items.add(new TitleAddressSave(R.drawable.company, "Công ty"));
+        items.add(new TitleAddressSave(R.drawable.add_location, "Thêm địa điểm"));
         return items;
     }
 
+    public List<AbstractFlexibleItem> getAddressSaveItems() {
+        List<AbstractFlexibleItem>  items = new ArrayList<>();
+        items.add(new AddressSaveItem(R.drawable.address_save_default_img, "Masteri Thảo Điền", "Thảo Điền, Thủ Đức, Hồ Chí Minh"));
+        items.add(new AddressSaveItem(R.drawable.address_save_default_img, "Masteri Thảo Điền", "Thảo Điền, Thủ Đức, Hồ Chí Minh"));
+        items.add(new AddressSaveItem(R.drawable.address_save_default_img, "Masteri Thảo Điền", "Thảo Điền, Thủ Đức, Hồ Chí Minh"));
+        return items;
+    }
 
 
 }

@@ -7,6 +7,7 @@ import com.base.mvvm.ui.home_introduce.HomeIntroduceActivity;
 import com.base.mvvm.ui.home_splash.HomeSplashActivity;
 import com.base.mvvm.ui.login.LoginActivity;
 import com.base.mvvm.ui.main.MainActivity;
+import com.base.mvvm.ui.my_booking_detail.MyBookingDetailActivity;
 import com.base.mvvm.ui.signin.SignInActivity;
 import com.base.mvvm.ui.signup.SignUpActivity;
 import com.base.mvvm.ui.update_account.UpdateAccountActivity;
@@ -26,5 +27,6 @@ public interface ActivityComponent {
     void inject(UpdateAccountActivity activity);
     void inject(HomeSplashActivity activity);
     void inject(HomeIntroduceActivity activity);
+    void inject(MyBookingDetailActivity activity);
 }
 

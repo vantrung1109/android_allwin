@@ -1,20 +1,17 @@
 package com.base.mvvm.ui.fragment.activity;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
+
 import com.base.mvvm.ui.base.BaseFragmentViewModel;
-import com.base.mvvm.ui.fragment.activity.model.BookingDetail;
 import com.base.mvvm.utils.NetworkUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -63,19 +60,17 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                         showSuccessMessage("Call Api Get My Booking Successfully");
                        //listBooking.setValue(response.getData().getContent());
                         listMyBookings.setValue(response.getData().getContent());
-                        Log.d("TAG", "callApiGetMyBooking: " + response.getData().getContent());
-                        Log.e("TAG", "callApiGetMyBooking: " + listMyBookings );
+//                        Log.d("TAG", "callApiGetMyBooking: " + response.getData().getContent());
+//                        Log.e("TAG", "callApiGetMyBooking: " + listMyBookings );
                     }else{
                         showErrorMessage(response.getMessage());
                     }
                     hideLoading();
                 }, throwable -> {
+                    Log.d("TAG", "callApiGetMyBooking: " + throwable.getMessage());
                     showErrorMessage(application.getResources().getString(R.string.no_internet));
                     hideLoading();
                 }));
     }
-    public List<MyBookingResponse> getBookingDetailList() {
-        callApiGetMyBooking();
-        return listMyBookings.getValue();
-    }
+
 }

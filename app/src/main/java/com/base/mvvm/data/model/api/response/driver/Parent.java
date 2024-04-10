@@ -1,5 +1,10 @@
 package com.base.mvvm.data.model.api.response.driver;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Parent {
+public class Parent implements Serializable {
     private String createdBy;
     private String createdDate;
     private Long id;
@@ -17,4 +22,5 @@ public class Parent {
     private String name;
     private String postCode;
     private Integer status;
+
 }

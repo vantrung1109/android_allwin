@@ -1,9 +1,11 @@
 package com.base.mvvm.ui.base;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +38,7 @@ public abstract class BaseFragment<B extends ViewDataBinding, V extends BaseFrag
     @Inject
     protected String token;
     private Dialog progressDialog;
+
 
     @Nullable
     @Override
@@ -98,6 +101,15 @@ public abstract class BaseFragment<B extends ViewDataBinding, V extends BaseFrag
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
+        }
+    }
+    public void hideKeyboard() {
+        View view = this.getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
         }
     }
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/_5sdp"
+    android:background="@drawable/item_save_address_background">
+        <ImageView
+            android:id="@+id/img_title_address_save"
+            android:layout_width="@dimen/_13sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:src="@drawable/private_home"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/_7sdp"
+            />
+        <TextView
+            android:id="@+id/tv_title_address_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nhà riêng"
+            android:layout_toEndOf="@+id/img_title_address_save"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="@dimen/_11ssp"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:textStyle="bold"
+            />
+</RelativeLayout>

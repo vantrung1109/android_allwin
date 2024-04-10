@@ -5,7 +5,7 @@
     <data>
         <variable
             name="ivm"
-            type="com.base.mvvm.ui.fragment.activity.model.BookingDetail" />
+            type="com.base.mvvm.data.model.api.response.booking.MyBookingResponse" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -25,7 +25,7 @@
                 android:id="@+id/tv_create_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{ivm.createDate, default = @string/created_date_default}"
+                android:text="@{ivm.createdDate, default = @string/created_date_default}"
                 android:layout_gravity="center"
                 android:textSize="@dimen/_8ssp"
                 android:textStyle="bold"
@@ -84,7 +84,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11ssp"
                         android:textStyle="bold"
-                        android:maxLines="2"
+                        android:maxLines="1"
                         android:ellipsize="end"
                         />
 
@@ -92,12 +92,12 @@
                         android:id="@+id/tv_destination_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{ivm.destinationaAddress, default = @string/destination_address_default}"
+                        android:text="@{ivm.destinationAddress, default = @string/destination_address_default}"
                         android:fontFamily="@font/roboto_500"
                         android:textSize="@dimen/_8ssp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textStyle="bold"
-                        android:maxLines="2"
+                        android:maxLines="1"
                         android:ellipsize="end"
                         />
 

@@ -1,26 +1,20 @@
 package com.base.mvvm.ui.fragment.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.mvvm.BR;
 import com.base.mvvm.R;
 
 import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
-import com.base.mvvm.data.service.DatabaseService;
 import com.base.mvvm.databinding.FragmentActivityBinding;
 import com.base.mvvm.di.component.FragmentComponent;
 import com.base.mvvm.ui.base.BaseFragment;
-import com.base.mvvm.ui.fragment.activity.model.BookingDetail;
-import com.base.mvvm.ui.fragment.activity.model.Option;
+import com.base.mvvm.ui.my_booking_detail.MyBookingDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +24,9 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 
 
 public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityFragmentViewModel>
-
+    implements FlexibleAdapter.OnItemClickListener
 {
-    FlexibleAdapter mFlexibleAdapterBookingDetail;
+    FlexibleAdapter mFlexibleAdapterMyBooking;
     @Override
     public int getBindingVariable() {
         return BR.vm;
@@ -48,26 +42,19 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
         viewModel.showLoading();
 
-        MutableLiveData<List<BookingDetail>> liveDataListBooking = new MutableLiveData<>();
-        List<BookingDetail> listBookingDetails = new ArrayList<>();
+        List<MyBookingResponse> myBookings = new ArrayList<>();
 
         viewModel.listMyBookings.observe(getViewLifecycleOwner(), myBookingResponses -> {
-            if (myBookingResponses != null) {
-                for (MyBookingResponse booking : myBookingResponses) {
-                    listBookingDetails.add(new BookingDetail(booking.getId(), booking.getCreatedDate(), booking.getPickupAddress(), booking.getDestinationAddress(), booking.getMoney(), booking.getState()));
-                }
-            }
-            liveDataListBooking.setValue(listBookingDetails);
+            myBookings.addAll(myBookingResponses);
         });
 
-        liveDataListBooking.setValue(listBookingDetails);
-        mFlexibleAdapterBookingDetail = new FlexibleAdapter<>(listBookingDetails, this);
+        mFlexibleAdapterMyBooking = new FlexibleAdapter<>(myBookings, this);
 
-        liveDataListBooking.observe(getViewLifecycleOwner(), bookingDetails -> {
-            mFlexibleAdapterBookingDetail.updateDataSet(bookingDetails);
+        viewModel.listMyBookings.observe(getViewLifecycleOwner(), myBookingResponses -> {
+            mFlexibleAdapterMyBooking.updateDataSet(myBookings);
         });
 
-        binding.rcvBookingDetail.setAdapter(mFlexibleAdapterBookingDetail);
+        binding.rcvBookingDetail.setAdapter(mFlexibleAdapterMyBooking);
         binding.rcvBookingDetail.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
@@ -77,5 +64,19 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     }
 
 
+    @Override
+    public boolean onItemClick(View view, int i) {
+        IFlexible flexibleItem = mFlexibleAdapterMyBooking.getItem(i);
 
+        if (flexibleItem instanceof MyBookingResponse){
+            MyBookingResponse myBookingResponse = (MyBookingResponse) flexibleItem;
+            Intent intent = new Intent(getActivity(), MyBookingDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("myBookingResponse", myBookingResponse);
+            Log.e("ActivityFragment", "onItemClick: " + myBookingResponse.getDriverVehicle().getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+        return false;
+    }
 }

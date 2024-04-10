@@ -6,8 +6,8 @@ import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SignUpRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
 import com.base.mvvm.data.model.api.request.UpdateProfileRequest;
-import com.base.mvvm.data.model.api.response.booking.BookingDetail;
 import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
+
 import com.base.mvvm.data.model.api.response.customer.AccountResponse;
 import com.base.mvvm.data.model.api.response.customer.LoginResponse;
 import com.base.mvvm.data.model.api.response.customer.SigninResponse;

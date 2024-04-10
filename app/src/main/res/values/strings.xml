@@ -34,4 +34,9 @@
     <string name="money_default">50.000đ</string>
     <string name="str_completed_booking">• Hoàn thành</string>
     <string name="str_safe">Lái xe an toàn, phương tiện sạch sẽ</string>
+    <string name="str_driver_name_default">Lý Tiểu Long</string>
+    <string name="str_driver_vehicle_default">59-S2 57301</string>
+    <string name="promotion_money_default">0.000đ</string>
+    <string name="pickup_adderss_default_detail">150/17 Đinh Tiên Hoàng, Phường 26, Quận 3</string>
+    <string name="code_default">Mã: 73570</string>
 </resources>

@@ -11,6 +11,8 @@
             type="com.base.mvvm.ui.fragment.activity.ActivityFragment" />
     </data>
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

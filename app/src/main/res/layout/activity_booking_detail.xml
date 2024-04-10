@@ -5,10 +5,10 @@
     <data>
         <variable
             name="vm"
-            type="com.base.mvvm.ui.update_account.UpdateAccountViewModel" />
+            type="com.base.mvvm.ui.my_booking_detail.MyBookingDetailViewModel" />
 
         <variable name="a"
-            type="com.base.mvvm.ui.update_account.UpdateAccountActivity" />
+            type="com.base.mvvm.ui.my_booking_detail.MyBookingDetailActivity" />
         <import type="android.text.TextUtils" />
     </data>
 
@@ -61,14 +61,13 @@
                 android:layout_centerVertical="true"
                 android:layout_marginTop="@dimen/_20sdp"
                 app:cardCornerRadius="@dimen/_45sdp"
-                android:onClickListener="@{(v)-> a.getNewAvatar()}"
                 android:layout_marginStart="@dimen/_30sdp"
                 >
                 <ImageView
                     android:id="@+id/imgAvatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@{vm.profile.avatar, default = @drawable/background_account}"
+                    android:src="@{vm.myBooking.driver.avatar, default = @drawable/background_account}"
                     android:scaleType="fitXY"
                     />
             </androidx.cardview.widget.CardView>
@@ -86,30 +85,36 @@
                     android:id="@+id/tv_driver_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lý Tiểu Long"
+                    android:text="@={vm.myBooking.driver.fullName, default = @string/str_driver_name_default}"
                     android:textSize="@dimen/_13ssp"
                     android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:id="@+id/tv_driver_vehicle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Honda SH Mode"
+                    android:text="@{vm.myBooking.driverVehicle.name, default = @string/str_driver_vehicle_default}"
                     android:textSize="@dimen/_9ssp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_medium"
-                    android:layout_marginTop="@dimen/_3sdp"/>
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:id="@+id/tv_plate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="59-S2 57301"
+                    android:text="@{vm.myBooking.driverVehicle.plate, default = @string/str_driver_vehicle_default}"
                     android:textSize="@dimen/_9ssp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_medium"
-                    android:layout_marginTop="@dimen/_3sdp"/>
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textStyle="bold"
+                    />
 
             </LinearLayout>
         </RelativeLayout>
@@ -124,7 +129,9 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:layout_below="@+id/layout_driver"
-            android:layout_marginTop="@dimen/_15sdp"/>
+            android:layout_marginTop="@dimen/_15sdp"
+            android:textStyle="bold"
+            />
 
         <LinearLayout
             android:id="@+id/layout_star"
@@ -159,8 +166,6 @@
                 android:layout_height="@dimen/_25sdp"
                 android:src="@drawable/star"
                 android:layout_marginEnd="@dimen/_10sdp"/>
-
-            
         </LinearLayout>
 
         <TextView
@@ -173,6 +178,7 @@
             android:textColor="@color/black"
             android:layout_below="@+id/layout_star"
             android:layout_marginTop="@dimen/_15sdp"
+            android:textStyle="bold"
             />
 
         <View
@@ -200,6 +206,8 @@
                 android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_15ssp"
                 android:textColor="@color/black"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:textStyle="bold"
                 />
 
             <RelativeLayout
@@ -222,7 +230,7 @@
                     android:id="@+id/tv_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50.000đ"
+                    android:text="@{String.valueOf(vm.myBooking.money), default = @string/money_default}"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="@dimen/_11ssp"
                     android:textColor="@color/black"
@@ -248,7 +256,7 @@
                     android:id="@+id/tv_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0.000đ"
+                    android:text="@{String.valueOf(vm.myBooking.promotionMoney), default = @string/promotion_money_default}"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="@dimen/_11ssp"
                     android:textColor="@color/black"
@@ -282,11 +290,12 @@
                     android:id="@+id/tv_sum_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50.000đ"
+                    android:text="@{String.valueOf(vm.myBooking.promotionMoney - vm.myBooking.money), default = @string/promotion_money_default}"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="@dimen/_11ssp"
                     android:textColor="@color/black"
                     android:layout_alignParentEnd="true"
+                    android:textStyle="bold"
                     />
 
             </RelativeLayout>
@@ -318,11 +327,12 @@
                 android:textSize="@dimen/_15ssp"
                 android:textColor="@color/black"
                 android:layout_centerVertical="true"
-
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textStyle="bold"
                 />
             <RelativeLayout
                 android:id="@+id/layout_code"
-
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp">
@@ -331,21 +341,23 @@
                 android:id="@+id/tv_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mã: 73570"
+                android:text="@{vm.myBooking.code, default =@string/code_default}"
                 android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_11ssp"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 />
             <TextView
                 android:id="@+id/tv_create_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/created_date_default"
+                android:text="@{vm.myBooking.createdDate, default = @string/created_date_default}"
                 android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_11ssp"
                 android:textColor="@color/black"
                 android:layout_toEndOf="@id/tv_code"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:textStyle="bold"
                 />
             </RelativeLayout>
 
@@ -371,18 +383,21 @@
                     android:textColor="#898A8D"
                     android:layout_toEndOf="@id/image_plane"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:textStyle="bold"
                     />
                 <TextView
                     android:id="@+id/tv_pickup_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="150/17 Đinh Tiên Hoàng, Phường 26, Quận 3"
+                    android:text="@{vm.myBooking.pickupAddress, default =@string/pickup_adderss_default_detail}"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="@dimen/_11ssp"
                     android:textColor="@color/black"
                     android:layout_toEndOf="@id/image_plane"
                     android:layout_below="@+id/tv_address_text"
-                    android:layout_marginStart="@dimen/_10sdp"/>
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    />
 
             </RelativeLayout>
 
@@ -408,22 +423,22 @@
                     android:textColor="#898A8D"
                     android:layout_toEndOf="@id/image_flag"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:textStyle="bold"
                     />
                 <TextView
                     android:id="@+id/tv_destination_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="150/17 Đinh Tiên Hoàng, Phường 26, Quận 3"
+                    android:text="@{vm.myBooking.destinationAddress, default =@string/pickup_adderss_default_detail}"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="@dimen/_11ssp"
                     android:textColor="@color/black"
                     android:layout_toEndOf="@id/image_flag"
                     android:layout_below="@+id/tv_destination_address_text"
-                    android:layout_marginStart="@dimen/_10sdp"/>
-
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    />
             </RelativeLayout>
-
-
 
         </LinearLayout>
 
@@ -441,10 +456,9 @@
             android:text="Đã hoàn thành"
             android:gravity="center"
             android:textSize="@dimen/_15ssp"
-            android:textColor="@color/btn_completed_booking"
+            android:textColor="@color/text_completed_booking"
             android:clickable="true"
             android:id="@+id/btn_update"
-            android:onClick="@{(v)-> a.uploadFile()}"
             android:fontFamily="@font/roboto_bold"
             android:textStyle="bold"
             android:layout_marginBottom="@dimen/_20sdp"

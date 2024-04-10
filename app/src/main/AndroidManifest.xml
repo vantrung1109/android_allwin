@@ -65,6 +65,8 @@
         </activity>
         <activity android:name=".ui.home_introduce.HomeIntroduceActivity"
             android:exported="true"/>
+        <activity android:name=".ui.my_booking_detail.MyBookingDetailActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
