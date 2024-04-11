@@ -99,6 +99,7 @@
                         android:textColor="@color/black"
                         android:background="@null"
                         android:textStyle="bold"
+                        android:onTextChanged="@{() -> a.check_rcv()}"
                         />
                     <ImageView
                         android:id="@+id/delete_edit_pickup_address"

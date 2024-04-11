@@ -5,6 +5,7 @@ package com.base.mvvm.ui.fragment.home;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -82,13 +83,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (binding.editPickupAddress.hasFocus() || binding.editDestinationAddress.hasFocus()) {
-                    binding.layoutSaveAddress.setVisibility(View.GONE);
-                    binding.rcvItemAddressSave.setVisibility(View.VISIBLE);
-                } else {
-                    binding.layoutSaveAddress.setVisibility(View.VISIBLE);
-                    binding.rcvItemAddressSave.setVisibility(View.GONE);
-                }
+                check_rcv();
             }
 
             @Override
@@ -106,6 +101,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
             binding.rcvItemAddressSave.setVisibility(View.GONE);
         });
 
+    }
+
+    public void check_rcv() {
+        if (binding.editPickupAddress.hasFocus() || binding.editDestinationAddress.hasFocus()) {
+            binding.layoutSaveAddress.setVisibility(View.GONE);
+            binding.rcvItemAddressSave.setVisibility(View.VISIBLE);
+        } else {
+            binding.layoutSaveAddress.setVisibility(View.VISIBLE);
+            binding.rcvItemAddressSave.setVisibility(View.GONE);
+        }
     }
 
     @Override

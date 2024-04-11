@@ -2,6 +2,7 @@ package com.base.mvvm.data.remote;
 
 import com.base.mvvm.data.model.api.ResponseListObj;
 import com.base.mvvm.data.model.api.ResponseWrapper;
+import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
 import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SignUpRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
@@ -55,5 +56,11 @@ public interface ApiService {
                                                                                  @Query("page") Integer pageNumber,
                                                                                  @Query("size") Integer pageSize,
                                                                                  @Query("state") Integer state);
+
+    @GET("place/queryautocomplete/json")
+    @Headers({"isSearchPlaces: 1"})
+    Observable<SearchPlaceApi> getSearchPlacesGG(@Query("input") String input,
+                                           @Query("key") String key);
+
 
 }

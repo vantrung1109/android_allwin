@@ -18,6 +18,7 @@ android {
 
         buildConfigField "String", "MEDIA_URL", "\"https://org-media-template.developteam.net/\""
         buildConfigField "String", "BASE_URL", "\"https://ww-user-api.developteam.net/\""
+        buildConfigField "String", "GGAPI_URL", "\"https://maps.googleapis.com/maps/api/\""
 
     }
 

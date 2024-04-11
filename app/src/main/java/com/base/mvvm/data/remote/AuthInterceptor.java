@@ -40,13 +40,13 @@ public class AuthInterceptor implements Interceptor {
             newRequest.removeHeader("IgnoreAuth");
             return chain.proceed(newRequest.build());
         }
-
         //Add Authentication
         newRequest = chain.request().newBuilder();
         String token = appPreferences.getToken();
         if (token != null && !token.equals("")) {
             newRequest.addHeader("Authorization", "Bearer " + token);
         }
+
 
         Response origResponse = chain.proceed(newRequest.build());
         if (origResponse.code() == 403 || origResponse.code() == 401) {
@@ -67,6 +67,22 @@ public class AuthInterceptor implements Interceptor {
             newRequest.removeHeader("isMedia");
             return chain.proceed(newRequest.url(builder.toString()).build());
         }
+
+        String isSearchPlaces = chain.request().header("isSearchPlaces");
+        if(isSearchPlaces != null && isSearchPlaces.equals("1")){
+            StringBuilder builder = new StringBuilder(BuildConfig.GGAPI_URL);
+            for (String seg: chain.request().url().pathSegments()) {
+                builder.append(seg).append('/');
+            }
+            builder.deleteCharAt(builder.length()-1);
+            builder.append('?');
+            builder.append(chain.request().url().query());
+            newRequest.removeHeader("isSearchPlaces");
+            return chain.proceed(newRequest.url(builder.toString()).build());
+        }
+
         return origResponse;
+
+
     }
 }
