@@ -104,9 +104,9 @@ public abstract class BaseFragment<B extends ViewDataBinding, V extends BaseFrag
         }
     }
     public void hideKeyboard() {
-        View view = this.getActivity().getCurrentFocus();
+        View view = requireActivity().getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager) this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) this.requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm != null) {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }

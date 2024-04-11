@@ -40,7 +40,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     @Override
     protected void performDataBinding() {
 
-        viewModel.showLoading();
+        viewModel.callApiGetMyBooking();
 
         List<MyBookingResponse> myBookings = new ArrayList<>();
 

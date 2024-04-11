@@ -24,7 +24,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     public ActivityFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-        callApiGetMyBooking();
     }
     FlexibleAdapter mFlexibleAdapterOption;
     FlexibleAdapter mFlexibleAdapterBookingDetail;
@@ -33,8 +32,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
 
 
     public void callApiGetMyBooking(){
-
-
+        showLoading();
         compositeDisposable.add(repository.getApiService().getMyBooking(
                         null,
                         null,

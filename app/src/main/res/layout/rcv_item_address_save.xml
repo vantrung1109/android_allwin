@@ -18,31 +18,31 @@
 
             />
         <TextView
-            android:id="@+id/tv_pickup_address"
+            android:id="@+id/tv_pickup_address_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Masteri Thảo Điền"
-
-
 
             android:layout_toEndOf="@+id/img_item_address_save"
             android:fontFamily="@font/roboto_bold"
             android:layout_marginStart="@dimen/_7sdp"
             android:textSize="@dimen/_11ssp"
             android:textColor="@color/black"
+            android:textStyle="bold"
             />
 
         <TextView
-            android:id="@+id/tv_destination_dress"
+            android:id="@+id/tv_destination_dress_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Thảo Điền, Thủ Đức, Hồ Chí Minh"
             android:layout_toEndOf="@+id/img_item_address_save"
-            android:layout_below="@id/tv_pickup_address"
+            android:layout_below="@id/tv_pickup_address_item"
             android:fontFamily="@font/roboto_medium"
             android:layout_marginStart="@dimen/_7sdp"
             android:textColor="#898A8D"
             android:layout_marginTop="@dimen/_5sdp"
+            android:textStyle="bold"
             />
     </RelativeLayout>
 

@@ -22,7 +22,7 @@ public class BaseFragmentViewModel extends ViewModel {
 
 
 
-    public CompositeDisposable compositeDisposable;
+    protected CompositeDisposable compositeDisposable;
 
     @Setter
     protected String token;

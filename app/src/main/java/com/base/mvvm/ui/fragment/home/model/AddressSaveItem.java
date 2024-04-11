@@ -62,9 +62,9 @@ public class AddressSaveItem extends AbstractFlexibleItem<AddressSaveItem.Addres
         TextView tvPickUpAddress, tvDestinationAddress;
         public AddressSaveItemViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            img = view.findViewById(R.id.img_title_address_save);
-            tvPickUpAddress = view.findViewById(R.id.tv_pickup_address);
-            tvDestinationAddress = view.findViewById(R.id.tv_destination_address);
+            img = view.findViewById(R.id.img_item_address_save);
+            tvPickUpAddress = view.findViewById(R.id.tv_pickup_address_item);
+            tvDestinationAddress = view.findViewById(R.id.tv_destination_dress_item);
         }
     }
 
