@@ -2,7 +2,7 @@ package com.base.mvvm.data.service;
 
 import com.base.mvvm.R;
 
-import com.base.mvvm.ui.fragment.home.model.AddressSaveItem;
+import com.base.mvvm.data.model.api.api_search.Prediction;
 import com.base.mvvm.ui.fragment.home.model.TitleAddressSave;
 
 import java.util.ArrayList;
@@ -41,13 +41,8 @@ public class DatabaseService {
         return items;
     }
 
-    public List<AbstractFlexibleItem> getAddressSaveItems() {
-        List<AbstractFlexibleItem>  items = new ArrayList<>();
-        items.add(new AddressSaveItem(R.drawable.address_save_default_img, "Masteri Thảo Điền", "Thảo Điền, Thủ Đức, Hồ Chí Minh"));
-        items.add(new AddressSaveItem(R.drawable.address_save_default_img, "Masteri Thảo Điền", "Thảo Điền, Thủ Đức, Hồ Chí Minh"));
-        items.add(new AddressSaveItem(R.drawable.address_save_default_img, "Masteri Thảo Điền", "Thảo Điền, Thủ Đức, Hồ Chí Minh"));
-        return items;
-    }
+
+
 
 
 }

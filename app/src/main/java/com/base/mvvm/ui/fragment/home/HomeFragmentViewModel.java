@@ -3,10 +3,12 @@ package com.base.mvvm.ui.fragment.home;
 import android.util.Log;
 
 import androidx.databinding.ObservableField;
+import androidx.lifecycle.MutableLiveData;
 
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
+import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
 import com.base.mvvm.ui.base.BaseFragmentViewModel;
 import com.base.mvvm.utils.NetworkUtils;
 
@@ -18,15 +20,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeFragmentViewModel extends BaseFragmentViewModel {
 
-    ObservableField<Boolean> isFocusEditText = new ObservableField<>();
+
+    public MutableLiveData<SearchPlaceApi> objectSearchPlaces = new MutableLiveData<>();
     public HomeFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-
     }
 
-    public void onFocusEditText(boolean isFocus) {
-        isFocusEditText.set(!isFocus);
-    }
 
     public void onBackClick() {
         application.getCurrentActivity().finish();
@@ -34,7 +33,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
 
     public void getSearchPlaces(String text){
         compositeDisposable.add(repository.getApiService().getSearchPlacesGG(
-                        text + "Việt Nam",
+                        text + " Việt Nam",
                         "AIzaSyAQWUevZCTLaVd9a1Z2WEA2_e2gO9iW8rU")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -53,6 +52,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                 .subscribe(response -> {
                     if(response.getStatus().equals("OK")){
                         showSuccessMessage("Call Api Get My Booking Successfully");
+                        objectSearchPlaces.setValue(response);
                     }else{
                         showErrorMessage(response.getStatus());
                     }

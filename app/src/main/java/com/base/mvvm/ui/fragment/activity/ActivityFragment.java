@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -47,13 +48,10 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         viewModel.listMyBookings.observe(getViewLifecycleOwner(), myBookingResponses -> {
             myBookings.addAll(myBookingResponses);
         });
-
         mFlexibleAdapterMyBooking = new FlexibleAdapter<>(myBookings, this);
-
         viewModel.listMyBookings.observe(getViewLifecycleOwner(), myBookingResponses -> {
             mFlexibleAdapterMyBooking.updateDataSet(myBookings);
         });
-
         binding.rcvBookingDetail.setAdapter(mFlexibleAdapterMyBooking);
         binding.rcvBookingDetail.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
