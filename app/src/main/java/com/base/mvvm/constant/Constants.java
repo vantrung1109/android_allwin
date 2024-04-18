@@ -23,10 +23,13 @@ public class Constants {
     public static final String KEY_USER_ADDRESS_POS = "userAddressPos";
     public static final String BLANK_FRAGMENT = "blank fragment";
     public static final String ACCOUNT_FRAGMENT = "account fragment";
-    public static final String TENANT_FRAGMENT = "tenant fragment";
+
     public static final String ONLINE_PAYPAL = "ONLINE_PAYPAL";
     public static final String OFFLINE_CARD = "OFFLINE_CARD";
     public static final String OFFLINE_CASH = "OFFLINE_CASH";
+    public static final String FAVOURITE_FRAGMENT = "favourite fragment";
+    public static final String ACTIVITY_FRAGMENT = "activity fragment";
+    public static final String HOME_FRAGMENT = "home fragment";
 
     private Constants(){
 

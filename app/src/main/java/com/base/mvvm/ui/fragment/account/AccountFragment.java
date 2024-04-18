@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import androidx.databinding.Observable;
 
 import com.base.mvvm.BR;
 import com.base.mvvm.R;
@@ -32,6 +35,12 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding, Accoun
 
     @Override
     protected void performDataBinding() {
+//        viewModel.callApiGetProfile();
+        showProgressbar("Profile Loading...");
+        viewModel.showLoading();
+
+
+
     }
     @Override
     protected void performDependencyInjection(FragmentComponent buildComponent) {

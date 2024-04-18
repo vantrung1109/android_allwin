@@ -68,6 +68,10 @@
         <item name="android:focusable">true</item>
         <item name="android:background">@drawable/edit_txt_custom</item>
     </style>
-
+    <style name="AppCommonText">
+        <item name="fontFamily"> @font/roboto_medium </item>
+        <item name="android:fontFamily"> @font/roboto_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
 </resources>

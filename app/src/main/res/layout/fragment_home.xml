@@ -84,15 +84,15 @@
                     />
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_18sdp"
+                    android:layout_height="@dimen/_19sdp"
                     android:layout_toEndOf="@id/image_plane"
                     android:layout_below="@+id/tv_address_text"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_3sdp">
                     <EditText
                         android:id="@+id/edit_pickup_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_220sdp"
+                        android:layout_height="@dimen/_19sdp"
                         android:text="150/17 Đinh Tiên Hoàng, Phường 26, Quận 3"
                         android:fontFamily="@font/roboto_medium"
                         android:textSize="@dimen/_11ssp"
@@ -100,6 +100,8 @@
                         android:background="@null"
                         android:textStyle="bold"
                         android:onTextChanged="@{() -> a.check_rcv()}"
+                        android:inputType="textShortMessage"
+
                         />
                     <ImageView
                         android:id="@+id/delete_edit_pickup_address"
@@ -143,8 +145,8 @@
 
                 <EditText
                     android:id="@+id/edit_destination_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_220sdp"
+                    android:layout_height="@dimen/_19sdp"
                     android:text="150/17 Đinh Tiên Hoàng, Phường 26, Quận 3"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="@dimen/_11ssp"
@@ -154,6 +156,7 @@
                     android:background="@null"
                     android:textStyle="bold"
                     android:layout_centerVertical="true"
+                    android:inputType="textShortMessage"
                     />
                 <ImageView
                     android:id="@+id/delete_edit_destination_address"
@@ -245,10 +248,11 @@
             android:textSize="@dimen/_15ssp"
             android:textColor="@color/white"
             android:clickable="true"
-            android:id="@+id/btn_update"
+            android:id="@+id/btn_continue"
             android:fontFamily="@font/roboto_bold"
             android:textStyle="bold"
             android:layout_marginBottom="@dimen/_20sdp"
+            android:onClick="@{(v)-> vm.doContinue()}"
             />
 
     </RelativeLayout>

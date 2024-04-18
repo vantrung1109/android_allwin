@@ -40,13 +40,8 @@ public class UpdateAccountViewModel extends BaseViewModel {
 //    }
 //    public void updateProfile( ){
 //        showLoading();
-//        UpdateProfileRequest request = new UpdateProfileRequest();
-//        request.setName(profile.get().getName());
-//        request.setEmail(profile.get().getEmail());
-//        request.setNewPassword(password.get());
-//        request.setOldPassword(password.get());
-//        Log.e("updateProfile: ", request.toString());
-//        compositeDisposable.add(repository.getApiService().updateProfile(request)
+//
+//        compositeDisposable.add(repository.getApiService().updateProfile()
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .retryWhen(throwable ->
@@ -77,6 +72,42 @@ public class UpdateAccountViewModel extends BaseViewModel {
 //    }
 
 
+
+    public void updateProfileSimple(){
+        showLoading();
+
+        compositeDisposable.add(repository.getApiService().updateProfile(
+                new UpdateProfileRequest(profile.get().getAvatar(),
+                        profile.get().getName(),
+                        password.get(),
+                        password.get()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(throwable ->
+                        throwable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+                            @Override
+                            public ObservableSource<?> apply(Throwable throwable) throws Throwable {
+                                if (NetworkUtils.checkNetworkError(throwable)) {
+                                    return application.showDialogNoInternetAccess();
+                                }else{
+                                    return Observable.error(throwable);
+                                }
+                            }
+                        })
+                )
+                .subscribe(response -> {
+                    if(response.isResult()){
+                        showSuccessMessage("Update Profile Successfully");
+                    }else{
+                        showErrorMessage(response.getMessage());
+                    }
+                    hideLoading();
+                }, throwable -> {
+                    showErrorMessage(application.getResources().getString(R.string.no_internet));
+                    hideLoading();
+                })
+        );
+    }
     public Observable<ResponseWrapper<String>> updateProfile(UpdateProfileRequest request){
         return repository.getApiService().updateProfile(request);
     }
@@ -90,7 +121,7 @@ public class UpdateAccountViewModel extends BaseViewModel {
     }
 
     public void onBack(){
-        application.startActivity(new Intent(application, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        application.getCurrentActivity().finish();
     }
     public void getProfileFromApi(){
         showLoading();

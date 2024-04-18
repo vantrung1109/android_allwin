@@ -1,5 +1,7 @@
 package com.base.mvvm.data.remote;
 
+import android.app.Service;
+
 import com.base.mvvm.data.model.api.ResponseListObj;
 import com.base.mvvm.data.model.api.ResponseWrapper;
 import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
@@ -13,6 +15,9 @@ import com.base.mvvm.data.model.api.response.customer.AccountResponse;
 import com.base.mvvm.data.model.api.response.customer.LoginResponse;
 import com.base.mvvm.data.model.api.response.customer.SigninResponse;
 import com.base.mvvm.data.model.api.response.customer.UploadFileResponse;
+import com.base.mvvm.data.model.api.response.service.ServiceResponse;
+
+import java.io.Serializable;
 
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.MultipartBody;
@@ -62,5 +67,7 @@ public interface ApiService {
     Observable<SearchPlaceApi> getSearchPlacesGG(@Query("input") String input,
                                            @Query("key") String key);
 
+    @GET("v1/user-service/auto-complete")
+    Observable<ResponseWrapper<ResponseListObj<ServiceResponse>>> getServices();
 
 }

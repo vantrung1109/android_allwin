@@ -29,15 +29,17 @@ import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AccountFragmentViewModel extends BaseFragmentViewModel {
-
+    public ObservableField<Boolean> isShowPassWord = new ObservableField<>(false);
     public ObservableField<AccountResponse> profile = new ObservableField<>(new AccountResponse());
     public AccountFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
         callApiGetProfile();
+
+    }
+    public void showPassword(){
+        isShowPassWord.set(!isShowPassWord.get());
     }
     public void callApiGetProfile(){
-
-        showLoading();
 
         compositeDisposable.add(repository.getApiService().profile2()
                 .subscribeOn(Schedulers.io())
@@ -69,6 +71,13 @@ public class AccountFragmentViewModel extends BaseFragmentViewModel {
                     hideLoading();
                 }));
     }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+        Log.e("BaseFragment", "Account");
+    }
+
     public void goToUpdateAccount(){
         Intent intent = new Intent(application, UpdateAccountActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

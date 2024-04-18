@@ -1,6 +1,5 @@
 package com.base.mvvm.ui.fragment.home;
 
-import android.content.Intent;
 import android.util.Log;
 
 import androidx.databinding.ObservableField;
@@ -9,9 +8,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
-import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
-import com.base.mvvm.ui.base.BaseFragmentViewModel;
+import com.base.mvvm.data.model.api.response.service.ServiceResponse;
+import com.base.mvvm.ui.base.BaseViewModel;
 import com.base.mvvm.utils.NetworkUtils;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -19,24 +20,16 @@ import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class HomeFragmentViewModel extends BaseFragmentViewModel {
-
-
-    public MutableLiveData<SearchPlaceApi> objectSearchPlaces = new MutableLiveData<>();
-    public HomeFragmentViewModel(Repository repository, MVVMApplication application) {
+public class MapViewModel extends BaseViewModel {
+    public MutableLiveData<List<ServiceResponse>> listServices = new MutableLiveData<>();
+    public MapViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-
+        getServices();
     }
 
-
-    public void onBackClick() {
-        application.getCurrentActivity().finish();
-    }
-
-    public void getSearchPlaces(String text){
-        compositeDisposable.add(repository.getApiService().getSearchPlacesGG(
-                        text + " Việt Nam",
-                        "AIzaSyAQWUevZCTLaVd9a1Z2WEA2_e2gO9iW8rU")
+    public void getServices(){
+        showLoading();
+        compositeDisposable.add(repository.getApiService().getServices()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(throwable ->
@@ -52,11 +45,11 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                         })
                 )
                 .subscribe(response -> {
-                    if(response.getStatus().equals("OK")){
-                        //showSuccessMessage("Call Api Get My Booking Successfully");
-                        objectSearchPlaces.setValue(response);
+                    if(response.isResult()){
+                        showSuccessMessage("Call Api Get services successfully!");
+                        listServices.setValue(response.getData().getContent());
                     }else{
-                        showErrorMessage(response.getStatus());
+                        showErrorMessage(response.getMessage());
                     }
                     hideLoading();
                 }, throwable -> {
@@ -64,10 +57,5 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                     showErrorMessage(application.getResources().getString(R.string.no_internet));
                     hideLoading();
                 }));
-    }
-    public void  doContinue(){
-        Intent intent = new Intent(application, MapActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        application.startActivity(intent);
     }
 }

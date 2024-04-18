@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BaseMVVM</string>
     <string name="msg_loading">Please wait...</string>
+    <string name="str_api_key">AIzaSyAQWUevZCTLaVd9a1Z2WEA2_e2gO9iW8rU</string>
 
     <!--Network error-->
     <string name="newtwork_error">No internet connection, please check your connection.</string>

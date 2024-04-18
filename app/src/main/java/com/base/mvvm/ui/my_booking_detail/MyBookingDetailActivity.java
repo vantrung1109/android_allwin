@@ -10,12 +10,13 @@ import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 import com.base.mvvm.databinding.ActivityBookingDetailBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
+import com.base.mvvm.utils.DisplayUtils;
 
 import java.io.Serializable;
 
 import eu.davidea.flexibleadapter.databinding.BR;
 
-public class MyBookingDetailActivity extends BaseActivity<ActivityBookingDetailBinding, MyBookingDetailViewModel>{
+public class MyBookingDetailActivity extends BaseActivity<ActivityBookingDetailBinding, MyBookingDetailViewModel> {
     @Override
     public int getLayoutId() {
         return R.layout.activity_booking_detail;
@@ -49,26 +50,28 @@ public class MyBookingDetailActivity extends BaseActivity<ActivityBookingDetailB
             //viewBinding.imgAvatar.setImageResource(myBookingResponse.getDriver().getAvatar());
             viewBinding.tvDriverVehicle.setText(myBookingResponse.getDriverVehicle().getName());
             viewBinding.tvPlate.setText(myBookingResponse.getDriverVehicle().getPlate());
-            viewBinding.tvMoney.setText(myBookingResponse.getMoney().toString());
-            viewBinding.tvDiscount.setText(myBookingResponse.getPromotionMoney().toString());
+            viewBinding.tvMoney.setText(DisplayUtils.custom_money(myBookingResponse.getMoney()));
+            viewBinding.tvDiscount.setText(DisplayUtils.custom_money(myBookingResponse.getPromotionMoney()));
             viewBinding.tvCreateDate.setText(myBookingResponse.getCreatedDate());
             viewBinding.tvPickupAddress.setText(myBookingResponse.getPickupAddress());
             viewBinding.tvDestinationAddress.setText(myBookingResponse.getDestinationAddress());
-            viewBinding.tvCode.setText("Mã:" + myBookingResponse.getCode());
+            viewBinding.tvCode.setText("Mã: " + myBookingResponse.getCode());
+            viewBinding.tvSumMoney.setText(DisplayUtils.custom_money(myBookingResponse.getMoney() - myBookingResponse.getPromotionMoney()));
 
-//            if (myBookingResponse != null) {
-//                viewModel.myBooking.get().setDriver(myBookingResponse.getDriver());
-//                viewModel.myBooking.get().setDriverVehicle(myBookingResponse.getDriverVehicle());
-//
-//                viewModel.myBooking.get().setMoney(myBookingResponse.getMoney());
-//                viewModel.myBooking.get().setPromotionMoney(myBookingResponse.getPromotionMoney());
-//                viewModel.myBooking.get().setCreatedDate(myBookingResponse.getCreatedDate());
-//                viewModel.myBooking.get().setCode(myBookingResponse.getCode());
-//
-//                viewModel.myBooking.get().setPickupAddress(myBookingResponse.getPickupAddress());
-//                viewModel.myBooking.get().setDestinationAddress(myBookingResponse.getDestinationAddress());
+            if (myBookingResponse.getState() == 300) {
+                viewBinding.tvState.setText("Đã hoàn thành");
+                viewBinding.tvState.setBackground(getResources().getDrawable(R.drawable.bg_state_completed_booking, null));
+                viewBinding.tvState.setTextColor(getResources().getColor(R.color.completed_booking, null));
+            } else if (myBookingResponse.getState() == -100) {
+                viewBinding.tvState.setText("Đã hủy");
+                viewBinding.tvState.setBackground(getResources().getDrawable(R.drawable.bg_state_cancel_booking, null));
+                viewBinding.tvState.setTextColor(getResources().getColor(R.color.text_state_cancel, null));
             } else {
-
+                viewBinding.tvState.setText("Đang xử lý");
+                viewBinding.tvState.setBackground(getResources().getDrawable(R.drawable.bg_state_processing_booking, null));
+                viewBinding.tvState.setTextColor(getResources().getColor(R.color.processing_booking, null));
             }
+
         }
     }
+}

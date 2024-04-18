@@ -2,6 +2,7 @@ package com.base.mvvm.ui.base;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ public abstract class BaseFragment<B extends ViewDataBinding, V extends BaseFrag
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (((ObservableBoolean) sender).get()) {
+
                     showProgressbar(getResources().getString(R.string.msg_loading));
                 } else {
                     hideProgress();

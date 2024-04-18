@@ -20,4 +20,11 @@
     <color name="processing_booking">#E3CF23</color>
     <color name="btn_completed_booking">#DCFFED</color>
     <color name="text_completed_booking">#0FA958</color>
+    <color name="bg_state_cancel">#FFDDDD</color>
+    <color name="text_state_cancel">#FF0000</color>
+    <color name="bg_state_processing">#F6F0C3</color>
+    <color name="text_state_processing">#E3CF23</color>
+    <color name="vehicle_focus">#EFF8E2</color>
+    <color name="stroke_vehicle_focus">#7EA567</color>
+
 </resources>

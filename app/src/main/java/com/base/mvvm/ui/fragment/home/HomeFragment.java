@@ -133,6 +133,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
         if (binding.editPickupAddress.hasFocus() || binding.editDestinationAddress.hasFocus()) {
             binding.layoutSaveAddress.setVisibility(View.GONE);
             binding.rcvItemAddressSave.setVisibility(View.VISIBLE);
+            binding.btnContinue.setVisibility(View.GONE);
             if (binding.editPickupAddress.hasFocus()){{
                 viewModel.getSearchPlaces(binding.editPickupAddress.getText().toString());
             }}
@@ -145,6 +146,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
         } else {
             binding.layoutSaveAddress.setVisibility(View.VISIBLE);
             binding.rcvItemAddressSave.setVisibility(View.GONE);
+            binding.btnContinue.setVisibility(View.VISIBLE);
         }
     }
 
@@ -165,10 +167,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
             Prediction prediction = (Prediction) flexibleItem;
             if (binding.editPickupAddress.hasFocus()){
                 binding.editPickupAddress.setText(prediction.getDescription());
+
             }
             else{
                 binding.editDestinationAddress.setText(prediction.getDescription());
             }
+            binding.btnContinue.setVisibility(View.VISIBLE);
             binding.layoutSaveAddress.setVisibility(View.VISIBLE);
             binding.rcvItemAddressSave.setVisibility(View.GONE);
             hideKeyboard();

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingDetail implements Serializable {
+public class  BookingDetail implements Serializable {
     private Long id;
     private DriverProfileResponse driver;
     private CustomerProfileResponse customer;

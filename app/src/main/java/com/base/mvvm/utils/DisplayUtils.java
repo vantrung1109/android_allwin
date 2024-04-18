@@ -46,4 +46,21 @@ public class DisplayUtils {
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE); // 隐藏软键盘
         immHide.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+    public static String custom_money(Double money) {
+        int custom_money = money.intValue();
+        String custom_money_string = "";
+        while (custom_money / 1000 != 0){
+            int temp =  custom_money % 1000;
+            if (temp < 10){
+                custom_money_string = ".00" + String.valueOf(temp) + custom_money_string;
+            } else if (temp < 100){
+                custom_money_string = ".0" + String.valueOf(temp) + custom_money_string;
+            } else {
+                custom_money_string = "." + String.valueOf(temp) + custom_money_string;
+            }
+            custom_money = custom_money / 1000;
+        }
+        custom_money_string = String.valueOf(custom_money) + custom_money_string + "đ";
+        return custom_money_string;
+    }
 }

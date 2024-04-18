@@ -1,6 +1,7 @@
 package com.base.mvvm.utils;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,33 +15,27 @@ import com.base.mvvm.ui.fragment.home.HomeFragment;
 
 
 public class MyViewPager2Adapter extends FragmentStateAdapter {
-    Bundle bundle;
 
     public MyViewPager2Adapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-    }
-    public MyViewPager2Adapter(@NonNull FragmentActivity fragmentActivity, Bundle bundle) {
-        super(fragmentActivity);
-        this.bundle = bundle;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int i) {
         switch (i) {
-            case 0:
-                return new HomeFragment();
             case 1:
+                Log.e("MyViewPager2Adapter", "createFragment: ActivityFragment" + i);
                 return new ActivityFragment();
-            case 2:
-                return new FavouriteFragment();
-            case 3:{
-                AccountFragment accountFragment = new AccountFragment();
-//                accountFragment.setArguments(bundle);
-                return accountFragment;
-            }
 
+            case 2:
+                Log.e("MyViewPager2Adapter", "createFragment: FavouriteFragment" + i);
+                return new FavouriteFragment();
+            case 3:
+                Log.e("MyViewPager2Adapter", "createFragment: AccountFragment" + i);
+                return new AccountFragment();
             default:
+                Log.e("MyViewPager2Adapter", "createFragment: HomeFragment" + i);
                 return new HomeFragment();
         }
     }
@@ -49,4 +44,5 @@ public class MyViewPager2Adapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 4;
     }
+
 }

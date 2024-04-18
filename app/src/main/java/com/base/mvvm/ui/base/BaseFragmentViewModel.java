@@ -1,5 +1,7 @@
 package com.base.mvvm.ui.base;
 
+import android.util.Log;
+
 import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -19,8 +21,6 @@ public class BaseFragmentViewModel extends ViewModel {
     protected final MVVMApplication application;
     protected final MutableLiveData<ToastMessage> mErrorMessage = new MutableLiveData<>();
     protected final ObservableBoolean mIsLoading = new ObservableBoolean();
-
-
 
     protected CompositeDisposable compositeDisposable;
 
@@ -56,6 +56,7 @@ public class BaseFragmentViewModel extends ViewModel {
     }
 
     public void showLoading() {
+
         mIsLoading.set(true);
     }
 

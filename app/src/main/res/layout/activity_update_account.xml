@@ -240,10 +240,10 @@
             android:textColor="#FFFFFF"
             android:clickable="true"
             android:id="@+id/btn_update"
-            android:onClick="@{(v)-> a.uploadFile()}"
+            android:onClick="@{(v)-> vm.updateProfileSimple()}"
             android:fontFamily="@font/roboto_bold"
             android:textStyle="bold"
-
+            android:layout_marginBottom="@dimen/_10sdp"
             />
 
     </RelativeLayout>

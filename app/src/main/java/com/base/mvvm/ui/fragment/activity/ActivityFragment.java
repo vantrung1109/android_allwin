@@ -1,9 +1,12 @@
 package com.base.mvvm.ui.fragment.activity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +43,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
     @Override
     protected void performDataBinding() {
-
+        showProgressbar("Activities Loading...");
         viewModel.callApiGetMyBooking();
 
         List<MyBookingResponse> myBookings = new ArrayList<>();
@@ -55,6 +58,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         binding.rcvBookingDetail.setAdapter(mFlexibleAdapterMyBooking);
         binding.rcvBookingDetail.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
     }
     @Override
     protected void performDependencyInjection(FragmentComponent buildComponent) {
@@ -77,4 +81,14 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         }
         return false;
     }
+
+//    @Override
+//    public void showProgressbar(String msg) {
+//        super.showProgressbar(msg);
+//        Dialog dialog = new Dialog(getActivity());
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.layout_progressbar);
+//        dialog.setCancelable(false);
+//        dialog.show();
+//    }
 }

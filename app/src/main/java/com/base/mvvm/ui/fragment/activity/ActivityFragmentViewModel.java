@@ -1,6 +1,8 @@
 package com.base.mvvm.ui.fragment.activity;
 
+import android.app.Dialog;
 import android.util.Log;
+import android.view.Window;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -24,6 +26,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     public ActivityFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
+
+
     }
     FlexibleAdapter mFlexibleAdapterOption;
     FlexibleAdapter mFlexibleAdapterBookingDetail;
@@ -60,6 +64,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                         listMyBookings.setValue(response.getData().getContent());
 //                        Log.d("TAG", "callApiGetMyBooking: " + response.getData().getContent());
 //                        Log.e("TAG", "callApiGetMyBooking: " + listMyBookings );
+
                     }else{
                         showErrorMessage(response.getMessage());
                     }
@@ -71,4 +76,9 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                 }));
     }
 
+    @Override
+    public void showLoading() {
+        super.showLoading();
+        Log.e("BaseFragment", "activity showLoading: ");
+    }
 }

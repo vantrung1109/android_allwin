@@ -11,6 +11,7 @@ import com.base.mvvm.data.Repository;
 import com.base.mvvm.di.scope.ActivityScope;
 import com.base.mvvm.ui.base.BaseActivity;
 import com.base.mvvm.ui.home.HomeViewModel;
+import com.base.mvvm.ui.fragment.home.MapViewModel;
 import com.base.mvvm.ui.home_introduce.HomeIntroduceViewModel;
 import com.base.mvvm.ui.home_splash.HomeSplashViewModel;
 import com.base.mvvm.ui.login.LoginViewModel;
@@ -106,5 +107,13 @@ public class ActivityModule {
         Supplier<MyBookingDetailViewModel> supplier = () -> new MyBookingDetailViewModel(repository, (MVVMApplication)application);
         ViewModelProviderFactory<MyBookingDetailViewModel> factory = new ViewModelProviderFactory<>(MyBookingDetailViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(MyBookingDetailViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    MapViewModel provideMapViewModel(Repository repository, Context application) {
+        Supplier<MapViewModel> supplier = () -> new MapViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<MapViewModel> factory = new ViewModelProviderFactory<>(MapViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(MapViewModel.class);
     }
 }

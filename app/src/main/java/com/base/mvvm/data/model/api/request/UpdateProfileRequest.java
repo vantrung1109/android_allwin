@@ -2,16 +2,16 @@ package com.base.mvvm.data.model.api.request;
 
 import androidx.annotation.NonNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateProfileRequest {
-    private String username;
-    private String fullName;
     private String avatar;
-    private String email;
-    private String userOfficeName;
-    private String phone;
-    private String password;
+    private String name;
     private String newPassword;
+    private String oldPassword;
 }

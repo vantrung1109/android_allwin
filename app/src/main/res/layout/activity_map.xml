@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+       <variable
+            name="vm"
+            type="com.base.mvvm.ui.fragment.home.MapViewModel" />
+
+        <variable name="a"
+            type="com.base.mvvm.ui.fragment.home.MapActivity" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <fragment
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_320sdp"
+                    />
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/map"
+
+                    >
+                    <ScrollView
+                        android:id="@+id/scroll_rcv"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_200sdp"
+                        >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcv_vehicle_order"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_170sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp">
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </ScrollView>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_account_profile"
+            android:layout_alignParentBottom="true"
+            >
+
+            <RelativeLayout
+                android:id="@+id/layout_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                >
+
+                <ImageView
+                    android:id="@+id/img_cash"
+                    android:layout_width="@dimen/_21sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@drawable/cash"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    />
+                <TextView
+                    android:id="@+id/tv_cash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiền mặt"
+                    android:layout_toEndOf="@+id/img_cash"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    style="@style/AppCommonText"
+                    android:textSize="@dimen/_11ssp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ưu đãi"
+                    android:layout_centerInParent="true"
+                    style="@style/AppCommonText"
+                    android:textSize="@dimen/_11ssp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ghi chú"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    style="@style/AppCommonText"
+                    android:textSize="@dimen/_11ssp"
+                    />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_below="@+id/layout_note"
+
+                android:background="@drawable/btn_custom_enable"
+                android:enabled="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Đặt Winbike"
+                android:gravity="center"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:id="@+id/btn_order"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</layout>

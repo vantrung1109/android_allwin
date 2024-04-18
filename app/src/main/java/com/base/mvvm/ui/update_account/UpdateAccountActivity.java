@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -68,6 +69,17 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        viewModel.isShowPassWord.addOnPropertyChangedCallback(new androidx.databinding.Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(androidx.databinding.Observable sender, int propertyId) {
+                if(!viewModel.isShowPassWord.get()){
+                    viewBinding.editPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }else {
+                    viewBinding.editPassword.setTransformationMethod(null);;
+                }
+            }
+        });
+
         // allowing permissions of gallery and camera
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -114,155 +126,146 @@ public class UpdateAccountActivity extends BaseActivity<ActivityUpdateAccountBin
 
     }
 
-    public void uploadFile(){
-        viewModel.showLoading();
-        // Upload image if necessary
-        if (updatedAvatar != null) {
-            // Upload avatar then update profile
-            // Convert the Bitmap to a byte array
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            updatedAvatar.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-            byte[] imageByteArray = byteArrayOutputStream.toByteArray();
-
-            // Create a request body for the image
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageByteArray);
-
-            // Create a multipart request builder
-            MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM);
-            requestBodyBuilder.addFormDataPart("file", "image.jpg", requestFile);
-            requestBodyBuilder.addFormDataPart("type", Constants.FILE_TYPE_AVATAR);
-            MultipartBody responseBody = requestBodyBuilder.build();
-            UpdateProfileRequest request = prepareRequest();
-
-            viewModel.compositeDisposable.add(viewModel.uploadAvatar(responseBody)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(response -> {
-                                if (response.isResult()) {
-                                    if (response.getData().getFilePath() != null) {
-                                        request.setAvatar(response.getData().getFilePath());
-                                    }
-                                    viewModel.showSuccessMessage("Update File successfully");
-                                } else {
-                                    viewModel.showErrorMessage(response.getMessage());
-                                }
-                                viewModel.hideLoading();
-                                setResult(Activity.RESULT_OK);
-                                finish();
-                            }, err -> {
-                                Timber.tag("uploadFile: ").e(err);
-                                viewModel.hideLoading();
-                                viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
-                            }));
-        }
-    }
-
-    public void updateProfile(){
-//        if(viewModel.profile.get() == null || Objects.equals(viewModel.profile.get().getName(), "")){
-//            viewModel.showErrorMessage("Pls fill name");
+//    public void uploadFile(){
+//        viewModel.showLoading();
+//        // Upload image if necessary
+//        if (updatedAvatar != null) {
+//            // Upload avatar then update profile
+//            // Convert the Bitmap to a byte array
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            updatedAvatar.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//            byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+//
+//            // Create a request body for the image
+//            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageByteArray);
+//
+//            // Create a multipart request builder
+//            MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
+//                    .setType(MultipartBody.FORM);
+//            requestBodyBuilder.addFormDataPart("file", "image.jpg", requestFile);
+//            requestBodyBuilder.addFormDataPart("type", Constants.FILE_TYPE_AVATAR);
+//            MultipartBody responseBody = requestBodyBuilder.build();
+//            UpdateProfileRequest request = prepareRequest();
+//
+//            viewModel.compositeDisposable.add(viewModel.uploadAvatar(responseBody)
+//                            .subscribeOn(Schedulers.io())
+//                            .observeOn(AndroidSchedulers.mainThread())
+//                            .subscribe(response -> {
+//                                if (response.isResult()) {
+//                                    if (response.getData().getFilePath() != null) {
+//                                        request.setAvatar(response.getData().getFilePath());
+//                                    }
+//                                    viewModel.showSuccessMessage("Update File successfully");
+//                                } else {
+//                                    viewModel.showErrorMessage(response.getMessage());
+//                                }
+//                                viewModel.hideLoading();
+//                                setResult(Activity.RESULT_OK);
+//                                finish();
+//                            }, err -> {
+//                                Timber.tag("uploadFile: ").e(err);
+//                                viewModel.hideLoading();
+//                                viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
+//                            }));
 //        }
+//    }
 
-        viewModel.showLoading();
-        // Upload image if necessary
-        if (updatedAvatar != null) {
-            // Upload avatar then update profile
-            // Convert the Bitmap to a byte array
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            updatedAvatar.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-            byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+//    public void updateProfile(){
+////        if(viewModel.profile.get() == null || Objects.equals(viewModel.profile.get().getName(), "")){
+////            viewModel.showErrorMessage("Pls fill name");
+////        }
+//
+//        viewModel.showLoading();
+//        // Upload image if necessary
+//        if (updatedAvatar != null) {
+//            // Upload avatar then update profile
+//            // Convert the Bitmap to a byte array
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            updatedAvatar.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//            byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+//
+//            // Create a request body for the image
+//            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageByteArray);
+//
+//            // Create a multipart request builder
+//            MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
+//                    .setType(MultipartBody.FORM);
+//            requestBodyBuilder.addFormDataPart("file", "image.jpg", requestFile);
+//            requestBodyBuilder.addFormDataPart("type", Constants.FILE_TYPE_AVATAR);
+//
+//            UpdateProfileRequest request = prepareRequest();
+//            AtomicReference<String> check = new AtomicReference<>("hehehe");
+//            Observable<ResponseWrapper<String>>
+//                    uploadAndProfileUpdateObservable = viewModel.uploadAvatar(requestBodyBuilder.build())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .flatMap(uploadResponse -> {
+//                        if (uploadResponse.isResult()) {
+//                            check.set("kaka");
+//                        }
+//                        else check.set(uploadResponse.getData().getFilePath());
+//                        if (uploadResponse.isResult() && uploadResponse.getData().getFilePath() != null) {
+//                            request.setAvatar(uploadResponse.getData().getFilePath());
+//                        }
+//                        return viewModel.updateProfile(request)
+//                                .subscribeOn(Schedulers.io());
+//                    });
+//
+//            viewModel.compositeDisposable.add(uploadAndProfileUpdateObservable
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(response -> {
+//                        if (response.isResult()) {
+//                            viewModel.showSuccessMessage(application.getString(R.string.update_profile_success));
+//                        } else {
+//
+//                            viewModel.showErrorMessage(response.getMessage());
+//                        }
+//                        viewModel.hideLoading();
+//
+//                        setResult(Activity.RESULT_OK);
+//                        finish();
+//                    }, err -> {
+//                        Log.e("updateProfile: ", check.get());
+//                        viewModel.hideLoading();
+//                        viewModel.showErrorMessage("updateProfile: " + check.get());
+////                        viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
+//                    }));
+//
+//        } else {
+//            // Update profile only
+//            handleUpdateProfile();
+//        }
+//    }
 
-            // Create a request body for the image
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageByteArray);
+//    public void handleUpdateProfile() {
+//        UpdateProfileRequest request = prepareRequest();
+//        Log.e("updateProfile: ", request.toString());
+//        viewModel.compositeDisposable.add(viewModel.updateProfile(request)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(response -> {
+//                    // render the avatar
+//                    if (response.isResult()) {
+//                        viewModel.showSuccessMessage(application.getString(R.string.update_profile_success));
+//                    } else {
+//                        viewModel.showErrorMessage(response.getMessage());
+//                    }
+//                    viewModel.hideLoading();
+//                    setResult(Activity.RESULT_OK);
+//                    finish();
+//                }, err -> {
+//                    viewModel.hideLoading();
+//                    viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
+//                }));
+//    }
 
-            // Create a multipart request builder
-            MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM);
-            requestBodyBuilder.addFormDataPart("file", "image.jpg", requestFile);
-            requestBodyBuilder.addFormDataPart("type", Constants.FILE_TYPE_AVATAR);
-
-            UpdateProfileRequest request = prepareRequest();
-            AtomicReference<String> check = new AtomicReference<>("hehehe");
-            Observable<ResponseWrapper<String>>
-                    uploadAndProfileUpdateObservable = viewModel.uploadAvatar(requestBodyBuilder.build())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .flatMap(uploadResponse -> {
-                        if (uploadResponse.isResult()) {
-                            check.set("kaka");
-                        }
-                        else check.set(uploadResponse.getData().getFilePath());
-                        if (uploadResponse.isResult() && uploadResponse.getData().getFilePath() != null) {
-                            request.setAvatar(uploadResponse.getData().getFilePath());
-                        }
-                        return viewModel.updateProfile(request)
-                                .subscribeOn(Schedulers.io());
-                    });
-
-            viewModel.compositeDisposable.add(uploadAndProfileUpdateObservable
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        if (response.isResult()) {
-                            viewModel.showSuccessMessage(application.getString(R.string.update_profile_success));
-                        } else {
-
-                            viewModel.showErrorMessage(response.getMessage());
-                        }
-                        viewModel.hideLoading();
-
-                        setResult(Activity.RESULT_OK);
-                        finish();
-                    }, err -> {
-                        Log.e("updateProfile: ", check.get());
-                        viewModel.hideLoading();
-                        viewModel.showErrorMessage("updateProfile: " + check.get());
-//                        viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
-                    }));
-
-        } else {
-            // Update profile only
-            handleUpdateProfile();
-        }
-    }
-
-    public void handleUpdateProfile() {
-        UpdateProfileRequest request = prepareRequest();
-        Log.e("updateProfile: ", request.toString());
-        viewModel.compositeDisposable.add(viewModel.updateProfile(request)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
-                    // render the avatar
-                    if (response.isResult()) {
-                        viewModel.showSuccessMessage(application.getString(R.string.update_profile_success));
-                    } else {
-                        viewModel.showErrorMessage(response.getMessage());
-                    }
-                    viewModel.hideLoading();
-                    setResult(Activity.RESULT_OK);
-                    finish();
-                }, err -> {
-                    viewModel.hideLoading();
-                    viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
-                }));
-    }
-
-    private UpdateProfileRequest prepareRequest() {
-        UpdateProfileRequest request = new UpdateProfileRequest();
-        Log.e("prepareRequest", "Name" + viewModel.profile.get().getName());
-        Log.e("prepareRequest", "email" + viewModel.profile.get().getEmail());
-        Log.e("prepareRequest", "password" + viewModel.password.get());
-        Log.e("prepareRequest", "avatar" + viewModel.avatar.get());
-        request.setUsername(viewModel.profile.get().getName());
-        request.setFullName(viewModel.profile.get().getName());
-        request.setEmail(viewModel.profile.get().getEmail());
-        request.setPhone("0365817754");
-        request.setUserOfficeName(viewModel.profile.get().getName());
-        request.setNewPassword(viewModel.password.get());
-        request.setPassword(viewModel.password.get());
-        request.setAvatar(viewModel.avatar.get());
-        return request;
-    }
+//    private UpdateProfileRequest prepareRequest() {
+//        UpdateProfileRequest request = new UpdateProfileRequest();
+//        request.setName(viewModel.profile.get().getName());
+//        request.setOldPassword(viewModel.profile.get().get);
+//        request.setAvatar(viewModel.avatar.get());
+//        return request;
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

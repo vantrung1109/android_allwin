@@ -1,7 +1,7 @@
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.crashlytics'
-
+apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -48,6 +48,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+    implementation 'com.google.android.gms:play-services-location:21.2.0'
     //Preference
     implementation "androidx.preference:preference:1.1.1"
     implementation 'com.github.dhaval2404:imagepicker:2.1'
