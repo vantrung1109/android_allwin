@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.mvvm.R;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
+import com.base.mvvm.data.service.DatabaseService;
 import com.base.mvvm.databinding.ActivityMapBinding;
+import com.base.mvvm.databinding.ActivityPaymentMethodBinding;
+import com.base.mvvm.databinding.ActivityPaymentMethodBindingImpl;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
 import com.base.mvvm.ui.fragment.home.maps.MapViewModel;
@@ -34,13 +37,14 @@ import java.util.List;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.databinding.BR;
 
-public class PaymentMethodActivity extends BaseActivity<ActivityMapBinding, PaymentMethodViewModel> {
+public class PaymentMethodActivity extends BaseActivity<ActivityPaymentMethodBinding, PaymentMethodViewModel> {
+
 
     FlexibleAdapter mFlexibleAdapter;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_map;
+        return R.layout.activity_payment_method;
     }
 
     @Override
@@ -56,6 +60,10 @@ public class PaymentMethodActivity extends BaseActivity<ActivityMapBinding, Paym
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mFlexibleAdapter = new FlexibleAdapter<>(DatabaseService.getInstance().getPaymentMethods(), this);
+        viewBinding.rcvPaymentMethod.setLayoutManager(new LinearLayoutManager(this));
+        viewBinding.rcvPaymentMethod.setAdapter(mFlexibleAdapter);
     }
 
 }

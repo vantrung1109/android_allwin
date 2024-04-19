@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/background_payment_method"
+        android:layout_marginTop="@dimen/_10sdp"
+        >
+
+        <ImageView
+            android:id="@+id/img_payment_method"
+            android:layout_width="@dimen/_21sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:src="@drawable/cash"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_15sdp" />
+
+        <TextView
+            android:id="@+id/tv_payment_method_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiền mặt"
+            android:layout_toEndOf="@+id/img_payment_method"
+            android:layout_marginStart="@dimen/_10sdp"
+            style="@style/AppCommonText"
+            android:textSize="@dimen/_11ssp"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/img_is_selected"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:src="@drawable/is_selected"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_15sdp" />
+    </RelativeLayout>
+</layout>

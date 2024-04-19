@@ -59,6 +59,9 @@
         <activity android:name=".ui.fragment.home.maps.MapActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.fragment.home.payment_method.PaymentMethodActivity"
+            android:exported="true"/>
+
         <activity android:name=".ui.home_splash.HomeSplashActivity"
             android:exported="true">
             <intent-filter>

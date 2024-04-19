@@ -4,6 +4,7 @@ import com.base.mvvm.R;
 
 import com.base.mvvm.data.model.api.api_search.Prediction;
 import com.base.mvvm.ui.fragment.home.model.TitleAddressSave;
+import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodItem;
 import com.base.mvvm.ui.home.map.model.VehicleOrder;
 
 import java.util.ArrayList;
@@ -50,6 +51,11 @@ public class DatabaseService {
         return items;
     }
 
-
+    public List<AbstractFlexibleItem> getPaymentMethods() {
+        List<AbstractFlexibleItem>  items = new ArrayList<>();
+        items.add(new PaymentMethodItem(R.drawable.cash, "Tiền mặt", true));
+        items.add(new PaymentMethodItem(R.drawable.card_money, "Thẻ tín dụng/ Thẻ ghi nợ", false));
+        return items;
+    }
 
 }
