@@ -3,10 +3,10 @@
     <data>
        <variable
             name="vm"
-            type="com.base.mvvm.ui.fragment.home.MapViewModel" />
+            type="com.base.mvvm.ui.fragment.home.maps.MapViewModel" />
 
         <variable name="a"
-            type="com.base.mvvm.ui.fragment.home.MapActivity" />
+            type="com.base.mvvm.ui.fragment.home.maps.MapActivity" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_320sdp"
+                    android:layout_height="@dimen/_300sdp"
                     />
                 <RelativeLayout
 
@@ -35,12 +35,13 @@
                     <ScrollView
                         android:id="@+id/scroll_rcv"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_200sdp"
+                        android:layout_height="@dimen/_180sdp"
+
                         >
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rcv_vehicle_order"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_170sdp"
+                            android:layout_height="@dimen/_180sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_15sdp">

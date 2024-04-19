@@ -1,4 +1,4 @@
-package com.base.mvvm.ui.fragment.home;
+package com.base.mvvm.ui.fragment.home.maps;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -12,9 +12,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.mvvm.R;
-import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
-import com.base.mvvm.data.service.DatabaseService;
 import com.base.mvvm.databinding.ActivityMapBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;

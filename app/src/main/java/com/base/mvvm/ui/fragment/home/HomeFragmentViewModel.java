@@ -3,7 +3,6 @@ package com.base.mvvm.ui.fragment.home;
 import android.content.Intent;
 import android.util.Log;
 
-import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 
 import com.base.mvvm.MVVMApplication;
@@ -11,6 +10,7 @@ import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
 import com.base.mvvm.ui.base.BaseFragmentViewModel;
+import com.base.mvvm.ui.fragment.home.maps.MapActivity;
 import com.base.mvvm.utils.NetworkUtils;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

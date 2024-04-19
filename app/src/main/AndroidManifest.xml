@@ -56,7 +56,7 @@
         <activity android:name=".ui.update_account.UpdateAccountActivity"
             android:exported="true"
             />
-        <activity android:name=".ui.fragment.home.MapActivity"
+        <activity android:name=".ui.fragment.home.maps.MapActivity"
             android:exported="true"
             />
         <activity android:name=".ui.home_splash.HomeSplashActivity"

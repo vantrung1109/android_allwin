@@ -1,4 +1,4 @@
-package com.base.mvvm.ui.fragment.home;
+package com.base.mvvm.ui.fragment.home.maps;
 
 import android.util.Log;
 
