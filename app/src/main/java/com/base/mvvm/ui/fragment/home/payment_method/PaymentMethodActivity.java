@@ -56,29 +56,6 @@ public class PaymentMethodActivity extends BaseActivity<ActivityMapBinding, Paym
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        List<ServiceResponse> serviceAutos = new ArrayList<>();
-
-        viewModel.listServices.observe(this, serviceResponses -> {
-            serviceAutos.addAll(serviceResponses);
-        });
-
-        mFlexibleAdapter = new FlexibleAdapter<>(serviceAutos, this);
-
-        viewModel.listServices.observe(this, serviceResponses -> {
-            mFlexibleAdapter.updateDataSet(serviceAutos);
-        });
-
-
-        mFlexibleAdapter = new FlexibleAdapter(serviceAutos, this);
-
-        viewBinding.rcvVehicleOrder.setAdapter(mFlexibleAdapter);
-        viewBinding.rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-
-
-
     }
 
 }
