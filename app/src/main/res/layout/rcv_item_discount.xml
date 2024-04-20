@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_account_profile"
+    android:layout_marginTop="@dimen/_10sdp"
+    >
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <RelativeLayout
+                android:id="@+id/layout_discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/img_discount"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:src="@drawable/car_discount"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_price_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/AppCommonText"
+                    android:text="Giảm 20.000VND"
+                    android:layout_toEndOf="@id/img_discount"
+                    android:textSize="@dimen/_15ssp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_condition_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/AppCommonText"
+                    android:text="Cước phí chỉ từ 50k"
+                    android:layout_toEndOf="@id/img_discount"
+                    android:layout_below="@id/tv_price_discount"
+                    android:textColor="@color/green_text"
+                    />
+            </RelativeLayout>
+            <ImageView
+                android:id="@+id/dash_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_5sdp"
+                android:src="@drawable/dash_line"
+                android:layout_below="@id/layout_discount"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dash_line"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:padding="@dimen/_5sdp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    >
+                    <ImageView
+                        android:id="@+id/img_clock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/clock"
+                        />
+                    <TextView
+                        android:id="@+id/tv_shelf_life"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hạn sử dụng: "
+                        android:layout_toEndOf="@+id/img_clock"
+                        android:textSize="@dimen/_8sdp"
+                        style="@style/AppCommonText"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_time_remaining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15:00, 20/9/2023"
+                        android:layout_toEndOf="@+id/tv_shelf_life"
+                        android:textSize="@dimen/_8sdp"
+                        style="@style/AppCommonText"
+                        />
+                </RelativeLayout>
+
+
+                <Button
+                    android:id="@+id/btn_use_discount"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="Dùng ngay"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    style="@style/AppCommonText"
+                    android:textColor="@color/green_text"
+                    android:background="@drawable/btn_use_discount"
+                    android:textSize="@dimen/_11sdp"
+                    android:textAllCaps="false"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+</RelativeLayout>

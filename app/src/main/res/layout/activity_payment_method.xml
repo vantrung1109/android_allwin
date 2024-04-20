@@ -35,7 +35,7 @@
                 android:layout_height="@dimen/_15sdp"
                 android:src="@drawable/back"
                 android:layout_centerVertical="true"
-
+                android:onClick="@{()->vm.onBack()}"
                 />
         </RelativeLayout>
 

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+       <variable
+            name="vm"
+            type="com.base.mvvm.ui.fragment.home.note.NoteViewModel" />
+
+        <variable name="a"
+            type="com.base.mvvm.ui.fragment.home.note.NoteActivity" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ghi chú"
+                style="@style/AppTextTitle"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="normal"
+                android:layout_centerInParent="true"
+                />
+            <ImageView
+                android:id="@+id/button_back"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/back"
+                android:layout_centerVertical="true"
+                android:onClick="@{()->vm.onBack()}"
+                />
+        </RelativeLayout>
+        
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_title"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/background_note"
+            style="@style/AppCommonText"
+            android:hint="Ghi chú cho tài xế"
+            android:paddingStart="@dimen/_15sdp"
+            android:textSize="@dimen/_11ssp"
+            android:minLines="2"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            />
+        <RelativeLayout
+            android:id="@+id/layout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/background_account_profile"
+            android:layout_alignParentBottom="true">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@drawable/btn_custom_enable"
+                android:enabled="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Tiếp tục"
+                android:gravity="center"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:id="@+id/btn_continue"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+
+
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

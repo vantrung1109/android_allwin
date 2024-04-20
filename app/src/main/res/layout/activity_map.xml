@@ -17,19 +17,45 @@
             android:layout_height="match_parent">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <fragment
-                    xmlns:map="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_height="wrap_content"
+                >
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_300sdp"
-                    />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layout_map">
+
+                    <fragment
+                        xmlns:map="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_300sdp"
+                        />
+                    <RelativeLayout
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:background="@drawable/background_round"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:onClick="@{(v) -> vm.onBack()}">
+                        <ImageView
+                            android:id="@+id/button_back"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:src="@drawable/back"
+                            android:layout_centerVertical="true"
+                            android:layout_centerInParent="true"
+
+                            />
+                    </RelativeLayout>
+
+                </FrameLayout>
+
                 <RelativeLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/map"
+                    android:layout_below="@+id/layout_map"
 
                     >
                     <ScrollView
@@ -87,16 +113,20 @@
                     android:layout_marginStart="@dimen/_5sdp"
                     style="@style/AppCommonText"
                     android:textSize="@dimen/_11ssp"
+                    android:onClick="@{()->vm.navigateToPaymentMethod()}"
                     />
                 <TextView
+                    android:id="@+id/tv_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ưu đãi"
                     android:layout_centerInParent="true"
                     style="@style/AppCommonText"
                     android:textSize="@dimen/_11ssp"
+                    android:onClick="@{()->vm.navigateToDiscount()}"
                     />
                 <TextView
+                    android:id="@+id/tv_note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ghi chú"
@@ -104,6 +134,7 @@
                     android:layout_marginEnd="@dimen/_15sdp"
                     style="@style/AppCommonText"
                     android:textSize="@dimen/_11ssp"
+                    android:onClick="@{()->vm.navigateToNote()}"
                     />
 
             </RelativeLayout>

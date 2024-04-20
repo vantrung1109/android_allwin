@@ -10,6 +10,8 @@ import com.base.mvvm.ViewModelProviderFactory;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.di.scope.ActivityScope;
 import com.base.mvvm.ui.base.BaseActivity;
+import com.base.mvvm.ui.fragment.home.discount.DiscountViewModel;
+import com.base.mvvm.ui.fragment.home.note.NoteViewModel;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodViewModel;
 import com.base.mvvm.ui.home.HomeViewModel;
 import com.base.mvvm.ui.fragment.home.maps.MapViewModel;
@@ -123,5 +125,20 @@ public class ActivityModule {
         Supplier<PaymentMethodViewModel> supplier = () -> new PaymentMethodViewModel(repository, (MVVMApplication)application);
         ViewModelProviderFactory<PaymentMethodViewModel> factory = new ViewModelProviderFactory<>(PaymentMethodViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(PaymentMethodViewModel.class);
+    }
+    @Provides
+    @ActivityScope
+    DiscountViewModel provideDiscountViewModel(Repository repository, Context application) {
+        Supplier<DiscountViewModel> supplier = () -> new DiscountViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<DiscountViewModel> factory = new ViewModelProviderFactory<>(DiscountViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(DiscountViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    NoteViewModel provideNoteViewModel(Repository repository, Context application) {
+        Supplier<NoteViewModel> supplier = () -> new NoteViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<NoteViewModel> factory = new ViewModelProviderFactory<>(NoteViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(NoteViewModel.class);
     }
 }

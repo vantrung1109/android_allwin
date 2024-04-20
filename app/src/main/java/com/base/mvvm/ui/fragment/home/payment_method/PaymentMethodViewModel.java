@@ -24,4 +24,8 @@ public class PaymentMethodViewModel extends BaseViewModel {
         super(repository, application);
     }
 
+    public void onBack(){
+        application.getCurrentActivity().finish();
+    }
+
 }

@@ -3,6 +3,7 @@ package com.base.mvvm.data.service;
 import com.base.mvvm.R;
 
 import com.base.mvvm.data.model.api.api_search.Prediction;
+import com.base.mvvm.ui.fragment.home.discount.DiscountItem;
 import com.base.mvvm.ui.fragment.home.model.TitleAddressSave;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodItem;
 import com.base.mvvm.ui.home.map.model.VehicleOrder;
@@ -55,6 +56,16 @@ public class DatabaseService {
         List<AbstractFlexibleItem>  items = new ArrayList<>();
         items.add(new PaymentMethodItem(R.drawable.cash, "Tiền mặt", true));
         items.add(new PaymentMethodItem(R.drawable.card_money, "Thẻ tín dụng/ Thẻ ghi nợ", false));
+        return items;
+    }
+
+    public List<AbstractFlexibleItem> getDiscountItems() {
+        List<AbstractFlexibleItem>  items = new ArrayList<>();
+        items.add(new DiscountItem(R.drawable.car_discount, 20000.0, 50000.0, "15:00, 20/9/2023"));
+        items.add(new DiscountItem(R.drawable.car_discount, 20000.0, 50000.0, "15:00, 20/9/2023"));
+        items.add(new DiscountItem(R.drawable.car_discount, 20000.0, 50000.0, "15:00, 20/9/2023"));
+        items.add(new DiscountItem(R.drawable.car_discount, 20000.0, 50000.0, "15:00, 20/9/2023"));
+        items.add(new DiscountItem(R.drawable.car_discount, 20000.0, 50000.0, "15:00, 20/9/2023"));
         return items;
     }
 

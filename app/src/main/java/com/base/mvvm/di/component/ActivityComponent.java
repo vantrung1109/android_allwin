@@ -2,6 +2,8 @@ package com.base.mvvm.di.component;
 
 import com.base.mvvm.di.module.ActivityModule;
 import com.base.mvvm.di.scope.ActivityScope;
+import com.base.mvvm.ui.fragment.home.discount.DiscountActivity;
+import com.base.mvvm.ui.fragment.home.note.NoteActivity;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodActivity;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodViewModel;
 import com.base.mvvm.ui.home.HomeActivity;
@@ -34,5 +36,7 @@ public interface ActivityComponent {
     void inject (MapActivity activity);
 
     void inject (PaymentMethodActivity activity);
+    void inject (DiscountActivity activity);
+    void inject (NoteActivity viewModel);
 }
 
