@@ -33,15 +33,13 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     FlexibleAdapter mFlexibleAdapterBookingDetail;
     MutableLiveData<List<MyBookingResponse>> listMyBookings = new MutableLiveData<>();
 
-
-
-    public void callApiGetMyBooking(){
+    public void callApiGetMyBooking(Integer pageSize, Integer  pageNumber){
         showLoading();
         compositeDisposable.add(repository.getApiService().getMyBooking(
                         null,
                         null,
-                        null,
-                        null,
+                        pageNumber,
+                        pageSize,
                         null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

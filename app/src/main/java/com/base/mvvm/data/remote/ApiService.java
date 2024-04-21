@@ -58,8 +58,8 @@ public interface ApiService {
     @GET("/v1/booking/my-booking")
     Observable<ResponseWrapper<ResponseListObj<MyBookingResponse>>> getMyBooking(@Query("endDate") String endDate,
                                                                                  @Query("startDate") String startDate,
-                                                                                 @Query("page") Integer pageNumber,
-                                                                                 @Query("size") Integer pageSize,
+                                                                                 @Query("page") Integer page,
+                                                                                 @Query("size") Integer size,
                                                                                  @Query("state") Integer state);
 
     @GET("place/queryautocomplete/json")
