@@ -12,22 +12,14 @@
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/main_fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/bottom_navigation"
+            android:layout_height="wrap_content"
             android:background="@color/white" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_navigation"
-            android:visibility="gone"
-            />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
@@ -35,22 +27,22 @@
             android:layout_height="@dimen/_60sdp"
             android:layout_alignParentBottom="true"
             app:menu="@menu/menu_bottom_navigation"
-            android:background="#fff"
             app:labelVisibilityMode="labeled"
             app:itemIconTint="@color/custom_bottom_navigation"
             app:itemTextColor="@color/custom_bottom_navigation"
-            app:itemIconSize="@dimen/_15sdp"
+            app:backgroundTint="@color/white"
 
             />
-        <View
-            android:id="@+id/divider_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_1sdp"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background= "#E6E6E6"
-            />
+
+
+        <!--        <androidx.viewpager2.widget.ViewPager2-->
+        <!--            android:id="@+id/view_pager2"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_above="@+id/bottom_navigation"-->
+        <!--            android:visibility="gone"-->
+        <!--            />-->
+
 
     </RelativeLayout>
 </layout>

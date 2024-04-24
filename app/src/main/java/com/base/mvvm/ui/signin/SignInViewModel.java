@@ -81,6 +81,7 @@ public class SignInViewModel extends BaseViewModel {
                     }
                     hideLoading();
                 }, throwable -> {
+                    Log.e("error", throwable.getMessage());
                     showErrorMessage(application.getResources().getString(R.string.no_internet));
                     hideLoading();
                 }));

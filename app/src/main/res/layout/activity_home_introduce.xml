@@ -21,8 +21,10 @@
             android:layout_height="@dimen/_220sdp"
             android:src="@drawable/home_introduce"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:scaleType="fitXY" />
+            android:layout_marginTop="@dimen/_50sdp"
+            android:scaleType="fitXY"
+
+            />
 
         <TextView
             android:id="@+id/tv_instruct"
@@ -32,9 +34,11 @@
             style="@style/AppTextTitle"
             android:textSize="@dimen/_15sdp"
             android:text="Sử dụng vị trí của bạn và cho phép nhận thông báo "
-            android:layout_marginTop="@dimen/_60sdp"
-
-            android:layout_marginStart="@dimen/_20sdp" />
+            android:layout_marginTop="@dimen/_90sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/_20sdp"
+            />
 
         <TextView
             android:id="@+id/tv_introduce"
@@ -43,15 +47,18 @@
             android:layout_below="@id/tv_instruct"
             android:textSize="@dimen/_11sdp"
             android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-            android:fontFamily="@font/roboto_500"
+            android:fontFamily="@font/roboto_medium"
             android:textColor="#9F9696"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_15sdp"/>
+            android:layout_marginTop="@dimen/_15sdp"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/_15sdp"
+            />
 
         <TextView
             android:id="@+id/btn_continue"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_38sdp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_below="@+id/tv_introduce"

@@ -28,5 +28,6 @@
     <color name="stroke_vehicle_focus">#7EA567</color>
     <color name="green_text">#7EA567</color>
     <color name="color_dashline">#CEDDB9</color>
+    <color name="black_full">#000000</color>
 
 </resources>

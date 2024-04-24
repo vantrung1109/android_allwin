@@ -20,7 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_250sdp"
             android:src="@drawable/background_home"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/_30sdp"
+            />
 
         <TextView
             android:id="@+id/tv_xinchao"
@@ -29,7 +31,7 @@
             android:layout_below="@id/background_home"
             style="@style/AppTextTitle"
             android:text="Xin chào, "
-
+            android:textColor="@color/black_full"
             android:layout_marginStart="@dimen/_20sdp" />
 
         <TextView
@@ -39,20 +41,24 @@
             android:layout_below="@id/tv_xinchao"
             android:textSize="@dimen/_11sdp"
             android:text="@string/introduce_app"
-            android:fontFamily="@font/roboto_500"
+            android:fontFamily="@font/roboto_medium"
             android:textColor="#9F9696"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_5sdp"/>
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/_20sdp"
+            />
+
 
         <TextView
 
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_38sdp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_below="@+id/tv_introduce"
             android:background="@drawable/btn_custom_enable"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_25sdp"
             android:text="Đăng nhập"
             android:gravity="center"
             android:textSize="@dimen/_15ssp"
@@ -65,12 +71,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_38sdp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_below="@+id/btn_signin"
             android:background="@drawable/btn_custom_enable_no_background"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:text="Đăng ký"
             android:gravity="center"
             android:textSize="@dimen/_15ssp"
