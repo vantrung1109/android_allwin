@@ -4,18 +4,24 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.mvvm.R;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
+import com.base.mvvm.data.service.DatabaseService;
 import com.base.mvvm.databinding.ActivityMapBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
+import com.base.mvvm.ui.fragment.home.model.VehicleOrder;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,14 +32,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.databinding.BR;
+import eu.davidea.flexibleadapter.items.IFlexible;
 
-public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel> implements OnMapReadyCallback {
+public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
+        implements OnMapReadyCallback,
+    FlexibleAdapter.OnItemClickListener {
 
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap myMap;
@@ -41,6 +52,11 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel> 
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     FlexibleAdapter mFlexibleAdapter;
+
+    private BottomSheetBehavior bottomSheetBehavior;
+    private BottomSheetBehavior bottomSheetBehaviorPayment;
+
+    View currentview;
 
     @Override
     public int getLayoutId() {
@@ -66,22 +82,67 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel> 
 
         List<ServiceResponse> serviceAutos = new ArrayList<>();
 
-        viewModel.listServices.observe(this, serviceResponses -> {
-            serviceAutos.addAll(serviceResponses);
-        });
+//        viewModel.listServices.observe(this, serviceResponses -> {
+//            serviceAutos.addAll(serviceResponses);
+//        });
 
         mFlexibleAdapter = new FlexibleAdapter<>(serviceAutos, this);
 
-        viewModel.listServices.observe(this, serviceResponses -> {
-            mFlexibleAdapter.updateDataSet(serviceAutos);
+//        viewModel.listServices.observe(this, serviceResponses -> {
+//            mFlexibleAdapter.updateDataSet(serviceAutos);
+//        });
+
+
+        mFlexibleAdapter = new FlexibleAdapter(DatabaseService.getInstance().getVehicleOrders(), this);
+
+//        viewBinding.rcvVehicleOrder.setAdapter(mFlexibleAdapter);
+//        viewBinding.rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+
+//        mAdapter.setNotifyChangeOfUnfilteredItems(true) //true is the default! This will rebind new item when refreshed
+//                .setMode(SelectableAdapter.Mode.SINGLE);
+
+        RecyclerView rcvVehicleOrder = findViewById(R.id.rcv_vehicle_order);
+
+        rcvVehicleOrder.setAdapter(mFlexibleAdapter);
+        rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+
+        bottomSheetBehavior = BottomSheetBehavior.from(viewBinding.layoutBottomSheet);
+        bottomSheetBehaviorPayment = BottomSheetBehavior.from(viewBinding.layoutBottomSheetPayment);
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull @org.jetbrains.annotations.NotNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehaviorPayment.setHideable(true);
+                    bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_HIDDEN);
+                } else {
+                   bottomSheetBehaviorPayment.setHideable(false);
+                   bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+
+            }
+
+            @Override
+            public void onSlide(@NonNull @org.jetbrains.annotations.NotNull View bottomSheet, float slideOffset) {
+
+            }
         });
 
 
-        mFlexibleAdapter = new FlexibleAdapter(serviceAutos, this);
-
-        viewBinding.rcvVehicleOrder.setAdapter(mFlexibleAdapter);
-        viewBinding.rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
+        //bottom sheet payment
+        TextView tvCash = findViewById(R.id.tv_cash);
+        TextView tvDiscount = findViewById(R.id.tv_discount);
+        TextView tvNote = findViewById(R.id.tv_note);
+        tvCash.setOnClickListener(v -> {
+            viewModel.navigateToPaymentMethod();
+        });
+        tvDiscount.setOnClickListener(v -> {
+            viewModel.navigateToDiscount();
+        });
+        tvNote.setOnClickListener(v -> {
+            viewModel.navigateToNote();
+        });
 
 
 
@@ -127,5 +188,19 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel> 
                 Toast.makeText(this, "Location permission is denied, please allow the permission", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public boolean onItemClick(View view, int i) {
+        IFlexible item = mFlexibleAdapter.getItem(i);
+        if (item instanceof VehicleOrder) {
+            VehicleOrder vehicleOrder = (VehicleOrder) item;
+            if (currentview != null)
+                currentview.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_normal, null));
+            view.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_focus, null));
+            currentview = view;
+        }
+
+        return false;
     }
 }

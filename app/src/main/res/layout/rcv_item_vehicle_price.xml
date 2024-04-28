@@ -9,6 +9,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/layout_rcv_vehicle_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/_10sdp"

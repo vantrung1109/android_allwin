@@ -2,11 +2,10 @@ package com.base.mvvm.data.service;
 
 import com.base.mvvm.R;
 
-import com.base.mvvm.data.model.api.api_search.Prediction;
 import com.base.mvvm.ui.fragment.home.discount.DiscountItem;
 import com.base.mvvm.ui.fragment.home.model.TitleAddressSave;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodItem;
-import com.base.mvvm.ui.home.map.model.VehicleOrder;
+import com.base.mvvm.ui.fragment.home.model.VehicleOrder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,15 @@ public class DatabaseService {
 
     public List<AbstractFlexibleItem> getVehicleOrders() {
         List<AbstractFlexibleItem>  items = new ArrayList<>();
+        items.add(new VehicleOrder(R.drawable.motorbike, "WinBike", 50000));
+        items.add(new VehicleOrder(R.drawable.car, "WinCar", 100000));
+        items.add(new VehicleOrder(R.drawable.car_high, "Winwin High Class", 250000));
+        items.add(new VehicleOrder(R.drawable.motorbike, "WinBike", 50000));
+        items.add(new VehicleOrder(R.drawable.car, "WinCar", 100000));
+        items.add(new VehicleOrder(R.drawable.car_high, "Winwin High Class", 250000));
+        items.add(new VehicleOrder(R.drawable.motorbike, "WinBike", 50000));
+        items.add(new VehicleOrder(R.drawable.car, "WinCar", 100000));
+        items.add(new VehicleOrder(R.drawable.car_high, "Winwin High Class", 250000));
         items.add(new VehicleOrder(R.drawable.motorbike, "WinBike", 50000));
         items.add(new VehicleOrder(R.drawable.car, "WinCar", 100000));
         items.add(new VehicleOrder(R.drawable.car_high, "Winwin High Class", 250000));

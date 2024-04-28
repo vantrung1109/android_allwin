@@ -50,11 +50,10 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         viewModel.callApiGetMyBooking(10, currentPage);
         List<MyBookingResponse> myBookings = new ArrayList<>();
 
-        viewModel.listMyBookings.observe(getViewLifecycleOwner(), myBookingResponses -> {
-            myBookings.addAll(myBookingResponses);
-        });
+
         mFlexibleAdapterMyBooking = new FlexibleAdapter<>(myBookings, this);
         viewModel.listMyBookings.observe(getViewLifecycleOwner(), myBookingResponses -> {
+            myBookings.addAll(myBookingResponses);
             mFlexibleAdapterMyBooking.updateDataSet(myBookings);
         });
         binding.rcvBookingDetail.setAdapter(mFlexibleAdapterMyBooking);

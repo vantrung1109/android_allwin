@@ -65,7 +65,10 @@ public class SignInViewModel extends BaseViewModel {
                             }
                         })
                 )
-                .subscribe(response -> {
+                .subscribe(
+
+
+                        response -> {
                     if(response.isResult()){
                         repository.setToken(response.getData().getAccess_token());
                         Log.d("token", response.getData().getAccess_token());

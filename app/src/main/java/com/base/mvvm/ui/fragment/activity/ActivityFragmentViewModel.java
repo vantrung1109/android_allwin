@@ -12,9 +12,11 @@ import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 
 import com.base.mvvm.ui.base.BaseFragmentViewModel;
+import com.base.mvvm.ui.fragment.fragmentApi;
 import com.base.mvvm.utils.NetworkUtils;
 
 import java.util.List;
+import java.util.Observer;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -23,11 +25,9 @@ import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class ActivityFragmentViewModel extends BaseFragmentViewModel {
+public class ActivityFragmentViewModel extends BaseFragmentViewModel implements fragmentApi {
     public ActivityFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-
-
     }
     FlexibleAdapter mFlexibleAdapterOption;
     FlexibleAdapter mFlexibleAdapterBookingDetail;
@@ -78,5 +78,10 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     public void showLoading() {
         super.showLoading();
         Log.e("BaseFragment", "activity showLoading: ");
+    }
+
+    @Override
+    public Observer getObserver() {
+        return null;
     }
 }

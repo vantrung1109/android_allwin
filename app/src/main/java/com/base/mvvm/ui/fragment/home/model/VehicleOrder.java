@@ -1,7 +1,8 @@
-package com.base.mvvm.ui.home.map.model;
+package com.base.mvvm.ui.fragment.home.model;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.base.mvvm.R;
@@ -27,6 +28,8 @@ public class VehicleOrder extends AbstractFlexibleItem<VehicleOrder.VehicleOrder
     private String vehicleName;
     private double price;
 
+
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof VehicleOrder) {
@@ -43,6 +46,7 @@ public class VehicleOrder extends AbstractFlexibleItem<VehicleOrder.VehicleOrder
 
     @Override
     public VehicleOrderViewHolder createViewHolder(View view, FlexibleAdapter<IFlexible> flexibleAdapter) {
+
         return new VehicleOrderViewHolder(view, flexibleAdapter);
     }
 
@@ -51,17 +55,32 @@ public class VehicleOrder extends AbstractFlexibleItem<VehicleOrder.VehicleOrder
         vehicleOrderViewHolder.imgVehicle.setImageResource(imgVehicle);
         vehicleOrderViewHolder.tvVehicleName.setText(vehicleName);
         vehicleOrderViewHolder.tvPrice.setText(DisplayUtils.custom_money(price));
+//        vehicleOrderViewHolder.layout.setOnClickListener(v -> {
+//            vehicleOrderViewHolder.layout.setBackground(vehicleOrderViewHolder.itemView.getResources().getDrawable(R.drawable.background_vehicle_focus, null));
+//        });
+
+
     }
+
+
 
     public static class VehicleOrderViewHolder extends FlexibleViewHolder {
         ImageView imgVehicle;
         TextView tvVehicleName, tvPrice;
+        RelativeLayout layout;
 
         public VehicleOrderViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             imgVehicle = view.findViewById(R.id.img_vehicle);
             tvVehicleName = view.findViewById(R.id.tv_name_vehicle);
             tvPrice = view.findViewById(R.id.tv_price);
+            layout = view.findViewById(R.id.layout_rcv_vehicle_order);
+//            layout.setOnClickListener(v -> {
+//                //do something
+//                layout.setBackground(view.getResources().getDrawable(R.drawable.background_vehicle_focus, null));
+//
+//                });
+
         }
     }
 }
