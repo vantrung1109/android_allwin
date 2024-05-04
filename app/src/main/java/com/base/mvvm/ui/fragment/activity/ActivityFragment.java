@@ -1,13 +1,9 @@
 package com.base.mvvm.ui.fragment.activity;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +16,7 @@ import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 import com.base.mvvm.databinding.FragmentActivityBinding;
 import com.base.mvvm.di.component.FragmentComponent;
 import com.base.mvvm.ui.base.BaseFragment;
+import com.base.mvvm.ui.fragment.InterfaceCallBackApi;
 import com.base.mvvm.ui.my_booking_detail.MyBookingDetailActivity;
 
 import java.util.ArrayList;
@@ -30,9 +27,10 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 
 
 public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityFragmentViewModel>
-    implements FlexibleAdapter.OnItemClickListener
+    implements FlexibleAdapter.OnItemClickListener, InterfaceCallBackApi<List<MyBookingResponse>>
 {
     FlexibleAdapter mFlexibleAdapterMyBooking;
+    List<MyBookingResponse> listMyBookingResponses;
     Integer currentPage = 0;
     @Override
     public int getBindingVariable() {
@@ -47,19 +45,10 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     @Override
     protected void performDataBinding() {
         showProgressbar("Activities Loading...");
-        viewModel.callApiGetMyBooking(10, currentPage);
-        List<MyBookingResponse> myBookings = new ArrayList<>();
-
-
-        mFlexibleAdapterMyBooking = new FlexibleAdapter<>(myBookings, this);
-        viewModel.listMyBookings.observe(getViewLifecycleOwner(), myBookingResponses -> {
-            myBookings.addAll(myBookingResponses);
-            mFlexibleAdapterMyBooking.updateDataSet(myBookings);
-        });
-        binding.rcvBookingDetail.setAdapter(mFlexibleAdapterMyBooking);
-        binding.rcvBookingDetail.setLayoutManager(
-                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
+        listMyBookingResponses = new ArrayList<>();
+        mFlexibleAdapterMyBooking = new FlexibleAdapter<>(listMyBookingResponses, this);
+        callApiAt(currentPage);
+        viewModel.setListenerCallBack(this);
         binding.rcvBookingDetail.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -74,9 +63,31 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
                     loadMoreData();
                 }
             }
-
-
         });
+        binding.rcvBookingDetail.setAdapter(mFlexibleAdapterMyBooking);
+        binding.rcvBookingDetail.setLayoutManager(
+                new LinearLayoutManager(getContext(),
+                        LinearLayoutManager.VERTICAL,
+                        false));
+
+    }
+
+    private void callApiAt(int page) {
+        viewModel.callApiGetMyBooking(10, page);
+    }
+    @Override
+    public void doSuccessGetData(List<MyBookingResponse> myBookingResponses) {
+        listMyBookingResponses.addAll(myBookingResponses);
+        mFlexibleAdapterMyBooking.updateDataSet(listMyBookingResponses);
+    }
+
+    @Override
+    public void doSuccess() {
+
+    }
+
+    @Override
+    public void doError() {
 
     }
     @Override
@@ -86,7 +97,8 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
 
     private void loadMoreData() {
 //        showProgressbar("Loading more data...");
-        viewModel.callApiGetMyBooking(10, ++currentPage);
+        callApiAt(++currentPage);
+        //viewModel.callApiGetMyBooking2(10, ++currentPage);
     }
     @Override
     public boolean onItemClick(View view, int i) {
@@ -103,6 +115,9 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         }
         return false;
     }
+
+
+
 
 //    @Override
 //    public void showProgressbar(String msg) {

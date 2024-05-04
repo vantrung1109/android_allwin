@@ -2,13 +2,10 @@ package com.base.mvvm.ui.fragment.home;
 
 
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -17,23 +14,21 @@ import com.base.mvvm.R;
 
 import com.base.mvvm.data.model.api.api_search.Prediction;
 import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
-import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 import com.base.mvvm.data.service.DatabaseService;
 import com.base.mvvm.databinding.FragmentHomeBinding;
 import com.base.mvvm.di.component.FragmentComponent;
 import com.base.mvvm.ui.base.BaseFragment;
+import com.base.mvvm.ui.fragment.InterfaceCallBackApi;
 import com.base.mvvm.ui.fragment.home.model.TitleAddressSave;
-import com.base.mvvm.ui.my_booking_detail.MyBookingDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
-public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>
-    implements FlexibleAdapter.OnItemClickListener
+public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>
+    implements FlexibleAdapter.OnItemClickListener, InterfaceCallBackApi<SearchPlaceApi>
 {
 
     FlexibleAdapter mFlexibleAdapterTitleAddressSave, mFlexibleAdapterAddressSaveItem;
@@ -82,18 +77,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
             binding.editDestinationAddress.setText("");
         });
 
+        viewModel.setListenerCallBack(this);
 
         List<Prediction> listPredictions = new ArrayList<>();
+        mFlexibleAdapterAddressSaveItem = new FlexibleAdapter(new ArrayList(), this);
 
-        viewModel.objectSearchPlaces.observe(getViewLifecycleOwner(), searchPlaces -> {
-            listPredictions.addAll(searchPlaces.getPredictions());
-        });
-
-        mFlexibleAdapterAddressSaveItem = new FlexibleAdapter(listPredictions, this);
-
-        viewModel.objectSearchPlaces.observe(getViewLifecycleOwner(), searchPlaces -> {
-            mFlexibleAdapterAddressSaveItem.updateDataSet(searchPlaces.getPredictions());
-        });
 
         binding.rcvItemAddressSave.setAdapter(mFlexibleAdapterAddressSaveItem);
         binding.rcvItemAddressSave.setLayoutManager(
@@ -129,19 +117,31 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
 
     }
 
+    @Override
+    public void doSuccessGetData(SearchPlaceApi searchPlaceApi) {
+        mFlexibleAdapterAddressSaveItem.updateDataSet(searchPlaceApi.getPredictions());
+    }
+
+    @Override
+    public void doSuccess() {
+
+    }
+
+    @Override
+    public void doError() {
+
+    }
+
     public void check_rcv() {
         if (binding.editPickupAddress.hasFocus() || binding.editDestinationAddress.hasFocus()) {
             binding.layoutSaveAddress.setVisibility(View.GONE);
             binding.rcvItemAddressSave.setVisibility(View.VISIBLE);
             binding.btnContinue.setVisibility(View.GONE);
-            if (binding.editPickupAddress.hasFocus()){{
+            if (binding.editPickupAddress.hasFocus()){
                 viewModel.getSearchPlaces(binding.editPickupAddress.getText().toString());
-            }}
+            }
             else{
                 viewModel.getSearchPlaces(binding.editDestinationAddress.getText().toString());
-//                viewModel.objectSearchPlaces.observe(getViewLifecycleOwner(), searchPlaces -> {
-//                    mFlexibleAdapterAddressSaveItem.updateDataSet(searchPlaces.getPredictions());
-//                });
             }
         } else {
             binding.layoutSaveAddress.setVisibility(View.VISIBLE);
@@ -179,4 +179,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
         }
         return false;
     }
+
+
 }

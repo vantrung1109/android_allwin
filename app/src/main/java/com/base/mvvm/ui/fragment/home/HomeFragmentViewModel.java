@@ -3,13 +3,12 @@ package com.base.mvvm.ui.fragment.home;
 import android.content.Intent;
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
 import com.base.mvvm.ui.base.BaseFragmentViewModel;
+import com.base.mvvm.ui.fragment.InterfaceCallBackApi;
 import com.base.mvvm.ui.fragment.home.maps.MapActivity;
 import com.base.mvvm.utils.NetworkUtils;
 
@@ -22,12 +21,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class HomeFragmentViewModel extends BaseFragmentViewModel {
 
 
-    public MutableLiveData<SearchPlaceApi> objectSearchPlaces = new MutableLiveData<>();
     public HomeFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
 
     }
-
+    InterfaceCallBackApi<SearchPlaceApi> callBack;
+    public void setListenerCallBack(InterfaceCallBackApi<SearchPlaceApi> callBack) {
+        this.callBack = callBack;
+    }
 
     public void onBackClick() {
         application.getCurrentActivity().finish();
@@ -53,10 +54,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                 )
                 .subscribe(response -> {
                     if(response.getStatus().equals("OK")){
-                        //showSuccessMessage("Call Api Get My Booking Successfully");
-                        objectSearchPlaces.setValue(response);
-                    }else{
-                        showErrorMessage(response.getStatus());
+                        callBack.doSuccessGetData(response);
                     }
                     hideLoading();
                 }, throwable -> {

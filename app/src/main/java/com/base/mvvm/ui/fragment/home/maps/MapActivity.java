@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.mvvm.R;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
-import com.base.mvvm.data.service.DatabaseService;
 import com.base.mvvm.databinding.ActivityMapBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
+import com.base.mvvm.ui.fragment.InterfaceCallBackApi;
 import com.base.mvvm.ui.fragment.home.model.VehicleOrder;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -38,13 +37,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.databinding.BR;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
 public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
-        implements OnMapReadyCallback,
-    FlexibleAdapter.OnItemClickListener {
+        implements OnMapReadyCallback, FlexibleAdapter.OnItemClickListener, InterfaceCallBackApi<List<ServiceResponse>>
+
+{
 
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap myMap;
@@ -80,29 +79,11 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
 
-        List<ServiceResponse> serviceAutos = new ArrayList<>();
-
-//        viewModel.listServices.observe(this, serviceResponses -> {
-//            serviceAutos.addAll(serviceResponses);
-//        });
-
-        mFlexibleAdapter = new FlexibleAdapter<>(serviceAutos, this);
-
-//        viewModel.listServices.observe(this, serviceResponses -> {
-//            mFlexibleAdapter.updateDataSet(serviceAutos);
-//        });
-
-
-        mFlexibleAdapter = new FlexibleAdapter(DatabaseService.getInstance().getVehicleOrders(), this);
-
-//        viewBinding.rcvVehicleOrder.setAdapter(mFlexibleAdapter);
-//        viewBinding.rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-
-//        mAdapter.setNotifyChangeOfUnfilteredItems(true) //true is the default! This will rebind new item when refreshed
-//                .setMode(SelectableAdapter.Mode.SINGLE);
+        mFlexibleAdapter = new FlexibleAdapter<>(new ArrayList<>(), this);
 
         RecyclerView rcvVehicleOrder = findViewById(R.id.rcv_vehicle_order);
+        viewModel.getServices();
+        viewModel.setListenerCallBack(this);
 
         rcvVehicleOrder.setAdapter(mFlexibleAdapter);
         rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -143,10 +124,23 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         tvNote.setOnClickListener(v -> {
             viewModel.navigateToNote();
         });
+    }
 
+    @Override
+    public void doSuccessGetData(List<ServiceResponse> serviceResponses) {
+        mFlexibleAdapter.updateDataSet(serviceResponses);
+    }
 
+    @Override
+    public void doSuccess() {
 
     }
+
+    @Override
+    public void doError() {
+
+    }
+
 
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -203,4 +197,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
         return false;
     }
+
+
+
 }

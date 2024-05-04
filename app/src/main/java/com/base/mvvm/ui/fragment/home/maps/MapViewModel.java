@@ -3,14 +3,12 @@ package com.base.mvvm.ui.fragment.home.maps;
 import android.content.Intent;
 import android.util.Log;
 
-import androidx.databinding.ObservableField;
-import androidx.lifecycle.MutableLiveData;
-
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 import com.base.mvvm.ui.base.BaseViewModel;
+import com.base.mvvm.ui.fragment.InterfaceCallBackApi;
 import com.base.mvvm.ui.fragment.home.discount.DiscountActivity;
 import com.base.mvvm.ui.fragment.home.note.NoteActivity;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodActivity;
@@ -25,10 +23,16 @@ import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MapViewModel extends BaseViewModel {
-    public MutableLiveData<List<ServiceResponse>> listServices = new MutableLiveData<>();
+    InterfaceCallBackApi<List<ServiceResponse>> callBack;
+
+
     public MapViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-        getServices();
+
+    }
+
+    public void setListenerCallBack(InterfaceCallBackApi<List<ServiceResponse>> callBack) {
+        this.callBack = callBack;
     }
 
     public void getServices(){
@@ -51,7 +55,7 @@ public class MapViewModel extends BaseViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
                         showSuccessMessage("Call Api Get services successfully!");
-                        listServices.setValue(response.getData().getContent());
+                        callBack.doSuccessGetData(response.getData().getContent());
                     }else{
                         showErrorMessage(response.getMessage());
                     }

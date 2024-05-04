@@ -20,7 +20,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_400sdp"
-            android:layout_marginBottom="@dimen/_50sdp"
+
             />
 
         <RelativeLayout
@@ -51,65 +51,6 @@
         <include layout="@layout/layout_bottom_sheet_payment"
             android:id="@+id/layout_bottom_sheet_payment"/>
 
-
-
-
-        <!--        <ScrollView-->
-
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent">-->
-        <!--            <RelativeLayout-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                >-->
-
-        <!--                <FrameLayout-->
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:id="@+id/layout_map">-->
-
-
-        <!--                    <RelativeLayout-->
-        <!--                        android:layout_width="@dimen/_20sdp"-->
-        <!--                        android:layout_height="@dimen/_20sdp"-->
-        <!--                        android:background="@drawable/background_round"-->
-        <!--                        android:layout_marginStart="@dimen/_10sdp"-->
-        <!--                        android:layout_marginTop="@dimen/_10sdp"-->
-        <!--                        android:onClick="@{(v) -> vm.onBack()}">-->
-        <!--                        <ImageView-->
-        <!--                            android:id="@+id/button_back"-->
-        <!--                            android:layout_width="@dimen/_15sdp"-->
-        <!--                            android:layout_height="@dimen/_15sdp"-->
-        <!--                            android:src="@drawable/back"-->
-        <!--                            android:layout_centerVertical="true"-->
-        <!--                            android:layout_centerInParent="true"-->
-
-        <!--                            />-->
-        <!--                    </RelativeLayout>-->
-
-        <!--                </FrameLayout>-->
-
-        <!--                <RelativeLayout-->
-
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_below="@+id/layout_map"-->
-
-        <!--                    >-->
-        <!--                    <ScrollView-->
-        <!--                        android:id="@+id/scrollView"-->
-        <!--                        android:layout_width="match_parent"-->
-        <!--                        android:layout_height="@dimen/_180sdp"-->
-
-        <!--                        >-->
-
-        <!--                    </ScrollView>-->
-
-        <!--                </RelativeLayout>-->
-
-        <!--            </RelativeLayout>-->
-
-        <!--        </ScrollView>-->
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
