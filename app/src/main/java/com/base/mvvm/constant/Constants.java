@@ -30,6 +30,7 @@ public class Constants {
     public static final String FAVOURITE_FRAGMENT = "favourite fragment";
     public static final String ACTIVITY_FRAGMENT = "activity fragment";
     public static final String HOME_FRAGMENT = "home fragment";
+    public static final String APP_DRIVER = "DRIVER_APP";
 
     private Constants(){
 

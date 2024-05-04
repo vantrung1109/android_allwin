@@ -4,6 +4,10 @@ import android.app.Application;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.base.mvvm.data.websocket.Message;
+import com.base.mvvm.data.websocket.SocketEventModel;
+import com.base.mvvm.data.websocket.SocketListener;
+import com.base.mvvm.data.websocket.WebSocketLiveData;
 import com.base.mvvm.di.component.AppComponent;
 import com.base.mvvm.di.component.DaggerAppComponent;
 import com.base.mvvm.others.MyTimberDebugTree;
@@ -17,28 +21,19 @@ import lombok.Getter;
 import lombok.Setter;
 import timber.log.Timber;
 
-public class MVVMApplication extends Application{
+public class MVVMApplication extends Application implements SocketListener {
+    @Getter
     @Setter
     private AppCompatActivity currentActivity;
 
+    @Setter
     @Getter
     private AppComponent appComponent;
 
-    public AppCompatActivity getCurrentActivity() {
-        return currentActivity;
-    }
+    @Setter
+    @Getter
+    private WebSocketLiveData mWebSocketLiveData;
 
-    public void setCurrentActivity(AppCompatActivity currentActivity) {
-        this.currentActivity = currentActivity;
-    }
-
-    public AppComponent getAppComponent() {
-        return appComponent;
-    }
-
-    public void setAppComponent(AppComponent appComponent) {
-        this.appComponent = appComponent;
-    }
 
     @Override
     public void onCreate() {
@@ -64,7 +59,15 @@ public class MVVMApplication extends Application{
         Toasty.Config.getInstance()
                 .allowQueue(false)
                 .apply();
+
+        mWebSocketLiveData = WebSocketLiveData.getInstance();
+        mWebSocketLiveData.setSocketListener(this);
+        mWebSocketLiveData.setAppOnline(true);
+
+
     }
+
+
 
 
     public PublishSubject<Integer> showDialogNoInternetAccess(){
@@ -76,5 +79,51 @@ public class MVVMApplication extends Application{
                         (dialogInterface, i) -> System.exit(0))
         );
         return subject;
+    }
+
+    public void startSocket(String token){
+        mWebSocketLiveData.setSession(token);
+        mWebSocketLiveData.startSocket();
+
+    }
+
+    public void stopSocket(){
+        mWebSocketLiveData.setSession(null);
+        mWebSocketLiveData.stopSocket();
+    }
+
+    @Override
+    public void onMessage(SocketEventModel socketEventModel) {
+
+    }
+
+    @Override
+    public void onTimeout(Message message) {
+
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+    @Override
+    public void onClosed() {
+
+    }
+
+    @Override
+    public void onConnected() {
+
+    }
+
+    @Override
+    public void onSessionExpire() {
+
+    }
+
+    @Override
+    public void onPingFailure() {
+
     }
 }

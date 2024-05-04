@@ -90,6 +90,12 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends BaseView
                 }
             }
         };
+
+        if (token == null || token.equals("NULL")){
+            ((MVVMApplication)application).stopSocket();
+        } else {
+            ((MVVMApplication)application).startSocket(token);
+        }
     }
 
     @Override
