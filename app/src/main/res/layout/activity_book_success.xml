@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.base.mvvm.ui.fragment.home.cancel_trip.cancel_success.CancelTripSuccessViewModel" />
+
+        <variable name="a"
+            type="com.base.mvvm.ui.fragment.home.cancel_trip.cancel_success.CancelTripSuccessActivity" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_cancel_trip"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_180sdp"
+            android:src="@drawable/book_successfully"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_150sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AppBoldText"
+            android:textColor="@color/black"
+            android:text="Chuyến đi đã hoàn tất!"
+            android:textSize="@dimen/_15ssp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/img_cancel_trip"
+            android:layout_marginTop="@dimen/_50sdp" />
+
+        <RelativeLayout
+            android:id="@+id/layout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/background_account_profile"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@drawable/btn_custom_enable"
+                android:enabled="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Đồng ý"
+                android:gravity="center"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:id="@+id/btn_accept"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

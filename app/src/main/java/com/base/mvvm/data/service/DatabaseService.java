@@ -2,6 +2,8 @@ package com.base.mvvm.data.service;
 
 import com.base.mvvm.R;
 
+import com.base.mvvm.ui.fragment.home.cancel_trip.CancelRatingItem;
+import com.base.mvvm.ui.fragment.home.cancel_trip.CancelTripItem;
 import com.base.mvvm.ui.fragment.home.discount.DiscountItem;
 import com.base.mvvm.ui.fragment.home.model.TitleAddressSave;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodItem;
@@ -74,6 +76,21 @@ public class DatabaseService {
         items.add(new DiscountItem(R.drawable.car_discount, 20000.0, 50000.0, "15:00, 20/9/2023"));
         items.add(new DiscountItem(R.drawable.car_discount, 20000.0, 50000.0, "15:00, 20/9/2023"));
         items.add(new DiscountItem(R.drawable.car_discount, 20000.0, 50000.0, "15:00, 20/9/2023"));
+        return items;
+    }
+
+    public List<AbstractFlexibleItem> getCancelItems() {
+        List<AbstractFlexibleItem>  items = new ArrayList<>();
+        items.add(new CancelTripItem("Tôi nhập sai địa chỉ", R.drawable.radiobutton_normal));
+        items.add(new CancelTripItem("Tìm được chỗ gần hơn", R.drawable.radiobutton_normal));
+        items.add(new CancelTripItem("Chưa áp mã giảm giá", R.drawable.radiobutton_normal));
+        return items;
+    }
+    public List<AbstractFlexibleItem> getCancelRatingItems() {
+        List<AbstractFlexibleItem>  items = new ArrayList<>();
+        items.add(new CancelRatingItem("Tuyệt vời", R.drawable.radiobutton_normal));
+        items.add(new CancelRatingItem("Tạm ổn", R.drawable.radiobutton_normal));
+        items.add(new CancelRatingItem("Quá tệ", R.drawable.radiobutton_normal));
         return items;
     }
 

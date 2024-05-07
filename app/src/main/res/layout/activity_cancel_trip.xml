@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="vm"
+            type="com.base.mvvm.ui.fragment.home.cancel_trip.CancelTripViewModel" />
+
+        <variable name="a"
+            type="com.base.mvvm.ui.fragment.home.cancel_trip.CancelTripActivity" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bạn muốn hủy chuyến"
+                style="@style/AppTextTitle"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="normal"
+                android:layout_centerInParent="true"
+                />
+            <ImageView
+                android:id="@+id/button_back"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/back"
+                android:layout_centerVertical="true"
+                android:onClick="@{()->vm.onBack()}"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_below="@+id/layout_title"
+            android:text="Lý do hủy"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="@dimen/_11ssp"
+            android:textStyle="bold"
+            android:textColor="#969696"
+            />
+
+        <FrameLayout
+            android:id="@+id/layout_reason_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/edit_txt_custom"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            >
+
+            <TextView
+                android:id="@+id/tv_reason_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black_full"
+                android:textColorHint="@color/black_full"
+
+                />
+            <ImageView
+                android:id="@+id/img_choose_reasons"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:src="@drawable/right_head_arrow"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/_20sdp"
+                />
+        </FrameLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_reason_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/background_rectangle_brown"
+            android:layout_below="@+id/layout_reason_cancel"
+            android:visibility="gone"
+            >
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:id="@+id/layout_rating_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rcv_reason_cancel"
+            >
+            <TextView
+                android:id="@+id/tv_rating_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+
+                android:text="Bạn đánh giá dịch vụ thế nào"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_11ssp"
+                android:textStyle="bold"
+                android:textColor="#969696"
+                />
+
+            <FrameLayout
+                android:id="@+id/layout_choose_rating"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/tv_rating_reason"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/edit_txt_custom"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/black_full"
+                    android:textColorHint="@color/black_full"
+
+                    />
+                <ImageView
+                    android:id="@+id/img_choose_rating"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:src="@drawable/right_head_arrow"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    />
+            </FrameLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/background_rectangle_brown"
+                android:layout_below="@+id/layout_choose_rating"
+                android:visibility="gone"
+                >
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/layout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/background_account_profile"
+            android:layout_alignParentBottom="true">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@drawable/btn_custom_enable"
+                android:enabled="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Xác nhận hủy"
+                android:gravity="center"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:id="@+id/btn_cancel"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

@@ -73,5 +73,10 @@
         <item name="android:fontFamily"> @font/roboto_medium</item>
         <item name="android:textColor">@color/black</item>
     </style>
+    <style name="AppBoldText">
+        <item name="fontFamily"> @font/roboto_bold </item>
+        <item name="android:fontFamily"> @font/roboto_bold</item>
+        <item name="android:textColor">@color/black_full</item>
+    </style>
 
 </resources>

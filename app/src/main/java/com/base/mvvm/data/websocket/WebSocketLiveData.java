@@ -56,7 +56,7 @@ public class WebSocketLiveData implements Runnable{
 
     @Getter
     @Setter
-    private String codeBooking = "000000";
+    private String codeBooking = "9xsjej";
 
     public void setTimeout(long timeout) {
         this.timeout = timeout;
@@ -233,7 +233,6 @@ public class WebSocketLiveData implements Runnable{
                 socketState = SOCKET_STATE_CONNECTED;
 
                 if(isAppOnline && socketListener != null){
-
                     Message message = new Message();
                     message.setCmd(Command.COMMAND_CLIENT_INFO);
                     message.setPlatform(0);

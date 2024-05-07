@@ -10,6 +10,8 @@ import com.base.mvvm.ViewModelProviderFactory;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.di.scope.ActivityScope;
 import com.base.mvvm.ui.base.BaseActivity;
+import com.base.mvvm.ui.fragment.home.cancel_trip.CancelTripViewModel;
+import com.base.mvvm.ui.fragment.home.cancel_trip.cancel_success.CancelTripSuccessViewModel;
 import com.base.mvvm.ui.fragment.home.discount.DiscountViewModel;
 import com.base.mvvm.ui.fragment.home.note.NoteViewModel;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodViewModel;
@@ -140,5 +142,20 @@ public class ActivityModule {
         Supplier<NoteViewModel> supplier = () -> new NoteViewModel(repository, (MVVMApplication)application);
         ViewModelProviderFactory<NoteViewModel> factory = new ViewModelProviderFactory<>(NoteViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(NoteViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    CancelTripViewModel provideCancelTripViewModel(Repository repository, Context application) {
+        Supplier<CancelTripViewModel> supplier = () -> new CancelTripViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<CancelTripViewModel> factory = new ViewModelProviderFactory<>(CancelTripViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(CancelTripViewModel.class);
+    }
+    @Provides
+    @ActivityScope
+    CancelTripSuccessViewModel provideCancelTripSuccessViewModel(Repository repository, Context application) {
+        Supplier<CancelTripSuccessViewModel> supplier = () -> new CancelTripSuccessViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<CancelTripSuccessViewModel> factory = new ViewModelProviderFactory<>(CancelTripSuccessViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(CancelTripSuccessViewModel.class);
     }
 }

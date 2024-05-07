@@ -187,14 +187,13 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     @Override
     public boolean onItemClick(View view, int i) {
         IFlexible item = mFlexibleAdapter.getItem(i);
-        if (item instanceof VehicleOrder) {
-            VehicleOrder vehicleOrder = (VehicleOrder) item;
+        if (item instanceof ServiceResponse) {
+            ServiceResponse serviceResponse = (ServiceResponse) item;
             if (currentview != null)
                 currentview.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_normal, null));
             view.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_focus, null));
             currentview = view;
         }
-
         return false;
     }
 

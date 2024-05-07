@@ -21,14 +21,18 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class VehicleOrder extends AbstractFlexibleItem<VehicleOrder.VehicleOrderViewHolder> {
 
     private int imgVehicle;
     private String vehicleName;
     private double price;
 
-
+    public VehicleOrder(int imgVehicle, String vehicleName, double price) {
+        this.imgVehicle = imgVehicle;
+        this.vehicleName = vehicleName;
+        this.price = price;
+    }
 
     @Override
     public boolean equals(Object o) {

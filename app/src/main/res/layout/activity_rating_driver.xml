@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="vm"
+            type="com.base.mvvm.ui.fragment.home.cancel_trip.CancelTripViewModel" />
+
+        <variable name="a"
+            type="com.base.mvvm.ui.fragment.home.cancel_trip.CancelTripActivity" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/AppTextTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Đánh giá"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="normal" />
+            <ImageView
+                android:id="@+id/button_back"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/back"
+                android:layout_centerVertical="true"
+                android:onClick="@{()->vm.onBack()}"
+                />
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/img_ava_driver"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:src="@drawable/img_ava_driver_sample"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/layout_title"
+            android:layout_marginTop="@dimen/_30sdp"
+            />
+        <TextView
+            android:id="@+id/tv_rating_driver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bạn đánh giá tài xế như thế nào"
+            style="@style/AppBoldText"
+            android:textSize="@dimen/_15ssp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/img_ava_driver"
+            android:layout_marginTop="@dimen/_15sdp"
+            />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_below="@+id/tv_rating_driver"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_centerHorizontal="true"
+            android:progressTint="#FDDA23"
+            android:stepSize="0.5"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/layout_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rating_bar"
+            android:layout_marginTop="@dimen/_30sdp"
+            >
+            <TextView
+                android:id="@+id/tv_safe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="An toàn"
+
+                style="@style/AppCommonText"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:background="@drawable/btn_disable"
+                />
+            <TextView
+                android:id="@+id/tv_fast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhanh"
+                style="@style/AppCommonText"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:layout_toEndOf="@+id/tv_safe"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/btn_disable"
+                />
+            <TextView
+                android:id="@+id/tv_clean"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phương tiện sạch sẽ"
+                style="@style/AppCommonText"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/btn_disable"
+                />
+        </RelativeLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:hint="Thêm nhận xét của bạn"
+            android:layout_below="@+id/layout_option"
+            android:background="@drawable/btn_disable"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            style="@style/AppCommonText"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:maxLines="10"
+            android:gravity="top"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/layout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/background_account_profile"
+            android:layout_alignParentBottom="true">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@drawable/btn_custom_enable"
+                android:enabled="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Gọi"
+                android:gravity="center"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:id="@+id/btn_continue"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+                />
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+</layout>
