@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import com.base.mvvm.BuildConfig;
 import com.base.mvvm.constant.Constants;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -56,7 +58,7 @@ public class WebSocketLiveData implements Runnable{
 
     @Getter
     @Setter
-    private String codeBooking = "9xsjej";
+    private List<String> codeBooking = new ArrayList<>();
 
     public void setTimeout(long timeout) {
         this.timeout = timeout;
@@ -112,17 +114,16 @@ public class WebSocketLiveData implements Runnable{
     }
 
     protected void postValue(SocketEventModel value) {
-        if( socketListener !=null){
+        if( socketListener !=null) {
             if (value != null && value.getMessage() != null && value.getMessage().getResponseCode() != null
-            && (value.getMessage().getResponseCode() == 200 || value.getMessage().getResponseCode() == 400)) {
+                    && (value.getMessage().getResponseCode() == 200 || value.getMessage().getResponseCode() == 400)) {
                 socketListener.onMessage(value);
             } else if (value != null && value.getMessage() != null && value.getMessage().getResponseCode() != null
-                    && value.getMessage().getResponseCode() == 401){
+                    && value.getMessage().getResponseCode() == 401) {
                 expireToken.add(value.getMessage().getToken());
                 socketListener.onSessionExpire();
             }
         }
-
     }
 
     private synchronized void connect() {
