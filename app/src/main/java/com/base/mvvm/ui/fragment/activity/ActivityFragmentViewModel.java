@@ -8,7 +8,7 @@ import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 
 import com.base.mvvm.ui.base.BaseFragmentViewModel;
-import com.base.mvvm.ui.fragment.InterfaceCallBackApi;
+import com.base.mvvm.ui.fragment.HomeCallBack;
 import com.base.mvvm.utils.NetworkUtils;
 
 import java.util.List;
@@ -24,9 +24,9 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
         super(repository, application);
     }
 
-    InterfaceCallBackApi<List<MyBookingResponse>> callBack;
+    HomeCallBack callBack;
 
-    public void setListenerCallBack(InterfaceCallBackApi<List<MyBookingResponse>> callBack) {
+    public void setListenerCallBack(HomeCallBack callBack) {
         this.callBack = callBack;
     }
 

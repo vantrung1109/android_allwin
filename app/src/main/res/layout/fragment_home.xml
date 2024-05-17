@@ -252,7 +252,7 @@
             android:fontFamily="@font/roboto_bold"
             android:textStyle="bold"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:onClick="@{(v)-> vm.doContinue()}"
+
             />
 
     </RelativeLayout>

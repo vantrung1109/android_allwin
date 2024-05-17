@@ -4,6 +4,11 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DisplayUtils {
 
     private DisplayUtils(){
@@ -99,4 +104,12 @@ public class DisplayUtils {
         return custom_money_string;
     }
 
+    public static String custom_time_remaining(String endDate) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        DateFormat outputFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+
+        Date date = inputFormat.parse(endDate);
+        String formattedDateString = outputFormat.format(date);
+        return formattedDateString;
+    }
 }

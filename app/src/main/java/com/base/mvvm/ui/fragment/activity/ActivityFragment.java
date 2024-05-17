@@ -16,7 +16,7 @@ import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 import com.base.mvvm.databinding.FragmentActivityBinding;
 import com.base.mvvm.di.component.FragmentComponent;
 import com.base.mvvm.ui.base.BaseFragment;
-import com.base.mvvm.ui.fragment.InterfaceCallBackApi;
+import com.base.mvvm.ui.fragment.HomeCallBack;
 import com.base.mvvm.ui.my_booking_detail.MyBookingDetailActivity;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 
 
 public class ActivityFragment extends BaseFragment<FragmentActivityBinding, ActivityFragmentViewModel>
-    implements FlexibleAdapter.OnItemClickListener, InterfaceCallBackApi<List<MyBookingResponse>>
+    implements FlexibleAdapter.OnItemClickListener, HomeCallBack
 {
     FlexibleAdapter mFlexibleAdapterMyBooking;
     List<MyBookingResponse> listMyBookingResponses;
@@ -75,21 +75,7 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
     private void callApiAt(int page) {
         viewModel.callApiGetMyBooking(10, page);
     }
-    @Override
-    public void doSuccessGetData(List<MyBookingResponse> myBookingResponses) {
-        listMyBookingResponses.addAll(myBookingResponses);
-        mFlexibleAdapterMyBooking.updateDataSet(listMyBookingResponses);
-    }
 
-    @Override
-    public void doSuccess() {
-
-    }
-
-    @Override
-    public void doError() {
-
-    }
     @Override
     protected void performDependencyInjection(FragmentComponent buildComponent) {
         buildComponent.inject(this);
@@ -116,7 +102,27 @@ public class ActivityFragment extends BaseFragment<FragmentActivityBinding, Acti
         return false;
     }
 
+    @Override
+    public void doSuccessGetData(Object data) {
+        List<MyBookingResponse> myBookingResponses = (List<MyBookingResponse>) data;
+        listMyBookingResponses.addAll(myBookingResponses);
+        mFlexibleAdapterMyBooking.updateDataSet(listMyBookingResponses);
+    }
 
+    @Override
+    public void doSuccessGetData(List<Object> data) {
+
+    }
+
+    @Override
+    public void doSuccess() {
+
+    }
+
+    @Override
+    public void doError() {
+
+    }
 
 
 //    @Override

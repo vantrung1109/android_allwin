@@ -2,6 +2,8 @@ package com.base.mvvm.ui.fragment.home;
 
 
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,13 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.base.mvvm.BR;
 import com.base.mvvm.R;
 
+import com.base.mvvm.data.model.api.address_by_placeid.Location;
 import com.base.mvvm.data.model.api.api_search.Prediction;
 import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
 import com.base.mvvm.data.service.DatabaseService;
 import com.base.mvvm.databinding.FragmentHomeBinding;
 import com.base.mvvm.di.component.FragmentComponent;
 import com.base.mvvm.ui.base.BaseFragment;
-import com.base.mvvm.ui.fragment.InterfaceCallBackApi;
+import com.base.mvvm.ui.fragment.HomeCallBack;
+import com.base.mvvm.ui.fragment.home.maps.MapActivity;
 import com.base.mvvm.ui.fragment.home.model.TitleAddressSave;
 
 import java.util.ArrayList;
@@ -28,10 +32,16 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
 public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>
-    implements FlexibleAdapter.OnItemClickListener, InterfaceCallBackApi<SearchPlaceApi>
+    implements FlexibleAdapter.OnItemClickListener, HomeCallBack
 {
 
+
+
     FlexibleAdapter mFlexibleAdapterTitleAddressSave, mFlexibleAdapterAddressSaveItem;
+    Prediction prediction_pickup, prediction_destination;
+
+    Location location_1;
+    Location location_2;
 
     @Override
     public int getBindingVariable() {
@@ -77,7 +87,7 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
             binding.editDestinationAddress.setText("");
         });
 
-        viewModel.setListenerCallBack(this);
+        viewModel.setCallBack(this);
 
         List<Prediction> listPredictions = new ArrayList<>();
         mFlexibleAdapterAddressSaveItem = new FlexibleAdapter(new ArrayList(), this);
@@ -113,24 +123,25 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
             binding.rcvItemAddressSave.setVisibility(View.GONE);
         });
 
-
-
-    }
-
-    @Override
-    public void doSuccessGetData(SearchPlaceApi searchPlaceApi) {
-        mFlexibleAdapterAddressSaveItem.updateDataSet(searchPlaceApi.getPredictions());
-    }
-
-    @Override
-    public void doSuccess() {
+        binding.btnContinue.setOnClickListener(v -> {
+            doContinue();
+        });
 
     }
 
-    @Override
-    public void doError() {
+    public void  doContinue(){
 
+        viewModel.setCallBack(this);
+
+        Intent intent = new Intent(this.getActivity(), MapActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("place_id_pickup", prediction_pickup.getPlace_id());
+        bundle.putString("place_id_destination", prediction_destination.getPlace_id());
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.getActivity().startActivity(intent);
     }
+
 
     public void check_rcv() {
         if (binding.editPickupAddress.hasFocus() || binding.editDestinationAddress.hasFocus()) {
@@ -167,10 +178,11 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
             Prediction prediction = (Prediction) flexibleItem;
             if (binding.editPickupAddress.hasFocus()){
                 binding.editPickupAddress.setText(prediction.getDescription());
-
+                prediction_pickup = prediction;
             }
             else{
                 binding.editDestinationAddress.setText(prediction.getDescription());
+                prediction_destination = prediction;
             }
             binding.btnContinue.setVisibility(View.VISIBLE);
             binding.layoutSaveAddress.setVisibility(View.VISIBLE);
@@ -181,4 +193,26 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
     }
 
 
+    @Override
+    public void doSuccessGetData(Object data) {
+        if (data instanceof SearchPlaceApi){
+            SearchPlaceApi searchPlaceApi = (SearchPlaceApi) data;
+            mFlexibleAdapterAddressSaveItem.updateDataSet(searchPlaceApi.getPredictions());
+        }
+    }
+
+    @Override
+    public void doSuccessGetData(List<Object> data) {
+
+    }
+
+    @Override
+    public void doSuccess() {
+
+    }
+
+    @Override
+    public void doError() {
+
+    }
 }

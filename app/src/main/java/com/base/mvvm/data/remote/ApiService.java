@@ -1,10 +1,10 @@
 package com.base.mvvm.data.remote;
 
-import android.app.Service;
-
 import com.base.mvvm.data.model.api.ResponseListObj;
 import com.base.mvvm.data.model.api.ResponseWrapper;
+import com.base.mvvm.data.model.api.address_by_placeid.AddressByPlaceId;
 import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
+import com.base.mvvm.data.model.api.distance.DistanceResponse;
 import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SignUpRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
@@ -15,9 +15,8 @@ import com.base.mvvm.data.model.api.response.customer.AccountResponse;
 import com.base.mvvm.data.model.api.response.customer.LoginResponse;
 import com.base.mvvm.data.model.api.response.customer.SigninResponse;
 import com.base.mvvm.data.model.api.response.customer.UploadFileResponse;
+import com.base.mvvm.data.model.api.response.discount.DiscountResponse;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
-
-import java.io.Serializable;
 
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.MultipartBody;
@@ -62,10 +61,30 @@ public interface ApiService {
                                                                                  @Query("size") Integer size,
                                                                                  @Query("state") Integer state);
 
+    @GET("/v1/promotion/client-list")
+    @Headers({"IgnoreAuth: 1"})
+    Observable<ResponseWrapper<ResponseListObj<DiscountResponse>>> getDiscount(@Query("endDate") String endDate,
+                                                                               @Query("startDate") String startDate,
+                                                                               @Query("page") Integer page,
+                                                                               @Query("size") Integer size,
+                                                                               @Query("state") Integer state);
+
     @GET("place/queryautocomplete/json")
     @Headers({"isSearchPlaces: 1"})
     Observable<SearchPlaceApi> getSearchPlacesGG(@Query("input") String input,
                                            @Query("key") String key);
+
+    @GET("geocode/json")
+    @Headers({"isSearchPlaces: 1"})
+    Observable<AddressByPlaceId> getDetailAddress(@Query("place_id") String placeId,
+                                                  @Query("key") String key);
+
+
+    @GET("distancematrix/json")
+    @Headers({"isSearchPlaces: 1"})
+    Observable<DistanceResponse> getDistance(@Query("destinations") String destinations,
+                                             @Query("origins") String origins,
+                                                  @Query("key") String key);
 
     @GET("v1/user-service/auto-complete")
     Observable<ResponseWrapper<ResponseListObj<ServiceResponse>>> getServices();

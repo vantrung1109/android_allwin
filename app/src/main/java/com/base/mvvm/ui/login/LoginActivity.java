@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+
 import com.base.mvvm.BR;
 import com.base.mvvm.R;
 import com.base.mvvm.databinding.ActivityLoginBinding;

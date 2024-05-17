@@ -80,7 +80,7 @@ public class SignInViewModel extends BaseViewModel {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         application.startActivity(intent, bundle);
                     }else{
-                        showErrorMessage(response.getMessage());
+//                        showErrorMessage(response.getMessage());
                     }
                     hideLoading();
                 }, throwable -> {

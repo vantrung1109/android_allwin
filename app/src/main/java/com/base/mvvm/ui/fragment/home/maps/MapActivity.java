@@ -1,9 +1,11 @@
 package com.base.mvvm.ui.fragment.home.maps;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,13 +16,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.base.mvvm.BR;
 import com.base.mvvm.R;
+import com.base.mvvm.data.model.api.address_by_placeid.AddressByPlaceId;
+import com.base.mvvm.data.model.api.api_search.Prediction;
+import com.base.mvvm.data.model.api.distance.DistanceResponse;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 import com.base.mvvm.databinding.ActivityMapBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
-import com.base.mvvm.ui.fragment.InterfaceCallBackApi;
-import com.base.mvvm.ui.fragment.home.model.VehicleOrder;
+import com.base.mvvm.ui.fragment.HomeCallBack;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,11 +42,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.databinding.BR;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
 public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
-        implements OnMapReadyCallback, FlexibleAdapter.OnItemClickListener, InterfaceCallBackApi<List<ServiceResponse>>
+        implements OnMapReadyCallback, FlexibleAdapter.OnItemClickListener, HomeCallBack
 
 {
 
@@ -56,6 +60,8 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     private BottomSheetBehavior bottomSheetBehaviorPayment;
 
     View currentview;
+    DistanceResponse distanceResponse;
+    List<String> locations = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
@@ -124,22 +130,25 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         tvNote.setOnClickListener(v -> {
             viewModel.navigateToNote();
         });
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String place_id_pickup = "";
+        String place_id_destination ="";
+        if (bundle != null) {
+            place_id_pickup =  bundle.getString("place_id_pickup");
+            place_id_destination =  bundle.getString("place_id_destination");
+        }
+
+        viewModel.setListenerCallBack(this);
+        viewModel.getAddressByPlaceId(place_id_pickup);
+        viewModel.getAddressByPlaceId(place_id_destination);
+
+        //viewModel.getDistance(locations.get(0), locations.get(1));
+
+
     }
 
-    @Override
-    public void doSuccessGetData(List<ServiceResponse> serviceResponses) {
-        mFlexibleAdapter.updateDataSet(serviceResponses);
-    }
-
-    @Override
-    public void doSuccess() {
-
-    }
-
-    @Override
-    public void doError() {
-
-    }
 
 
     private void getLastLocation() {
@@ -197,6 +206,43 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         return false;
     }
 
+    private int count = 0;
+    @Override
+    public void doSuccessGetData(Object data) {
 
+        if (data instanceof List) {
+            List<ServiceResponse> serviceResponses = (List<ServiceResponse>) data;
+            mFlexibleAdapter.updateDataSet(serviceResponses);
+        }
+        if (data instanceof AddressByPlaceId){
 
+            AddressByPlaceId addressByPlaceId = (AddressByPlaceId) data;
+            locations.add(addressByPlaceId.getResults().get(0).getGeometry().getLocation().getLat()
+                    + "," +
+                    addressByPlaceId.getResults().get(0).getGeometry().getLocation().getLng());
+            Log.e("getAddressByPlaceId", locations.toString());
+            if (count == 1)
+                viewModel.getDistance(locations.get(0), locations.get(1));
+            count++;
+
+        }
+        if (data instanceof DistanceResponse){
+            distanceResponse = (DistanceResponse) data;
+        }
+    }
+
+    @Override
+    public void doSuccessGetData(List<Object> data) {
+
+    }
+
+    @Override
+    public void doSuccess() {
+
+    }
+
+    @Override
+    public void doError() {
+
+    }
 }

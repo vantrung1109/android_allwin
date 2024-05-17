@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.base.mvvm.R;
 
+import java.io.Serializable;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -19,7 +20,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Prediction extends AbstractFlexibleItem<Prediction.PredictionViewHolder> {
+public class Prediction extends AbstractFlexibleItem<Prediction.PredictionViewHolder>
+    implements Serializable {
     private String description;
     private List<MatchedSubString> matched_substrings;
     private String place_id;
