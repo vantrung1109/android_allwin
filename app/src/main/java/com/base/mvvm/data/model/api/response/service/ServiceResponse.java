@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.mvvm.R;
+import com.base.mvvm.utils.DisplayUtils;
 
 import org.w3c.dom.Text;
 
@@ -50,6 +51,7 @@ public class ServiceResponse extends AbstractFlexibleItem<ServiceResponse.Servic
     @Override
     public void bindViewHolder(FlexibleAdapter<IFlexible> flexibleAdapter, ServiceViewHolder serviceViewHolder, int i, List<Object> list) {
         serviceViewHolder.tvNameVehicle.setText(name);
+        serviceViewHolder.tvMoney.setText(DisplayUtils.custom_money(Double.parseDouble(price)));
 
     }
 

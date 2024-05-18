@@ -86,6 +86,12 @@ public interface ApiService {
                                              @Query("origins") String origins,
                                                   @Query("key") String key);
 
+    @GET("directions/json")
+    @Headers({"isSearchPlaces: 1"})
+    Observable<DistanceResponse> getDirection(@Query("origin") String origin,
+                                             @Query("destination") String destination,
+                                             @Query("key") String key);
+
     @GET("v1/user-service/auto-complete")
     Observable<ResponseWrapper<ResponseListObj<ServiceResponse>>> getServices();
 

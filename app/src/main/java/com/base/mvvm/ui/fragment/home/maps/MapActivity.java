@@ -3,6 +3,7 @@ package com.base.mvvm.ui.fragment.home.maps;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ import com.base.mvvm.databinding.ActivityMapBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
 import com.base.mvvm.ui.fragment.HomeCallBack;
+import com.base.mvvm.ui.fragment.home.maps.model.ServicePrice;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,10 +35,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +66,8 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     private BottomSheetBehavior bottomSheetBehaviorPayment;
 
     View currentview;
-    DistanceResponse distanceResponse;
-    List<String> locations = new ArrayList<>();
+    List<ServiceResponse> serviceResponses;
+
 
     @Override
     public int getLayoutId() {
@@ -81,19 +87,10 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        viewModel.setListenerCallBack(this);
+        serviceResponses = new ArrayList<>();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
-
-        mFlexibleAdapter = new FlexibleAdapter<>(new ArrayList<>(), this);
-
-        RecyclerView rcvVehicleOrder = findViewById(R.id.rcv_vehicle_order);
-        viewModel.getServices();
-        viewModel.setListenerCallBack(this);
-
-        rcvVehicleOrder.setAdapter(mFlexibleAdapter);
-        rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
 
         bottomSheetBehavior = BottomSheetBehavior.from(viewBinding.layoutBottomSheet);
         bottomSheetBehaviorPayment = BottomSheetBehavior.from(viewBinding.layoutBottomSheetPayment);
@@ -140,11 +137,14 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             place_id_destination =  bundle.getString("place_id_destination");
         }
 
-        viewModel.setListenerCallBack(this);
-        viewModel.getAddressByPlaceId(place_id_pickup);
-        viewModel.getAddressByPlaceId(place_id_destination);
+        // Call Api Get Distance
+        viewModel.getAddressByPlaceId(place_id_pickup, place_id_destination);
 
-        //viewModel.getDistance(locations.get(0), locations.get(1));
+        // Call Api Services
+        mFlexibleAdapter = new FlexibleAdapter<>(new ArrayList<>(), this);
+        RecyclerView rcvVehicleOrder = findViewById(R.id.rcv_vehicle_order);
+        rcvVehicleOrder.setAdapter(mFlexibleAdapter);
+        rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
 
     }
@@ -175,10 +175,44 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         myMap = googleMap;
-        LatLng sydney = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        myMap.addMarker(new MarkerOptions().position(sydney).title("My current Location"));
-        myMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        myMap.animateCamera(CameraUpdateFactory.zoomTo(16.0f));
+//        LatLng sydney = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+//        myMap.addMarker(new MarkerOptions().position(sydney).title("My current Location"));
+
+
+
+        viewModel.locationOrigin.observe(this, location -> {
+            viewModel.locationDestination.observe(this, location2 -> {
+                if (location2 != null && location != null) {
+                    LatLng origin = new LatLng(location.getLat(), location.getLng());
+                    LatLng destination = new LatLng(location2.getLat(), location2.getLng());
+                    MarkerOptions markerOrigin = new MarkerOptions().position(origin).title("Origin Location");
+                    MarkerOptions markerDestination = new MarkerOptions().position(destination).title("Destination Location");
+
+                    // Draw a line between the two markers
+                    PolylineOptions polylineOptions = new PolylineOptions()
+                            .add(markerOrigin.getPosition())
+                            .add(markerDestination.getPosition())
+                            .color(Color.RED)
+                            .width(5f);
+                    googleMap.addMarker(markerOrigin);
+                    googleMap.addMarker(markerDestination);
+                    googleMap.addPolyline(polylineOptions);
+
+                    // Adjust the camera to show both markers and the line
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    builder.include(markerOrigin.getPosition());
+                    builder.include(markerDestination.getPosition());
+                    LatLngBounds bounds = builder.build();
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                }
+            });
+        });
+
+
+
+
+
+
     }
 
     @Override
@@ -211,23 +245,16 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     public void doSuccessGetData(Object data) {
 
         if (data instanceof List) {
-            List<ServiceResponse> serviceResponses = (List<ServiceResponse>) data;
+            serviceResponses = (List<ServiceResponse>) data;
             mFlexibleAdapter.updateDataSet(serviceResponses);
+
         }
         if (data instanceof AddressByPlaceId){
-
             AddressByPlaceId addressByPlaceId = (AddressByPlaceId) data;
-            locations.add(addressByPlaceId.getResults().get(0).getGeometry().getLocation().getLat()
-                    + "," +
-                    addressByPlaceId.getResults().get(0).getGeometry().getLocation().getLng());
-            Log.e("getAddressByPlaceId", locations.toString());
-            if (count == 1)
-                viewModel.getDistance(locations.get(0), locations.get(1));
-            count++;
 
         }
         if (data instanceof DistanceResponse){
-            distanceResponse = (DistanceResponse) data;
+            DistanceResponse distanceResponse = (DistanceResponse) data;
         }
     }
 
