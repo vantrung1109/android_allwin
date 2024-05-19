@@ -63,8 +63,8 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     FusedLocationProviderClient fusedLocationProviderClient;
     FlexibleAdapter mFlexibleAdapter;
 
-    private BottomSheetBehavior bottomSheetBehavior;
-    private BottomSheetBehavior bottomSheetBehaviorPayment;
+    private BottomSheetBehavior bottomSheetBehavior, bottomSheetBehaviorPayment, bottomSheetBehaviorWaiting;
+
 
     View currentview;
     ServiceResponse currentServiceResponse;
@@ -96,13 +96,17 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
         bottomSheetBehavior = BottomSheetBehavior.from(viewBinding.layoutBottomSheet);
         bottomSheetBehaviorPayment = BottomSheetBehavior.from(viewBinding.layoutBottomSheetPayment);
+        bottomSheetBehaviorWaiting = BottomSheetBehavior.from(viewBinding.layoutBottomSheetWaiting);
+        bottomSheetBehaviorWaiting.setHideable(true);
+        bottomSheetBehaviorWaiting.setState(BottomSheetBehavior.STATE_HIDDEN);
+
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull @org.jetbrains.annotations.NotNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     bottomSheetBehaviorPayment.setHideable(true);
                     bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_HIDDEN);
-                } else {
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED){
                    bottomSheetBehaviorPayment.setHideable(false);
                    bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
@@ -162,8 +166,16 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
                     }
                 });
             }
+            bottomSheetBehavior.setHideable(true);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            bottomSheetBehaviorPayment.setHideable(true);
+            bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_HIDDEN);
+            bottomSheetBehaviorWaiting.setHideable(false);
+            bottomSheetBehaviorWaiting.setState(BottomSheetBehavior.STATE_COLLAPSED);
             viewModel.createBookingRequest();
         });
+
+
 
     }
 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_account_profile"
+        android:layout_gravity="bottom"
+
+        >
+        <RelativeLayout
+            android:id="@+id/layout_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            >
+
+            <ProgressBar
+                android:id="@+id/progressbar_load_booking"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_booking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đang tìm tài xế cho bạn"
+                style="@style/AppCommonText"
+                android:layout_below="@+id/progressbar_load_booking"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_20sdp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chuyến đi sẽ sớm bắt đầu"
+                style="@style/AppCommonText"
+                android:textColor="@color/brown_edit_txt_non_focus"
+                android:layout_below="@+id/tv_booking"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/_11ssp"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+            
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_below="@+id/layout_note"
+
+            android:background="@drawable/btn_custom_enable_no_background"
+            android:enabled="true"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="Hủy"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="@color/btn_login"
+            android:clickable="true"
+            android:id="@+id/btn_order"
+            android:fontFamily="@font/roboto_bold"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            />
+    </RelativeLayout>
+</RelativeLayout>
