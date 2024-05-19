@@ -11,6 +11,7 @@ import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.address_by_placeid.Location;
+import com.base.mvvm.data.model.api.request.BookingCreateRequest;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 import com.base.mvvm.ui.base.BaseViewModel;
 import com.base.mvvm.ui.fragment.HomeCallBack;
@@ -36,7 +37,9 @@ public class MapViewModel extends BaseViewModel {
 
     public MutableLiveData<Location> locationOrigin = new MutableLiveData<>();
     public MutableLiveData<Location> locationDestination = new MutableLiveData<>();
-    //public MutableLiveData<Double> distance = new MutableLiveData<>();
+    public MutableLiveData<String> distance = new MutableLiveData<>();
+
+    public MutableLiveData<BookingCreateRequest> bookingCreateRequest = new MutableLiveData<>();
 
     public MapViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
@@ -72,7 +75,10 @@ public class MapViewModel extends BaseViewModel {
 
                         Gson gson = new Gson();
                         for (ServiceResponse serviceResponse : serviceResponses) {
+                            Log.e("ServiceResponse", serviceResponse.toString());
+
                             ServicePrice servicePrice = gson.fromJson(serviceResponse.getPrice(), ServicePrice.class);
+                            Log.e("ServicePrice", servicePrice.toString());
                             serviceResponse.setPrice(ServicePrice.calculatePrice(distance, servicePrice) + "");
                         }
 
@@ -111,7 +117,12 @@ public class MapViewModel extends BaseViewModel {
                     if (response.getStatus().equals("OK")){
                         Log.e("getDetailAddress", response.getResults().toString());
                         callBack.doSuccessGetData(response);
+
                         locationOrigin.setValue(response.getResults().get(0).getGeometry().getLocation());
+                        bookingCreateRequest.setValue(new BookingCreateRequest());
+                        bookingCreateRequest.getValue().setPickupAddress(response.getResults().get(0).getFormatted_address());
+                        bookingCreateRequest.getValue().setPickupLat(response.getResults().get(0).getGeometry().getLocation().getLat());
+                        bookingCreateRequest.getValue().setPickupLong(response.getResults().get(0).getGeometry().getLocation().getLng());
                         getDestinationAddressByPlaceId(destinationId);
                     }
                     hideLoading();
@@ -121,7 +132,7 @@ public class MapViewModel extends BaseViewModel {
                 })
         );
     }
-    public void getDestinationAddressByPlaceId ( String destinationId){
+    public void getDestinationAddressByPlaceId (String destinationId){
         showLoading();
         compositeDisposable.add(repository.getApiService()
                 .getDetailAddress(destinationId,
@@ -144,6 +155,9 @@ public class MapViewModel extends BaseViewModel {
                         Log.e("getDetailAddress", response.getResults().toString());
                         callBack.doSuccessGetData(response);
                         locationDestination.setValue(response.getResults().get(0).getGeometry().getLocation());
+                        bookingCreateRequest.getValue().setDestinationAddress(response.getResults().get(0).getFormatted_address());
+                        bookingCreateRequest.getValue().setDestinationLat(response.getResults().get(0).getGeometry().getLocation().getLat());
+                        bookingCreateRequest.getValue().setDestinationLong(response.getResults().get(0).getGeometry().getLocation().getLng());
                         getDistance(
                                 locationOrigin.getValue().getLat() + "," + locationOrigin.getValue().getLng(),
                                 locationDestination.getValue().getLat() + "," + locationDestination.getValue().getLng());
@@ -183,6 +197,7 @@ public class MapViewModel extends BaseViewModel {
                         String numericValue = distanceString.replaceAll("[^0-9.]", "");
                         double distance = Double.parseDouble(numericValue);
                         distance = distance * 1000;
+                        bookingCreateRequest.getValue().setDistance(distance);
                         getServices(distance);
 
                     }
@@ -192,6 +207,40 @@ public class MapViewModel extends BaseViewModel {
                     hideLoading();
                 })
         );
+    }
+
+    public void createBookingRequest(){
+        showLoading();
+        compositeDisposable.add(repository.getApiService()
+                .createBooking(bookingCreateRequest.getValue())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(throwable ->{
+                    return throwable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+                        @Override
+                        public ObservableSource<?> apply(Throwable throwable) throws Throwable {
+                            if (NetworkUtils.checkNetworkError(throwable)){
+                                return application.showDialogNoInternetAccess();
+                            } else
+                                return Observable.error(throwable);
+                        }
+                    });
+                })
+                .subscribe(response -> {
+                    if (response.isResult()){
+                        Log.e("createBooking", response.toString());
+                        callBack.doSuccessGetData(response);
+//                        navigateToPaymentMethod();
+                    } else {
+                        showErrorMessage(response.getMessage());
+                    }
+                    hideLoading();
+                }, throwable -> {
+                    showErrorMessage(application.getResources().getString(R.string.no_internet));
+                    hideLoading();
+                })
+        );
+
     }
 
 //    public void getDirection (String origin, String destination){

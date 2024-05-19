@@ -5,6 +5,7 @@ import com.base.mvvm.data.model.api.ResponseWrapper;
 import com.base.mvvm.data.model.api.address_by_placeid.AddressByPlaceId;
 import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
 import com.base.mvvm.data.model.api.distance.DistanceResponse;
+import com.base.mvvm.data.model.api.request.BookingCreateRequest;
 import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SignUpRequest;
 import com.base.mvvm.data.model.api.request.SigninRequest;
@@ -91,6 +92,10 @@ public interface ApiService {
     Observable<DistanceResponse> getDirection(@Query("origin") String origin,
                                              @Query("destination") String destination,
                                              @Query("key") String key);
+
+    @POST("v1/booking/create")
+    Observable<ResponseWrapper<BookingCreateRequest>> createBooking(@Body BookingCreateRequest request);
+
 
     @GET("v1/user-service/auto-complete")
     Observable<ResponseWrapper<ResponseListObj<ServiceResponse>>> getServices();

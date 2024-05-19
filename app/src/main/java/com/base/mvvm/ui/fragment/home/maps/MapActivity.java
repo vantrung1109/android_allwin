@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,9 +67,10 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     private BottomSheetBehavior bottomSheetBehaviorPayment;
 
     View currentview;
+    ServiceResponse currentServiceResponse;
     List<ServiceResponse> serviceResponses;
 
-
+    TextView btnOrder;
     @Override
     public int getLayoutId() {
         return R.layout.activity_map;
@@ -118,6 +120,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         TextView tvCash = findViewById(R.id.tv_cash);
         TextView tvDiscount = findViewById(R.id.tv_discount);
         TextView tvNote = findViewById(R.id.tv_note);
+        btnOrder = findViewById(R.id.btn_order);
         tvCash.setOnClickListener(v -> {
             viewModel.navigateToPaymentMethod();
         });
@@ -127,6 +130,8 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         tvNote.setOnClickListener(v -> {
             viewModel.navigateToNote();
         });
+        btnOrder.setEnabled(false);
+        btnOrder.setBackground(getResources().getDrawable(R.drawable.btn_disable, null));
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -146,6 +151,19 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         rcvVehicleOrder.setAdapter(mFlexibleAdapter);
         rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
+
+        btnOrder.setOnClickListener(v -> {
+            if (currentServiceResponse != null) {
+                viewModel.bookingCreateRequest.observe(this, bookingCreateRequest -> {
+                    if (bookingCreateRequest != null) {
+                        bookingCreateRequest.setServiceId(currentServiceResponse.getId());
+                        bookingCreateRequest.setMoney(Double.parseDouble(currentServiceResponse.getPrice()));
+                        bookingCreateRequest.setPromotionMoney(0.0);
+                    }
+                });
+            }
+            viewModel.createBookingRequest();
+        });
 
     }
 
@@ -208,11 +226,6 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             });
         });
 
-
-
-
-
-
     }
 
     @Override
@@ -231,10 +244,12 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     public boolean onItemClick(View view, int i) {
         IFlexible item = mFlexibleAdapter.getItem(i);
         if (item instanceof ServiceResponse) {
-            ServiceResponse serviceResponse = (ServiceResponse) item;
+            currentServiceResponse = (ServiceResponse) item;
             if (currentview != null)
                 currentview.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_normal, null));
             view.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_focus, null));
+            btnOrder.setEnabled(true);
+            btnOrder.setBackground(getResources().getDrawable(R.drawable.btn_custom_enable, null));
             currentview = view;
         }
         return false;
