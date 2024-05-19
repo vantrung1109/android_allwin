@@ -75,10 +75,7 @@ public class MapViewModel extends BaseViewModel {
 
                         Gson gson = new Gson();
                         for (ServiceResponse serviceResponse : serviceResponses) {
-                            Log.e("ServiceResponse", serviceResponse.toString());
-
                             ServicePrice servicePrice = gson.fromJson(serviceResponse.getPrice(), ServicePrice.class);
-                            Log.e("ServicePrice", servicePrice.toString());
                             serviceResponse.setPrice(ServicePrice.calculatePrice(distance, servicePrice) + "");
                         }
 
