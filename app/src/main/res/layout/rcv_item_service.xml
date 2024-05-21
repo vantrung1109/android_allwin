@@ -17,7 +17,7 @@
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:background="@drawable/background_vehicle_order"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         >
         <ImageView
             android:id="@+id/img_vehicle"

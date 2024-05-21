@@ -1,5 +1,7 @@
 package com.base.mvvm.ui.fragment.home.discount;
 
+import android.util.Log;
+
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.data.model.api.response.discount.DiscountResponse;
@@ -54,12 +56,16 @@ public class DiscountViewModel extends BaseViewModel {
                 .subscribe(response -> {
                     if (response.isResult()) {
                         showSuccessMessage("Call Api Get Discount Successfully");
+                        
+                        //List<DiscountResponse> listDiscount = response.getData().getContent();
                         if (callBack != null) {
                             callBack.doSuccessGetData(response.getData().getContent());
+                            //Log.e("DiscountViewModel", "callDiscount: " + response.getData().getContent());
                         }
                     }
                 }, throwable -> {
-                    showErrorMessage(throwable.getMessage());
+                    Log.e("DiscountViewModel", "callDiscount: " + throwable.getMessage());
+                    //showErrorMessage(throwable.getMessage());
                     hideLoading();
                         }
 

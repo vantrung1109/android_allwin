@@ -14,7 +14,6 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -45,7 +44,7 @@ public class VehicleOrder extends AbstractFlexibleItem<VehicleOrder.VehicleOrder
 
     @Override
     public int getLayoutRes() {
-        return R.layout.rcv_item_vehicle_price;
+        return R.layout.rcv_item_service;
     }
 
     @Override

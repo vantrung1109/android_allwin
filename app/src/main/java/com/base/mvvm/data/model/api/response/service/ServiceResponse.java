@@ -1,16 +1,12 @@
 package com.base.mvvm.data.model.api.response.service;
 
-import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.mvvm.R;
 import com.base.mvvm.utils.DisplayUtils;
-
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.List;
@@ -38,9 +34,16 @@ public class ServiceResponse extends AbstractFlexibleItem<ServiceResponse.Servic
     private String size;
     private String weight;
 
+
+    public static View firstView;
+    @Override
+    public boolean equals(Object o) {
+        return false;
+    }
+
     @Override
     public int getLayoutRes() {
-        return R.layout.rcv_item_vehicle_price;
+        return R.layout.rcv_item_service;
     }
 
     @Override
@@ -50,6 +53,16 @@ public class ServiceResponse extends AbstractFlexibleItem<ServiceResponse.Servic
 
     @Override
     public void bindViewHolder(FlexibleAdapter<IFlexible> flexibleAdapter, ServiceViewHolder serviceViewHolder, int i, List<Object> list) {
+
+        if (i == 0){
+            firstView = serviceViewHolder.itemView;
+            Log.e("ServiceResponse", "bindViewHolder: " + firstView);
+            serviceViewHolder.itemView.setBackground(serviceViewHolder.itemView.getContext().getResources().getDrawable(R.drawable.background_vehicle_focus, null));
+        }
+
+
+
+
         serviceViewHolder.tvNameVehicle.setText(name);
         serviceViewHolder.tvMoney.setText(DisplayUtils.custom_money(Double.parseDouble(price)));
 

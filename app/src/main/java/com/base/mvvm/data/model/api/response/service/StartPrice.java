@@ -1,4 +1,4 @@
-package com.base.mvvm.ui.fragment.home.maps.model;
+package com.base.mvvm.data.model.api.response.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StartPrice {
-    int distance;
-    double price;
+    Integer distance;
+    Double price;
 }

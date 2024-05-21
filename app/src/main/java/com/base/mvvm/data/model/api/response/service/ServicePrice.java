@@ -1,4 +1,4 @@
-package com.base.mvvm.ui.fragment.home.maps.model;
+package com.base.mvvm.data.model.api.response.service;
 
 import java.util.List;
 
@@ -32,12 +32,20 @@ public class ServicePrice {
             for (int i = 0; i < servicePrice.getPrices().size(); i++) {
                 PriceRange priceRange = servicePrice.getPrices().get(i);
 
+                // Giá trị lớn nhất
+                if (i == servicePrice.getPrices().size() - 1 &&
+                        priceRange.getTo() == null &&
+                        distance >= priceRange.getFrom()){
+                    totalPrice += (distance - priceRange.getFrom())/1000 * priceRange.getPrice();
+                    break;
+                }
+
                 // Case 3: if distance is in the range of the price range
                 if (distance >= priceRange.getFrom() && distance <= priceRange.getTo()) {
                     totalPrice += (distance - priceRange.getFrom())/1000 * priceRange.getPrice();
                 }
                 // Case 4: if distance is greater than the range of the price range
-                else if (distance > priceRange.getTo() && priceRange.getTo()!=0) {
+                else if (priceRange.getTo() != null && distance > priceRange.getTo() ) {
                     totalPrice += (double) (priceRange.getTo() - priceRange.getFrom()) /1000 * priceRange.getPrice();
                 }
             }

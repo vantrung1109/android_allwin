@@ -1,4 +1,4 @@
-package com.base.mvvm.ui.fragment.home.maps.model;
+package com.base.mvvm.data.model.api.response.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PriceRange {
-    int from;
-    int to;
-    double price;
+    Integer from;
+    Integer to;
+    Double price;
 }

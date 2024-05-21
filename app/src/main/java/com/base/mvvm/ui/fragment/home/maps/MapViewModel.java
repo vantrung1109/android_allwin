@@ -1,10 +1,9 @@
 package com.base.mvvm.ui.fragment.home.maps;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
-import androidx.databinding.ObservableField;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.base.mvvm.MVVMApplication;
@@ -16,11 +15,10 @@ import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 import com.base.mvvm.ui.base.BaseViewModel;
 import com.base.mvvm.ui.fragment.HomeCallBack;
 import com.base.mvvm.ui.fragment.home.discount.DiscountActivity;
-import com.base.mvvm.ui.fragment.home.maps.model.ServicePrice;
+import com.base.mvvm.data.model.api.response.service.ServicePrice;
 import com.base.mvvm.ui.fragment.home.note.NoteActivity;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodActivity;
 import com.base.mvvm.utils.NetworkUtils;
-import com.google.android.datatransport.runtime.Destination;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -276,11 +274,7 @@ public class MapViewModel extends BaseViewModel {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         application.startActivity(intent);
     }
-    public void navigateToDiscount(){
-        Intent intent = new Intent(application, DiscountActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        application.startActivity(intent);
-    }
+
     public void navigateToNote(){
         Intent intent = new Intent(application, NoteActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

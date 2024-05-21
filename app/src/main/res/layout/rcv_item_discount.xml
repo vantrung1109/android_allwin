@@ -94,11 +94,10 @@
                         />
                 </RelativeLayout>
 
-
-                <Button
+                <TextView
                     android:id="@+id/btn_use_discount"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Dùng ngay"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/_10sdp"
@@ -107,6 +106,10 @@
                     android:background="@drawable/btn_use_discount"
                     android:textSize="@dimen/_11sdp"
                     android:textAllCaps="false"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     />
 
             </RelativeLayout>

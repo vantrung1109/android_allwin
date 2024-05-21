@@ -1,6 +1,8 @@
 package com.base.mvvm.ui.fragment.home.maps;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -8,7 +10,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,14 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.base.mvvm.BR;
 import com.base.mvvm.R;
 import com.base.mvvm.data.model.api.address_by_placeid.AddressByPlaceId;
-import com.base.mvvm.data.model.api.api_search.Prediction;
 import com.base.mvvm.data.model.api.distance.DistanceResponse;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 import com.base.mvvm.databinding.ActivityMapBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
 import com.base.mvvm.ui.fragment.HomeCallBack;
-import com.base.mvvm.ui.fragment.home.maps.model.ServicePrice;
+import com.base.mvvm.ui.fragment.home.discount.DiscountActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,13 +37,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +54,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
 {
 
+    private static final int REQUEST_CODE_DISCOUNT = 1;
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap myMap;
 
@@ -71,6 +70,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     List<ServiceResponse> serviceResponses;
 
     TextView btnOrder;
+    RecyclerView rcvServices;
     @Override
     public int getLayoutId() {
         return R.layout.activity_map;
@@ -129,14 +129,16 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             viewModel.navigateToPaymentMethod();
         });
         tvDiscount.setOnClickListener(v -> {
-            viewModel.navigateToDiscount();
+            navigateToDiscount();
         });
         tvNote.setOnClickListener(v -> {
             viewModel.navigateToNote();
         });
-        btnOrder.setEnabled(false);
-        btnOrder.setBackground(getResources().getDrawable(R.drawable.btn_disable, null));
+//        btnOrder.setEnabled(false);
+//        btnOrder.setBackground(getResources().getDrawable(R.drawable.btn_disable, null));
 
+
+        // Get pick up, destination
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String place_id_pickup = "";
@@ -151,11 +153,11 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
         // Call Api Services
         mFlexibleAdapter = new FlexibleAdapter<>(new ArrayList<>(), this);
-        RecyclerView rcvVehicleOrder = findViewById(R.id.rcv_vehicle_order);
-        rcvVehicleOrder.setAdapter(mFlexibleAdapter);
-        rcvVehicleOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rcvServices = findViewById(R.id.rcv_services);
+        rcvServices.setAdapter(mFlexibleAdapter);
+        rcvServices.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-
+        // Create Booking
         btnOrder.setOnClickListener(v -> {
             if (currentServiceResponse != null) {
                 viewModel.bookingCreateRequest.observe(this, bookingCreateRequest -> {
@@ -200,15 +202,16 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
                 }
             }
         });
+
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         myMap = googleMap;
-//        LatLng sydney = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-//        myMap.addMarker(new MarkerOptions().position(sydney).title("My current Location"));
-
-
+        LatLng sydney = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        myMap.addMarker(new MarkerOptions().position(sydney).title("My current Location"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(16.0f));
 
         viewModel.locationOrigin.observe(this, location -> {
             viewModel.locationDestination.observe(this, location2 -> {
@@ -233,7 +236,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
                     builder.include(markerOrigin.getPosition());
                     builder.include(markerDestination.getPosition());
                     LatLngBounds bounds = builder.build();
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                    //googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
                 }
             });
         });
@@ -257,24 +260,31 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         IFlexible item = mFlexibleAdapter.getItem(i);
         if (item instanceof ServiceResponse) {
             currentServiceResponse = (ServiceResponse) item;
-            if (currentview != null)
+            if (currentview != null) {
                 currentview.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_normal, null));
+            }
+            if (i != 0){
+                rcvServices.getChildAt(0).setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_normal, null));
+            }
             view.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_focus, null));
-            btnOrder.setEnabled(true);
-            btnOrder.setBackground(getResources().getDrawable(R.drawable.btn_custom_enable, null));
+
             currentview = view;
         }
         return false;
     }
 
+
+
     private int count = 0;
+    @SuppressLint("CheckResult")
     @Override
     public void doSuccessGetData(Object data) {
 
         if (data instanceof List) {
             serviceResponses = (List<ServiceResponse>) data;
+            currentServiceResponse = serviceResponses.get(0);
             mFlexibleAdapter.updateDataSet(serviceResponses);
-
+            Log.e("MapActivity", "current: " + currentview);
         }
         if (data instanceof AddressByPlaceId){
             AddressByPlaceId addressByPlaceId = (AddressByPlaceId) data;
@@ -298,5 +308,33 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     @Override
     public void doError() {
 
+    }
+
+    public void navigateToDiscount(){
+        Intent intent = new Intent(application, DiscountActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("price", currentServiceResponse.getPrice());
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityForResult(intent, REQUEST_CODE_DISCOUNT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_DISCOUNT && resultCode == Activity.RESULT_OK && data != null) {
+            Bundle bundle = data.getExtras();
+
+            if (bundle != null && bundle.containsKey("discount_value")) {
+                Double discount = bundle.getDouble("discount_value");
+                if (discount != null) {
+                    Double price = Double.parseDouble(currentServiceResponse.getPrice());
+                    Double total = price - discount;
+                    currentServiceResponse.setPrice(String.valueOf(total));
+                    mFlexibleAdapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 }
