@@ -20,4 +20,5 @@ public class BookingCreateRequest {
     private Long promotionId;
     private Long serviceId;
     private String customerNote;
+    private Integer paymentKind;
 }

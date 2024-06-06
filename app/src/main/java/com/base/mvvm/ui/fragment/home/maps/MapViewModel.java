@@ -118,6 +118,7 @@ public class MapViewModel extends BaseViewModel {
                         bookingCreateRequest.getValue().setPickupAddress(response.getResults().get(0).getFormatted_address());
                         bookingCreateRequest.getValue().setPickupLat(response.getResults().get(0).getGeometry().getLocation().getLat());
                         bookingCreateRequest.getValue().setPickupLong(response.getResults().get(0).getGeometry().getLocation().getLng());
+                        bookingCreateRequest.getValue().setPaymentKind(1);
                         getDestinationAddressByPlaceId(destinationId);
                     }
                     hideLoading();
@@ -206,6 +207,7 @@ public class MapViewModel extends BaseViewModel {
 
     public void createBookingRequest(){
         showLoading();
+
         compositeDisposable.add(repository.getApiService()
                 .createBooking(bookingCreateRequest.getValue())
                 .subscribeOn(Schedulers.io())
