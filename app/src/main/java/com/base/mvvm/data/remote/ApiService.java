@@ -12,6 +12,7 @@ import com.base.mvvm.data.model.api.request.SigninRequest;
 import com.base.mvvm.data.model.api.request.UpdateProfileRequest;
 import com.base.mvvm.data.model.api.response.booking.MyBookingResponse;
 
+import com.base.mvvm.data.model.api.response.booking.booking_create.BookingCreateResponse;
 import com.base.mvvm.data.model.api.response.customer.AccountResponse;
 import com.base.mvvm.data.model.api.response.customer.LoginResponse;
 import com.base.mvvm.data.model.api.response.customer.SigninResponse;
@@ -94,7 +95,7 @@ public interface ApiService {
                                              @Query("key") String key);
 
     @POST("v1/booking/create")
-    Observable<ResponseWrapper<BookingCreateRequest>> createBooking(@Body BookingCreateRequest request);
+    Observable<ResponseWrapper<BookingCreateResponse>> createBooking(@Body BookingCreateRequest request);
 
 
     @GET("v1/user-service/auto-complete")
