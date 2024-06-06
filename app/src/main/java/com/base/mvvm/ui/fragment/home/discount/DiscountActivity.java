@@ -91,14 +91,14 @@ implements HomeCallBack,
 //        });
 
         viewBinding.btnContinue.setOnClickListener(v -> {
-                Intent intent = new Intent();
+
                 IFlexible flexibleItem = mFlexibleAdapter.getItem(DiscountResponse.getCurrentPositionItem());
                 currentDiscountResponse = (DiscountResponse) flexibleItem;
+                Intent resultIntent = new Intent();
                 Bundle bundle1 = new Bundle();
                 bundle1.putDouble("discount_value", currentDiscountResponse.getDiscountValue());
-                intent.putExtras(bundle1);
-                setResult(Activity.RESULT_OK, intent);
-                finishActivity(REQUEST_CODE_DISCOUNT);
+                resultIntent.putExtras(bundle1);
+                setResult(RESULT_OK, resultIntent);
                 finish();
         });
 

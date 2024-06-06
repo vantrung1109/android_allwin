@@ -1,5 +1,7 @@
 package com.base.mvvm.ui.fragment.home.maps;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +33,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MapViewModel extends BaseViewModel {
     HomeCallBack callBack;
-
 
     public MutableLiveData<Location> locationOrigin = new MutableLiveData<>();
     public MutableLiveData<Location> locationDestination = new MutableLiveData<>();
@@ -112,7 +113,6 @@ public class MapViewModel extends BaseViewModel {
                     if (response.getStatus().equals("OK")){
                         Log.e("getDetailAddress", response.getResults().toString());
                         callBack.doSuccessGetData(response);
-
                         locationOrigin.setValue(response.getResults().get(0).getGeometry().getLocation());
                         bookingCreateRequest.setValue(new BookingCreateRequest());
                         bookingCreateRequest.getValue().setPickupAddress(response.getResults().get(0).getFormatted_address());
@@ -271,16 +271,9 @@ public class MapViewModel extends BaseViewModel {
 
     public void navigateToPaymentMethod(){
         Intent intent = new Intent(application, PaymentMethodActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         application.startActivity(intent);
     }
 
-    public void navigateToNote(){
-        Intent intent = new Intent(application, NoteActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        application.startActivity(intent);
-    }
-    public void onBack(){
-        application.getCurrentActivity().finish();
-    }
+
+
 }

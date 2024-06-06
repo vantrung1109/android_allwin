@@ -29,6 +29,8 @@ import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
 import com.base.mvvm.ui.fragment.HomeCallBack;
 import com.base.mvvm.ui.fragment.home.discount.DiscountActivity;
+import com.base.mvvm.ui.fragment.home.note.NoteActivity;
+import com.base.mvvm.utils.DisplayUtils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,13 +50,13 @@ import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import okhttp3.internal.Util;
 
 public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
-        implements OnMapReadyCallback, FlexibleAdapter.OnItemClickListener, HomeCallBack
-
-{
+        implements OnMapReadyCallback, FlexibleAdapter.OnItemClickListener, HomeCallBack {
 
     private static final int REQUEST_CODE_DISCOUNT = 1;
+    private static final int REQUEST_CODE_NOTE = 2;
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap myMap;
 
@@ -71,6 +73,8 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
     TextView btnOrder;
     RecyclerView rcvServices;
+    TextView tvDiscount, tvNote, tvCash;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_map;
@@ -106,9 +110,9 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     bottomSheetBehaviorPayment.setHideable(true);
                     bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_HIDDEN);
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED){
-                   bottomSheetBehaviorPayment.setHideable(false);
-                   bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehaviorPayment.setHideable(false);
+                    bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
 
             }
@@ -121,9 +125,9 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
 
         //bottom sheet payment
-        TextView tvCash = findViewById(R.id.tv_cash);
-        TextView tvDiscount = findViewById(R.id.tv_discount);
-        TextView tvNote = findViewById(R.id.tv_note);
+        tvCash = findViewById(R.id.tv_cash);
+        tvDiscount = findViewById(R.id.tv_discount);
+        tvNote = findViewById(R.id.tv_note);
         btnOrder = findViewById(R.id.btn_order);
         tvCash.setOnClickListener(v -> {
             viewModel.navigateToPaymentMethod();
@@ -132,7 +136,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             navigateToDiscount();
         });
         tvNote.setOnClickListener(v -> {
-            viewModel.navigateToNote();
+            navigateToNote();
         });
 //        btnOrder.setEnabled(false);
 //        btnOrder.setBackground(getResources().getDrawable(R.drawable.btn_disable, null));
@@ -142,10 +146,10 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String place_id_pickup = "";
-        String place_id_destination ="";
+        String place_id_destination = "";
         if (bundle != null) {
-            place_id_pickup =  bundle.getString("place_id_pickup");
-            place_id_destination =  bundle.getString("place_id_destination");
+            place_id_pickup = bundle.getString("place_id_pickup");
+            place_id_destination = bundle.getString("place_id_destination");
         }
 
         // Call Api Get Distance
@@ -177,20 +181,13 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             viewModel.createBookingRequest();
         });
 
-
+        viewBinding.buttonBack.setOnClickListener(v -> {
+            finish();
+        });
 
     }
 
-
-
     private void getLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_CODE);
-            return;
-        }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -263,7 +260,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             if (currentview != null) {
                 currentview.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_normal, null));
             }
-            if (i != 0){
+            if (i != 0) {
                 rcvServices.getChildAt(0).setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_normal, null));
             }
             view.setBackground(MapActivity.this.getResources().getDrawable(R.drawable.background_vehicle_focus, null));
@@ -274,8 +271,8 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     }
 
 
-
     private int count = 0;
+
     @SuppressLint("CheckResult")
     @Override
     public void doSuccessGetData(Object data) {
@@ -286,11 +283,11 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             mFlexibleAdapter.updateDataSet(serviceResponses);
             Log.e("MapActivity", "current: " + currentview);
         }
-        if (data instanceof AddressByPlaceId){
+        if (data instanceof AddressByPlaceId) {
             AddressByPlaceId addressByPlaceId = (AddressByPlaceId) data;
 
         }
-        if (data instanceof DistanceResponse){
+        if (data instanceof DistanceResponse) {
             DistanceResponse distanceResponse = (DistanceResponse) data;
         }
     }
@@ -310,31 +307,55 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
     }
 
-    public void navigateToDiscount(){
+    public void navigateToDiscount() {
         Intent intent = new Intent(application, DiscountActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("price", currentServiceResponse.getPrice());
         intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivityForResult(intent, REQUEST_CODE_DISCOUNT);
+    }
+
+    public void navigateToNote() {
+        Intent intent = new Intent(application, NoteActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_NOTE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CODE_DISCOUNT && resultCode == Activity.RESULT_OK && data != null) {
-            Bundle bundle = data.getExtras();
-
-            if (bundle != null && bundle.containsKey("discount_value")) {
-                Double discount = bundle.getDouble("discount_value");
-                if (discount != null) {
-                    Double price = Double.parseDouble(currentServiceResponse.getPrice());
-                    Double total = price - discount;
-                    currentServiceResponse.setPrice(String.valueOf(total));
-                    mFlexibleAdapter.notifyDataSetChanged();
+        if (requestCode == REQUEST_CODE_DISCOUNT && resultCode == RESULT_OK) {
+            // Get the data from the Intent
+            Log.e("MapActivity", "onActivityResult: " + data);
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                if (bundle != null && bundle.containsKey("discount_value")) {
+                    Double discount = bundle.getDouble("discount_value");
+                    if (discount != null) {
+                        Double price = Double.parseDouble(currentServiceResponse.getPrice());
+                        Log.e("MapActivity", "price: " + price);
+                        Double total = price - discount;
+                        currentServiceResponse.setPrice(String.valueOf(total));
+                        mFlexibleAdapter.notifyDataSetChanged();
+                        tvDiscount.setText(DisplayUtils.custom_money_discount_map(discount));
+                    }
                 }
+            } else {
+                Log.e("MapActivity", "data is null");
+            }
+        } else if (requestCode == REQUEST_CODE_NOTE && resultCode == RESULT_OK) {
+            // Get the data from the Intent
+            Log.e("MapActivity", "onActivityResult: " + data);
+            if (data != null) {
+                String note = data.getStringExtra("note");
+                if (note != null) {
+                    tvNote.setText(note);
+                } else if (note == "") {
+                    tvNote.setText("Ghi chú");
+                }
+            } else {
+                Log.e("MapActivity", "data from noteActivity is null");
             }
         }
     }
+
 }

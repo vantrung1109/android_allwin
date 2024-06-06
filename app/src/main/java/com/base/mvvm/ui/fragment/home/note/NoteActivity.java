@@ -1,5 +1,6 @@
 package com.base.mvvm.ui.fragment.home.note;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -33,5 +34,15 @@ public class NoteActivity extends BaseActivity<ActivityNoteBinding, NoteViewMode
         buildComponent.inject(this);
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewBinding.btnContinue.setOnClickListener(v -> {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("note", viewBinding.editNote.getText().toString());
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        });
+    }
 
 }

@@ -26,7 +26,6 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
     @Setter
     HomeCallBack callBack;
 
-
     public void onBackClick() {
         application.getCurrentActivity().finish();
     }

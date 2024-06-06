@@ -12,8 +12,6 @@ public class HomeIntroduceViewModel extends BaseViewModel {
         super(repository, application);
     }
     public void doContinue() {
-
-
         Intent intent = new Intent(application, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         application.startActivity(intent);

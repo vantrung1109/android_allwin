@@ -1,5 +1,6 @@
 package com.base.mvvm.ui.fragment.home.discount;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.base.mvvm.MVVMApplication;

@@ -49,6 +49,10 @@ android {
 }
 
 dependencies {
+//    def activity_version = "1.9.0"
+//    implementation "androidx.activity:activity:$activity_version"
+//    implementation "androidx.fragment:fragment:$activity_version"
+
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
     implementation 'com.google.android.gms:play-services-location:21.2.0'
     //Preference

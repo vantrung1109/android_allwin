@@ -29,7 +29,7 @@
             android:background="@drawable/background_round"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:onClick="@{(v) -> vm.onBack()}">
+            >
             <ImageView
                 android:id="@+id/button_back"
                 android:layout_width="@dimen/_15sdp"

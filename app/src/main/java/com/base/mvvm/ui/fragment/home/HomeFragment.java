@@ -2,13 +2,18 @@ package com.base.mvvm.ui.fragment.home;
 
 
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.mvvm.BR;
@@ -32,12 +37,10 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
 public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>
-    implements FlexibleAdapter.OnItemClickListener, HomeCallBack
-{
+    implements FlexibleAdapter.OnItemClickListener, HomeCallBack {
 
-
-
-    FlexibleAdapter mFlexibleAdapterTitleAddressSave, mFlexibleAdapterAddressSaveItem;
+    FlexibleAdapter mFlexibleAdapterTitleAddressSave;
+    FlexibleAdapter mFlexibleAdapterAddressPickup, mFlexibleAdapterAddressDestination;;
     Prediction prediction_pickup, prediction_destination;
 
     Location location_1;
@@ -65,6 +68,8 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
         binding.editPickupAddress.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 binding.deleteEditPickupAddress.setVisibility(View.VISIBLE);
+                binding.rcvItemAddressDestination.setVisibility(View.GONE);
+                binding.btnContinue.setVisibility(View.GONE);
             } else {
                 binding.deleteEditPickupAddress.setVisibility(View.GONE);
             }
@@ -73,6 +78,8 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
         binding.editDestinationAddress.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 binding.deleteEditDestinationAddress.setVisibility(View.VISIBLE);
+                binding.rcvItemAddressPickup.setVisibility(View.GONE);
+                binding.btnContinue.setVisibility(View.GONE);
             } else {
                 binding.deleteEditDestinationAddress.setVisibility(View.GONE);
 
@@ -87,14 +94,20 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
             binding.editDestinationAddress.setText("");
         });
 
+        // set callback api of viewmodel to this
         viewModel.setCallBack(this);
 
         List<Prediction> listPredictions = new ArrayList<>();
-        mFlexibleAdapterAddressSaveItem = new FlexibleAdapter(new ArrayList(), this);
 
-
-        binding.rcvItemAddressSave.setAdapter(mFlexibleAdapterAddressSaveItem);
-        binding.rcvItemAddressSave.setLayoutManager(
+        // Using 2 adapter for 2 recyclerview express list address pickup and list address destination
+        mFlexibleAdapterAddressPickup = new FlexibleAdapter(listPredictions, this);
+        mFlexibleAdapterAddressDestination = new FlexibleAdapter(listPredictions, this);
+        binding.rcvItemAddressPickup.setAdapter(mFlexibleAdapterAddressPickup);
+        binding.rcvItemAddressPickup.setLayoutManager(
+                new LinearLayoutManager(this.getActivity(), LinearLayoutManager.VERTICAL, false)
+        );
+        binding.rcvItemAddressDestination.setAdapter(mFlexibleAdapterAddressDestination);
+        binding.rcvItemAddressDestination.setLayoutManager(
                 new LinearLayoutManager(this.getActivity(), LinearLayoutManager.VERTICAL, false)
         );
 
@@ -119,8 +132,7 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
         binding.layoutMain.setOnClickListener(v -> {
             //Toast.makeText(this.getActivity(), "Click", Toast.LENGTH_SHORT).show();
             hideKeyboard();
-            binding.layoutSaveAddress.setVisibility(View.VISIBLE);
-            binding.rcvItemAddressSave.setVisibility(View.GONE);
+            //binding.layoutSaveAddress.setVisibility(View.VISIBLE);
         });
 
         binding.btnContinue.setOnClickListener(v -> {
@@ -130,8 +142,31 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
     }
 
     public void  doContinue(){
-
         viewModel.setCallBack(this);
+        if (binding.editPickupAddress.getText().toString().isEmpty() || binding.editDestinationAddress.getText().toString().isEmpty()){
+            Toast.makeText(this.getActivity(), "Bạn phải chọn cả 2 địa điểm trước khi tiếp tục", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (prediction_pickup == null){
+            IFlexible flexibleItem = mFlexibleAdapterAddressPickup.getItem(0);
+            if (flexibleItem instanceof Prediction){
+                Prediction prediction = (Prediction) flexibleItem;
+                binding.editPickupAddress.setText(prediction.getDescription());
+                prediction_pickup = prediction;
+                binding.rcvItemAddressPickup.setVisibility(View.GONE);
+            }
+        }
+
+        if (prediction_destination == null){
+            IFlexible flexibleItem = mFlexibleAdapterAddressDestination.getItem(0);
+            if (flexibleItem instanceof Prediction){
+                Prediction prediction = (Prediction) flexibleItem;
+                binding.editDestinationAddress.setText(prediction.getDescription());
+                prediction_destination = prediction;
+                binding.rcvItemAddressDestination.setVisibility(View.GONE);
+            }
+        }
 
         Intent intent = new Intent(this.getActivity(), MapActivity.class);
         Bundle bundle = new Bundle();
@@ -139,15 +174,20 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
         bundle.putString("place_id_destination", prediction_destination.getPlace_id());
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.getActivity().startActivity(intent);
+        this.getActivity().startActivityForResult(intent, 1);
     }
 
 
     public void check_rcv() {
         if (binding.editPickupAddress.hasFocus() || binding.editDestinationAddress.hasFocus()) {
             binding.layoutSaveAddress.setVisibility(View.GONE);
-            binding.rcvItemAddressSave.setVisibility(View.VISIBLE);
             binding.btnContinue.setVisibility(View.GONE);
+            // show recyclerview
+            if (binding.editPickupAddress.hasFocus())
+                binding.rcvItemAddressPickup.setVisibility(View.VISIBLE);
+            else if (binding.editDestinationAddress.hasFocus())
+                binding.rcvItemAddressDestination.setVisibility(View.VISIBLE);
+
             if (binding.editPickupAddress.hasFocus()){
                 viewModel.getSearchPlaces(binding.editPickupAddress.getText().toString());
             }
@@ -156,8 +196,8 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
             }
         } else {
             binding.layoutSaveAddress.setVisibility(View.VISIBLE);
-            binding.rcvItemAddressSave.setVisibility(View.GONE);
-            binding.btnContinue.setVisibility(View.VISIBLE);
+            binding.rcvItemAddressPickup.setVisibility(View.GONE);
+            binding.rcvItemAddressDestination.setVisibility(View.GONE);
         }
     }
 
@@ -173,20 +213,28 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
             Log.e("HomeFragment", "onItemClick: ");
         }
 
-        IFlexible flexibleItem = mFlexibleAdapterAddressSaveItem.getItem(i);
-        if (flexibleItem instanceof Prediction){
-            Prediction prediction = (Prediction) flexibleItem;
+        IFlexible flexibleItemAddress = null;
+        if (binding.editPickupAddress.hasFocus())
+            flexibleItemAddress = mFlexibleAdapterAddressPickup.getItem(i);
+        else
+            flexibleItemAddress = mFlexibleAdapterAddressDestination.getItem(i);
+
+
+        if (flexibleItemAddress instanceof Prediction){
+            Prediction prediction = (Prediction) flexibleItemAddress;
             if (binding.editPickupAddress.hasFocus()){
                 binding.editPickupAddress.setText(prediction.getDescription());
                 prediction_pickup = prediction;
+                binding.rcvItemAddressPickup.setVisibility(View.GONE);
+
             }
             else{
                 binding.editDestinationAddress.setText(prediction.getDescription());
                 prediction_destination = prediction;
+                binding.rcvItemAddressDestination.setVisibility(View.GONE);
             }
-            binding.btnContinue.setVisibility(View.VISIBLE);
             binding.layoutSaveAddress.setVisibility(View.VISIBLE);
-            binding.rcvItemAddressSave.setVisibility(View.GONE);
+            binding.btnContinue.setVisibility(View.VISIBLE);
             hideKeyboard();
         }
         return false;
@@ -197,7 +245,10 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
     public void doSuccessGetData(Object data) {
         if (data instanceof SearchPlaceApi){
             SearchPlaceApi searchPlaceApi = (SearchPlaceApi) data;
-            mFlexibleAdapterAddressSaveItem.updateDataSet(searchPlaceApi.getPredictions());
+            if (binding.editPickupAddress.hasFocus())
+                mFlexibleAdapterAddressPickup.updateDataSet(searchPlaceApi.getPredictions());
+            else if (binding.editDestinationAddress.hasFocus())
+                mFlexibleAdapterAddressDestination.updateDataSet(searchPlaceApi.getPredictions());
         }
     }
 
@@ -214,5 +265,17 @@ public class   HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragme
     @Override
     public void doError() {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1){
+            if (resultCode == RESULT_OK){
+                prediction_destination = null;
+                prediction_pickup = null;
+            }
+        }
     }
 }

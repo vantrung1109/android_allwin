@@ -85,6 +85,25 @@ public class DisplayUtils {
         custom_money_string = "Giảm " + String.valueOf(custom_money) + custom_money_string + "VND";
         return custom_money_string;
     }
+
+    public static String custom_money_discount_map(Double money) {
+        int custom_money = money.intValue();
+        String custom_money_string = "";
+        while (custom_money / 1000 != 0){
+            int temp =  custom_money % 1000;
+            if (temp < 10){
+                custom_money_string = ".00" + String.valueOf(temp) + custom_money_string;
+            } else if (temp < 100){
+                custom_money_string = ".0" + String.valueOf(temp) + custom_money_string;
+            } else {
+                custom_money_string = "." + String.valueOf(temp) + custom_money_string;
+            }
+            custom_money = custom_money / 1000;
+        }
+        custom_money_string = "Giảm " + String.valueOf(custom_money) + custom_money_string + "đ";
+        return custom_money_string;
+    }
+
     public static String custom_condition_money_discount(Double money) {
         int custom_money = money.intValue();
         String custom_money_string = "";

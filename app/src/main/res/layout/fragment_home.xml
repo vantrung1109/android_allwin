@@ -216,7 +216,18 @@
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_item_address_save"
+            android:id="@+id/rcv_item_address_pickup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_address"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:visibility="gone"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_item_address_destination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_address"
