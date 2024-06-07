@@ -1,6 +1,7 @@
 package com.base.mvvm.ui.fragment.activity;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
@@ -93,9 +94,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                 )
                 .subscribe(response -> {
                     if(response.isResult()){
-                        showSuccessMessage("Call Api Get My Booking Successfully");
-                        //listBooking.setValue(response.getData().getContent());
-                        //listMyBookings.setValue(response.getData().getContent());
+                        Toast.makeText(application, "Hoàn thành tải lên những chuyến đi của bạn", Toast.LENGTH_SHORT).show();
                     }else{
                         showErrorMessage(response.getMessage());
                     }

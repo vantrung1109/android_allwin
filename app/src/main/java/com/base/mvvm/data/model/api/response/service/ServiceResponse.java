@@ -1,5 +1,6 @@
 package com.base.mvvm.data.model.api.response.service;
 
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,6 +32,7 @@ public class ServiceResponse extends AbstractFlexibleItem<ServiceResponse.Servic
     private Integer kind;
     private String name;
     private String price;
+    private String promotionPrice;
     private String size;
     private String weight;
 
@@ -54,29 +56,41 @@ public class ServiceResponse extends AbstractFlexibleItem<ServiceResponse.Servic
     @Override
     public void bindViewHolder(FlexibleAdapter<IFlexible> flexibleAdapter, ServiceViewHolder serviceViewHolder, int i, List<Object> list) {
 
-        if (i == 0){
+        // set position 0 is the item selected
+        if (i == 0) {
             firstView = serviceViewHolder.itemView;
-            Log.e("ServiceResponse", "bindViewHolder: " + firstView);
-            serviceViewHolder.itemView.setBackground(serviceViewHolder.itemView.getContext().getResources().getDrawable(R.drawable.background_vehicle_focus, null));
+            firstView.setBackground(serviceViewHolder.itemView.getContext().getResources().getDrawable(R.drawable.background_vehicle_focus, null));
         }
 
-
-
-
+        // Handle tv that represents name of service
         serviceViewHolder.tvNameVehicle.setText(name);
-        serviceViewHolder.tvMoney.setText(DisplayUtils.custom_money(Double.parseDouble(price)));
+
+        // Handle tv that represents promotion price
+        if (promotionPrice != null){
+            serviceViewHolder.tvPromotionMoney.setPaintFlags(serviceViewHolder.tvPromotionMoney.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            serviceViewHolder.tvPromotionMoney.setText(DisplayUtils.custom_money(Double.parseDouble(promotionPrice)));
+            serviceViewHolder.tvPromotionMoney.setVisibility(View.VISIBLE);
+        } else
+            serviceViewHolder.tvPromotionMoney.setVisibility(View.GONE);
+
+        // Handle tv that represents price
+        if (promotionPrice != null)
+            serviceViewHolder.tvMoney.setText(DisplayUtils.custom_money(Double.parseDouble(price) - Double.parseDouble(promotionPrice)));
+        else
+            serviceViewHolder.tvMoney.setText(DisplayUtils.custom_money(Double.parseDouble(price)));
 
     }
 
     public static class ServiceViewHolder extends FlexibleViewHolder {
         ImageView imgVehicle;
-        TextView tvNameVehicle, tvMoney;
+        TextView tvNameVehicle, tvMoney, tvPromotionMoney;
 
         public ServiceViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             imgVehicle = view.findViewById(R.id.img_vehicle);
             tvNameVehicle = view.findViewById(R.id.tv_name_vehicle);
             tvMoney = view.findViewById(R.id.tv_price);
+            tvPromotionMoney = view.findViewById(R.id.tv_promotion_price);
         }
     }
 }

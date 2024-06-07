@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,8 +30,7 @@ import eu.davidea.flexibleadapter.databinding.BR;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
 public class DiscountActivity extends BaseActivity<ActivityDiscountBinding, DiscountViewModel>
-implements HomeCallBack,
-    FlexibleAdapter.OnItemClickListener {
+implements HomeCallBack {
 
     private static final int REQUEST_CODE_DISCOUNT = 1;
 
@@ -38,8 +39,6 @@ implements HomeCallBack,
     List<DiscountResponse> listDiscountResponses;
     Double price;
     private DiscountResponse currentDiscountResponse;
-
-
 
     @Override
     public int getLayoutId() {
@@ -63,50 +62,46 @@ implements HomeCallBack,
         Bundle bundle = getIntent().getExtras();
         String priceString = "";
         if (bundle != null) {
-            priceString = bundle.getString("price");
+            priceString = bundle.getString("price_service");
+            if (bundle.getSerializable("discount") != null) {
+                currentDiscountResponse = (DiscountResponse) bundle.getSerializable("discount");
+            }
         }
-        price= Double.parseDouble(priceString);
 
+
+
+        price = Double.parseDouble(priceString);
         listDiscountResponses = new ArrayList<>();
+        // Call API get list discount
         viewModel.callDiscount(currentPage, 10);
-        mFlexibleAdapter = new FlexibleAdapter<>(new ArrayList<>(), this );
         viewModel.setCallBack(this);
+
+        // Set up adapter, recycler view
+        mFlexibleAdapter = new FlexibleAdapter<>(new ArrayList<>(), this );
         viewBinding.rcvDiscount.setLayoutManager(new LinearLayoutManager(this));
         viewBinding.rcvDiscount.setAdapter(mFlexibleAdapter);
 
-//        viewBinding.rcvDiscount.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-//                int totalItemCount = layoutManager.getItemCount();
-//                int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
-//
-//                // Check if scrolled to the last item
-//                if (totalItemCount == lastVisiblePosition + 1) {
-//                    loadMoreData();
-//
-//                }
-//            }
-//        });
-
+        // Handle Button Continue - Back to the MapActivity
         viewBinding.btnContinue.setOnClickListener(v -> {
-
-                IFlexible flexibleItem = mFlexibleAdapter.getItem(DiscountResponse.getCurrentPositionItem());
-                currentDiscountResponse = (DiscountResponse) flexibleItem;
+            // Check if the current position is not null
+            // get the current Position - the item selected
+            if (DiscountResponse.getCurrentPosition() != null)
+                currentDiscountResponse = (DiscountResponse) mFlexibleAdapter.getItem(
+                        DiscountResponse.getCurrentPosition());
+            if (currentDiscountResponse != null) {
                 Intent resultIntent = new Intent();
                 Bundle bundle1 = new Bundle();
-                bundle1.putDouble("discount_value", currentDiscountResponse.getDiscountValue());
+                bundle1.putSerializable("discount", currentDiscountResponse);
                 resultIntent.putExtras(bundle1);
                 setResult(RESULT_OK, resultIntent);
+                finish();
+            } else
                 finish();
         });
 
     }
     private void loadMoreData() {
-//        showProgressbar("Loading more data...");
         viewModel.callDiscount(++currentPage, 10 );
-        //viewModel.callApiGetMyBooking2(10, ++currentPage);
     }
 
     @Override
@@ -116,20 +111,25 @@ implements HomeCallBack,
             listDiscountResponses.addAll(listDiscountResponses1);
 
             for (int i = 0; i < listDiscountResponses.size(); i++) {
-                if (listDiscountResponses.get(i).getLimitValueMin()!=null &&
-                        price > listDiscountResponses.get(i).getLimitValueMin()) {
+                // Check if the price is greater than the minimum limit value && if the minimum limit value is exist
+                if (listDiscountResponses.get(i).getLimitValueMin() != null
+                        && price > listDiscountResponses.get(i).getLimitValueMin()) {
                     listDiscountResponses.get(i).setStatus(1);
-
                 } else {
                     listDiscountResponses.get(i).setStatus(0);
-                    Log.e("DiscountActivity", "doSuccessGetData: " + listDiscountResponses.get(i).getStatus());
+                }
+
+                // Check if the current discount response is not null, choose again the item selected
+                if (currentDiscountResponse != null) {
+                    if (currentDiscountResponse.getId().equals(listDiscountResponses.get(i).getId())) {
+                        listDiscountResponses.get(i).setIsSelected(true);
+                    } else {
+                        listDiscountResponses.get(i).setIsSelected(false);
+                    }
                 }
             }
             mFlexibleAdapter.updateDataSet(listDiscountResponses);
         }
-
-
-
     }
 
     @Override
@@ -147,13 +147,5 @@ implements HomeCallBack,
 
     }
 
-    @Override
-    public boolean onItemClick(View view, int position) {
-        IFlexible flexibleItem = mFlexibleAdapter.getItem(position);
-        Log.e("DiscountActivity", "onItemClick: " + position);
-        if (flexibleItem instanceof DiscountResponse) {
-            currentDiscountResponse = (DiscountResponse) flexibleItem;
-        }
-        return false;
-    }
+
 }

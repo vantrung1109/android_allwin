@@ -38,10 +38,9 @@ public class DiscountResponse extends AbstractFlexibleItem<DiscountResponse.Disc
     private Double limitValueMin;
     private Integer quantity;
     private List<ServiceResponse> services;
+    private Boolean isSelected;
 
-    private static View view;
-    @Getter
-    private static int currentPositionItem = 0;
+    public static Integer currentPosition;
     @Override
     public int getLayoutRes() {
         return R.layout.rcv_item_discount;
@@ -54,15 +53,22 @@ public class DiscountResponse extends AbstractFlexibleItem<DiscountResponse.Disc
 
     @Override
     public void bindViewHolder(FlexibleAdapter<IFlexible> adapter, DiscountResponseViewHolder holder, int position, List<Object> payloads) {
+
+        // Set textview discount value
         holder.tv_price_discount.setText(DisplayUtils.custom_money_discount(discountValue));
+
+        // Handle textview condition discount (limit value min)
         if (limitValueMin != null)
             holder.tv_condition_discount.setText(DisplayUtils.custom_condition_money_discount(limitValueMin));
+
+        // Handle textview time remaining
         try {
             holder.tv_time_remaining.setText(DisplayUtils.custom_time_remaining(endDate));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
+        // Handle button use discount and change background color for item view by status
         if (status == 1) {
             holder.btn_use_discount.setEnabled(true);
         } else {
@@ -71,13 +77,28 @@ public class DiscountResponse extends AbstractFlexibleItem<DiscountResponse.Disc
             holder.itemView.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.background_promotion_disable, null));
         }
 
+        // Handle button use discount
         holder.btn_use_discount.setOnClickListener(v -> {
-            if (view != null)
-                view.setBackground(view.getContext().getResources().getDrawable(R.drawable.background_account_profile, null));
-            holder.itemView.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.background_vehicle_focus, null));
-            view = holder.itemView;
-            currentPositionItem = position;
+            for (IFlexible item : adapter.getCurrentItems()) {
+                ((DiscountResponse)item).setIsSelected(false);
+            }
+            this.setIsSelected(true);
+            adapter.notifyDataSetChanged();
+            currentPosition = position;
         });
+
+        // Handle item selected
+        if (isSelected != null && isSelected) {
+            holder.itemView.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.background_vehicle_focus, null));
+        } else if (status == 1 &&
+                (isSelected == null
+                || (isSelected != null && !isSelected))) {
+            holder.itemView.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.background_vehicle_normal, null));
+        }
+    }
+
+    public static Integer getCurrentPosition() {
+        return currentPosition;
     }
 
     public static class DiscountResponseViewHolder extends FlexibleViewHolder {

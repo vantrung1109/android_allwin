@@ -23,6 +23,7 @@ import com.base.mvvm.BR;
 import com.base.mvvm.R;
 import com.base.mvvm.data.model.api.address_by_placeid.AddressByPlaceId;
 import com.base.mvvm.data.model.api.distance.DistanceResponse;
+import com.base.mvvm.data.model.api.response.discount.DiscountResponse;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 import com.base.mvvm.databinding.ActivityMapBinding;
 import com.base.mvvm.di.component.ActivityComponent;
@@ -65,10 +66,14 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     FlexibleAdapter mFlexibleAdapter;
 
     private BottomSheetBehavior bottomSheetBehavior, bottomSheetBehaviorPayment, bottomSheetBehaviorWaiting;
-
-
     View currentview;
     ServiceResponse currentServiceResponse;
+
+    // Navigate Discount and return value
+    DiscountResponse currentDiscount;
+
+    // Navigate Note and return value
+    String customerNote;
     List<ServiceResponse> serviceResponses;
 
     TextView btnOrder;
@@ -166,16 +171,28 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             if (currentServiceResponse != null) {
                 viewModel.bookingCreateRequest.observe(this, bookingCreateRequest -> {
                     if (bookingCreateRequest != null) {
+                        // set service id, money, customer note
                         bookingCreateRequest.setServiceId(currentServiceResponse.getId());
                         bookingCreateRequest.setMoney(Double.parseDouble(currentServiceResponse.getPrice()));
-                        bookingCreateRequest.setPromotionMoney(0.0);
+                        bookingCreateRequest.setCustomerNote(customerNote);
+                        // set promotion money (if promotion price is not null)
+                        if (currentDiscount != null ){
+                            bookingCreateRequest.setPromotionMoney(currentDiscount.getDiscountValue());
+                            // set promotion id false, need to fix
+                            //bookingCreateRequest.setPromotionId(currentDiscount.getId());
+                        }
+                        else
+                            // set money and promotion money (if promotion price is null
+                            bookingCreateRequest.setPromotionMoney(0.0);
                     }
                 });
             }
+            // Hide the bottom sheet payment
             bottomSheetBehavior.setHideable(true);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             bottomSheetBehaviorPayment.setHideable(true);
             bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_HIDDEN);
+            // Show the bottom sheet waiting
             bottomSheetBehaviorWaiting.setHideable(false);
             bottomSheetBehaviorWaiting.setState(BottomSheetBehavior.STATE_COLLAPSED);
             viewModel.createBookingRequest();
@@ -188,6 +205,21 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     }
 
     private void getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        !=
+                        PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -205,15 +237,19 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         myMap = googleMap;
-        LatLng sydney = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        myMap.addMarker(new MarkerOptions().position(sydney).title("My current Location"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(16.0f));
+        //LatLng current = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
 
         viewModel.locationOrigin.observe(this, location -> {
             viewModel.locationDestination.observe(this, location2 -> {
                 if (location2 != null && location != null) {
                     LatLng origin = new LatLng(location.getLat(), location.getLng());
+
+                    // Zoom at the origin location
+                    myMap.addMarker(new MarkerOptions().position(origin).title("My Pickup Location"));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
+                    googleMap.animateCamera(CameraUpdateFactory.zoomTo(16.0f));
+
                     LatLng destination = new LatLng(location2.getLat(), location2.getLng());
                     MarkerOptions markerOrigin = new MarkerOptions().position(origin).title("Origin Location");
                     MarkerOptions markerDestination = new MarkerOptions().position(destination).title("Destination Location");
@@ -290,6 +326,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         if (data instanceof DistanceResponse) {
             DistanceResponse distanceResponse = (DistanceResponse) data;
         }
+
     }
 
     @Override
@@ -310,45 +347,60 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     public void navigateToDiscount() {
         Intent intent = new Intent(application, DiscountActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("price", currentServiceResponse.getPrice());
+        // if discount is not null, pass it to DiscountActivity
+        if (currentDiscount != null) {
+            bundle.putSerializable("discount", currentDiscount);
+            bundle.putString("price_service", currentServiceResponse.getPrice());
+        }
+        // if discount is null, just pass the price of the service to DiscountActivity
+        else
+            bundle.putString("price_service", currentServiceResponse.getPrice());
         intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE_DISCOUNT);
     }
 
     public void navigateToNote() {
         Intent intent = new Intent(application, NoteActivity.class);
+        Bundle bundle = new Bundle();
+        // if note is not null, pass it to NoteActivity
+        if (customerNote != null) {
+            bundle.putString("note", customerNote);
+        }
+        intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE_NOTE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // From DiscountActivity
         if (requestCode == REQUEST_CODE_DISCOUNT && resultCode == RESULT_OK) {
-            // Get the data from the Intent
-            Log.e("MapActivity", "onActivityResult: " + data);
+            // Get the data from the DiscountActivity
             if (data != null) {
                 Bundle bundle = data.getExtras();
-                if (bundle != null && bundle.containsKey("discount_value")) {
-                    Double discount = bundle.getDouble("discount_value");
-                    if (discount != null) {
-                        Double price = Double.parseDouble(currentServiceResponse.getPrice());
-                        Log.e("MapActivity", "price: " + price);
-                        Double total = price - discount;
-                        currentServiceResponse.setPrice(String.valueOf(total));
+                if (bundle != null) {
+                    // Get the discount from the DiscountActivity
+                    currentDiscount = (DiscountResponse) bundle.getSerializable("discount");
+                    if (currentDiscount != null) {
+                        // Set the promotion price
+                        currentServiceResponse.setPromotionPrice(String.valueOf(currentDiscount.getDiscountValue()));
                         mFlexibleAdapter.notifyDataSetChanged();
-                        tvDiscount.setText(DisplayUtils.custom_money_discount_map(discount));
+                        // Set the discount value on the textview chosen discount
+                        tvDiscount.setText(DisplayUtils.custom_money_discount_map(currentDiscount.getDiscountValue()));
                     }
                 }
             } else {
                 Log.e("MapActivity", "data is null");
             }
-        } else if (requestCode == REQUEST_CODE_NOTE && resultCode == RESULT_OK) {
-            // Get the data from the Intent
-            Log.e("MapActivity", "onActivityResult: " + data);
+        }
+        // From NoteActivity
+        else if (requestCode == REQUEST_CODE_NOTE && resultCode == RESULT_OK) {
+            // Get the data from the NoteActivity
             if (data != null) {
                 String note = data.getStringExtra("note");
                 if (note != null) {
                     tvNote.setText(note);
+                    customerNote = note;
                 } else if (note == "") {
                     tvNote.setText("Ghi chú");
                 }

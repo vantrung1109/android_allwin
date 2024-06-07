@@ -69,7 +69,6 @@ public class MapViewModel extends BaseViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
                         showSuccessMessage("Call Api Get services successfully!");
-
                         List<ServiceResponse> serviceResponses = response.getData().getContent();
 
                         Gson gson = new Gson();
@@ -225,7 +224,10 @@ public class MapViewModel extends BaseViewModel {
                 })
                 .subscribe(response -> {
                     if (response.isResult()){
+                        application.getMWebSocketLiveData().getCodeBooking().add(response.getData().getCode());
+                        application.getMWebSocketLiveData().sendPing();
                         Log.e("createBooking", response.toString());
+
                         callBack.doSuccessGetData(response);
 //                        navigateToPaymentMethod();
                     } else {

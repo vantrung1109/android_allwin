@@ -37,6 +37,12 @@ public class NoteActivity extends BaseActivity<ActivityNoteBinding, NoteViewMode
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            viewBinding.editNote.setText(bundle.getString("note"));
+        }
+
         viewBinding.btnContinue.setOnClickListener(v -> {
             Intent resultIntent = new Intent();
             resultIntent.putExtra("note", viewBinding.editNote.getText().toString());

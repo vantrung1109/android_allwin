@@ -55,23 +55,10 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
-
+                    android:layout_marginBottom="@dimen/_15sdp"
                     >
                 </androidx.recyclerview.widget.RecyclerView>
 
-                <TextView
-                    android:id="@+id/layout_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rcv_discount"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:text="+  Phương thức thanh toán khác"
-                    style="@style/AppCommonText"
-                    android:textColor="#7EA567"
-                    android:textSize="@dimen/_14ssp"
-                    />
             </RelativeLayout>
         </ScrollView>
 

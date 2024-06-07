@@ -30,5 +30,6 @@
     <color name="color_dashline">#CEDDB9</color>
     <color name="black_full">#000000</color>
     <color name="brown_stroke">#F3F2F2</color>
+    <color name="brown_black">#424242</color>
 
 </resources>

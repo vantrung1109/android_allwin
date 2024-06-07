@@ -1,9 +1,12 @@
 package com.base.mvvm;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.base.mvvm.data.websocket.Command;
 import com.base.mvvm.data.websocket.Message;
 import com.base.mvvm.data.websocket.SocketEventModel;
 import com.base.mvvm.data.websocket.SocketListener;
@@ -94,7 +97,28 @@ public class MVVMApplication extends Application implements SocketListener {
 
     @Override
     public void onMessage(SocketEventModel socketEventModel) {
+       getCurrentActivity().runOnUiThread(() -> handleSocket(socketEventModel));
+    }
 
+    private void handleSocket(SocketEventModel socketEventModel) {
+        if (socketEventModel.getEvent().equals(SocketEventModel.EVENT_MESSAGE)){
+            Message message = socketEventModel.getMessage();
+            if (message.getResponseCode() == 200){
+                switch (message.getCmd()){
+                    case Command.COMMAND_DRIVER_ACCEPT:
+                        Log.e("Socket", "Driver accepted");
+
+                        getCurrentActivity().runOnUiThread(() -> {
+                            // Do something
+                        });
+
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     @Override
