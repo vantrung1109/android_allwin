@@ -25,7 +25,7 @@
                 android:id="@+id/tv_infor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tài xế sẽ đến đón bạn trong 6 phút"
+                android:text="Tài xế đang trên đường tới đón bạn..."
                 style="@style/AppCommonText"
                 android:textSize="@dimen/_15ssp"
                 android:layout_centerHorizontal="true"

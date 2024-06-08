@@ -2,6 +2,7 @@ package com.base.mvvm.data.model.api.response.booking.booking_create;
 
 import com.base.mvvm.data.model.api.response.booking.BookingDetail;
 import com.base.mvvm.data.model.api.response.customer.CustomerProfileResponse;
+import com.base.mvvm.data.model.api.response.driver.DriverProfileResponse;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingCreateResponse {
-    String id;
+    Long id;
     Integer status;
     String modifiedDate;
     String createdDate;
@@ -33,4 +34,5 @@ public class BookingCreateResponse {
     Double money;
     Double promotionMoney;
     List<BookingDetail> bookingDetails;
+    DriverProfileResponse driver;
 }

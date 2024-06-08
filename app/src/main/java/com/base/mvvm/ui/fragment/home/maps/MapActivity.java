@@ -4,12 +4,16 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.mvvm.BR;
 import com.base.mvvm.R;
+import com.base.mvvm.data.model.api.response.booking.booking_create.BookingCreateResponse;
 import com.base.mvvm.data.model.api.response.map.address_by_placeid.AddressByPlaceId;
 import com.base.mvvm.data.model.api.response.map.distance.DistanceResponse;
 import com.base.mvvm.data.model.api.response.discount.DiscountResponse;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
+import com.base.mvvm.data.model.websocket.BookingAccepted;
 import com.base.mvvm.databinding.ActivityMapBinding;
 import com.base.mvvm.di.component.ActivityComponent;
 import com.base.mvvm.ui.base.BaseActivity;
@@ -33,6 +39,7 @@ import com.base.mvvm.ui.fragment.HomeCallBack;
 import com.base.mvvm.ui.fragment.home.discount.DiscountActivity;
 import com.base.mvvm.ui.fragment.home.note.NoteActivity;
 import com.base.mvvm.utils.DisplayUtils;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,11 +57,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import lombok.Data;
 
 public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         implements OnMapReadyCallback, FlexibleAdapter.OnItemClickListener, HomeCallBack {
@@ -69,7 +78,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     FusedLocationProviderClient fusedLocationProviderClient;
     FlexibleAdapter mFlexibleAdapter;
 
-    private BottomSheetBehavior bottomSheetBehavior, bottomSheetBehaviorPayment, bottomSheetBehaviorWaiting;
+    private BottomSheetBehavior bottomSheetBehavior, bottomSheetBehaviorPayment, bottomSheetBehaviorWaiting, bottomSheetBehaviorAccepted;
     View currentview;
     ServiceResponse currentServiceResponse;
 
@@ -82,7 +91,13 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
     TextView btnOrder;
     RecyclerView rcvServices;
+    // Bottom sheet payment
     TextView tvDiscount, tvNote, tvCash;
+    // Bottom sheet Accepted Booking
+    TextView tvDriverName, tvVehicleName, tvDriverRating;
+    ImageView imgDriverAvatar;
+
+    Long currentBookingId;
 
     @Override
     public int getLayoutId() {
@@ -110,12 +125,14 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         bottomSheetBehavior = BottomSheetBehavior.from(viewBinding.layoutBottomSheet);
         bottomSheetBehaviorPayment = BottomSheetBehavior.from(viewBinding.layoutBottomSheetPayment);
         bottomSheetBehaviorWaiting = BottomSheetBehavior.from(viewBinding.layoutBottomSheetWaiting);
+        bottomSheetBehaviorAccepted = BottomSheetBehavior.from(viewBinding.layoutBottomSheetAcceptedBooking);
+
         bottomSheetBehaviorWaiting.setHideable(true);
         bottomSheetBehaviorWaiting.setState(BottomSheetBehavior.STATE_HIDDEN);
-
+        bottomSheetBehaviorAccepted.setHideable(true);
+        bottomSheetBehaviorAccepted.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         //bottom sheet payment
-
         tvCash = findViewById(R.id.tv_cash);
         tvDiscount = findViewById(R.id.tv_discount);
         tvNote = findViewById(R.id.tv_note);
@@ -131,6 +148,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         });
 //        btnOrder.setEnabled(false);
 //        btnOrder.setBackground(getResources().getDrawable(R.drawable.btn_disable, null));
+
 
 
         // Get pick up, destination
@@ -215,6 +233,10 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
             }
         });
+
+        // set bottom sheet accepted booking
+        tvDriverName = findViewById(R.id.tv_name_driver);
+        imgDriverAvatar = findViewById(R.id.image_driver);
 
     }
 
@@ -334,6 +356,13 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
                 // Move camera to the start of the polyline
                 myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 16.0f));
             }
+        }else if (data instanceof BookingCreateResponse && ((BookingCreateResponse)data).getDriver() != null) {
+            BookingCreateResponse bookingCreateResponse = (BookingCreateResponse) data;
+            tvDriverName.setText(bookingCreateResponse.getDriver().getFullName());
+            imgDriverAvatar.setImageURI(Uri.parse(bookingCreateResponse.getDriver().getAvatar()));
+        }
+        else if (data instanceof BookingCreateResponse) {
+            currentBookingId = ((BookingCreateResponse) data).getId();
         }
 
     }
@@ -455,4 +484,33 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         return poly;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("MapActivity", "onResume");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);  // Update the intent
+
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            BookingAccepted data = (BookingAccepted) bundle.getSerializable("data");
+            Log.e("MapActivity", "data: " + data);
+            if (data != null) {
+                bottomSheetBehaviorWaiting.setHideable(true);
+                bottomSheetBehaviorWaiting.setState(BottomSheetBehavior.STATE_HIDDEN);
+                bottomSheetBehaviorAccepted.setHideable(false);
+                bottomSheetBehaviorAccepted.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                Log.e("MapActivity", "data: " + currentBookingId);
+                viewModel.loadingBooking(currentBookingId);
+            } else {
+                Log.e("MapActivity", "Data is null");
+            }
+        } else {
+            Log.e("MapActivity", "Bundle is null");
+        }
+    }
 }

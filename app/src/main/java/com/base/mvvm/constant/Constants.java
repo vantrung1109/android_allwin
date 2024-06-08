@@ -31,7 +31,11 @@ public class Constants {
     public static final String ACTIVITY_FRAGMENT = "activity fragment";
     public static final String HOME_FRAGMENT = "home fragment";
     public static final String APP_DRIVER = "CUSTOMER_APP";
-
+    public static final int BOOKING_STATE_CANCEL = -100;
+    public static final int BOOKING_STATE_BOOKING = 0;
+    public static final int BOOKING_STATE_DRIVER_ACCEPT = 100 ;
+    public static final int BOOKING_STATE_PICKUP_SUCCESS = 200 ;
+    public static final int BOOKING_STATE_DONE = 300 ;
     private Constants(){
 
     }

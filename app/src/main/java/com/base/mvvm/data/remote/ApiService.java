@@ -28,6 +28,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -101,5 +102,8 @@ public interface ApiService {
 
     @GET("v1/user-service/auto-complete")
     Observable<ResponseWrapper<ResponseListObj<ServiceResponse>>> getServices();
+
+    @GET("/v1/booking/detail-booking/{id}")
+    Observable<ResponseWrapper<BookingCreateResponse>> loadBooking(@Path("id") Long id);
 
 }

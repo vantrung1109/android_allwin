@@ -223,7 +223,7 @@ public class MapViewModel extends BaseViewModel {
                         application.getMWebSocketLiveData().sendPing();
                         Log.e("createBooking", response.toString());
 
-                        callBack.doSuccessGetData(response);
+                        callBack.doSuccessGetData(response.getData());
 //                        navigateToPaymentMethod();
                     } else {
                         showErrorMessage(response.getMessage());
@@ -262,6 +262,39 @@ public class MapViewModel extends BaseViewModel {
                     hideLoading();
                 }, throwable -> {
                     Log.e("getDirection", throwable.getMessage());
+                    showErrorMessage(application.getResources().getString(R.string.no_internet));
+                    hideLoading();
+                })
+        );
+    }
+
+    public void loadingBooking(Long bookingId){
+        showLoading();
+        compositeDisposable.add(repository.getApiService()
+                .loadBooking(bookingId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(throwable ->{
+                    return throwable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+                        @Override
+                        public ObservableSource<?> apply(Throwable throwable) throws Throwable {
+                            if (NetworkUtils.checkNetworkError(throwable)){
+                                return application.showDialogNoInternetAccess();
+                            } else
+                                return Observable.error(throwable);
+                        }
+                    });
+                })
+                .subscribe(response -> {
+                    if (response.isResult()){
+                        callBack.doSuccessGetData(response.getData());
+                    } else {
+                        Log.e("loadBooking", response.getMessage());
+                        showErrorMessage(response.getMessage());
+                    }
+                    hideLoading();
+                }, throwable -> {
+                    Log.e("loadBooking", throwable.getMessage());
                     showErrorMessage(application.getResources().getString(R.string.no_internet));
                     hideLoading();
                 })

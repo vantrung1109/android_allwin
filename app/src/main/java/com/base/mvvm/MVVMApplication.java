@@ -2,11 +2,13 @@ package com.base.mvvm;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.base.mvvm.data.model.websocket.BookingAccepted;
 import com.base.mvvm.data.websocket.Command;
 import com.base.mvvm.data.websocket.Message;
 import com.base.mvvm.data.websocket.SocketEventModel;
@@ -19,6 +21,8 @@ import com.base.mvvm.others.MyTimberReleaseTree;
 import com.base.mvvm.ui.fragment.home.maps.MapActivity;
 import com.base.mvvm.utils.DialogUtils;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+
+import java.io.Serializable;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.rxjava3.subjects.PublishSubject;
@@ -109,10 +113,13 @@ public class MVVMApplication extends Application implements SocketListener {
                 switch (message.getCmd()){
                     case Command.COMMAND_DRIVER_ACCEPT:
                         Log.e("Socket", "Driver accepted");
-//                        Intent intent = new Intent(this, MapActivity.class);
-//                        intent
-
-
+                        Intent intent = new Intent(currentActivity, MapActivity.class);
+                        Bundle bundle = new Bundle();
+                        BookingAccepted bookingAccepted = message.getDataObject(BookingAccepted.class);
+                        bundle.putSerializable("data", bookingAccepted);
+                        intent.putExtras(bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        currentActivity.startActivity(intent);
                         break;
                     default:
                         break;
