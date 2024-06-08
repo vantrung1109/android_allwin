@@ -2,9 +2,9 @@ package com.base.mvvm.data.remote;
 
 import com.base.mvvm.data.model.api.ResponseListObj;
 import com.base.mvvm.data.model.api.ResponseWrapper;
-import com.base.mvvm.data.model.api.address_by_placeid.AddressByPlaceId;
-import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
-import com.base.mvvm.data.model.api.distance.DistanceResponse;
+import com.base.mvvm.data.model.api.response.map.address_by_placeid.AddressByPlaceId;
+import com.base.mvvm.data.model.api.map_search.SearchPlaceApi;
+import com.base.mvvm.data.model.api.response.map.distance.DistanceResponse;
 import com.base.mvvm.data.model.api.request.BookingCreateRequest;
 import com.base.mvvm.data.model.api.request.LoginRequest;
 import com.base.mvvm.data.model.api.request.SignUpRequest;
@@ -19,6 +19,7 @@ import com.base.mvvm.data.model.api.response.customer.SigninResponse;
 import com.base.mvvm.data.model.api.response.customer.UploadFileResponse;
 import com.base.mvvm.data.model.api.response.discount.DiscountResponse;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
+import com.google.gson.JsonObject;
 
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.MultipartBody;
@@ -88,11 +89,11 @@ public interface ApiService {
                                              @Query("origins") String origins,
                                                   @Query("key") String key);
 
+
     @GET("directions/json")
-    @Headers({"isSearchPlaces: 1"})
-    Observable<DistanceResponse> getDirection(@Query("origin") String origin,
-                                             @Query("destination") String destination,
-                                             @Query("key") String key);
+    @Headers({"isSearchPlaces:1"})
+    Observable<JsonObject> getMapDirection(@Query("origin") String destination, @Query("mode") String mode,
+                                           @Query("destination") String origin, @Query("key") String api);
 
     @POST("v1/booking/create")
     Observable<ResponseWrapper<BookingCreateResponse>> createBooking(@Body BookingCreateRequest request);

@@ -1,17 +1,8 @@
-package com.base.mvvm.data.model.api.api_search;
+package com.base.mvvm.data.model.api.map_search;
 
-
-import android.view.View;
-import android.widget.TextView;
-
-import com.base.mvvm.R;
 
 import java.util.List;
 
-import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import eu.davidea.flexibleadapter.items.IFlexible;
-import eu.davidea.viewholders.FlexibleViewHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

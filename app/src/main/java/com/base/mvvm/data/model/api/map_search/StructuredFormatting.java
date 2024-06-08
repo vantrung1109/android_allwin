@@ -1,4 +1,4 @@
-package com.base.mvvm.data.model.api.api_search;
+package com.base.mvvm.data.model.api.map_search;
 
 import java.util.List;
 

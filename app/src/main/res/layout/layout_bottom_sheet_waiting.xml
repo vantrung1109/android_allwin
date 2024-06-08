@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_280sdp"
+    android:background="@drawable/background_account_profile"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_account_profile"
-        android:layout_gravity="bottom"
 
+        android:layout_gravity="bottom"
+        android:layout_centerVertical="true"
         >
         <RelativeLayout
             android:id="@+id/layout_note"

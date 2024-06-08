@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_280sdp"
+    android:background="@drawable/background_account_profile"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="bottom"
+
+        >
+        <RelativeLayout
+            android:id="@+id/layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            >
+
+            <TextView
+                android:id="@+id/tv_infor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tài xế sẽ đến đón bạn trong 6 phút"
+                style="@style/AppCommonText"
+                android:textSize="@dimen/_15ssp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_15sdp"
+                />
+            <RelativeLayout
+                android:id="@+id/layout_infor_vehicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infor"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                >
+                <TextView
+                    android:id="@+id/tv_name_vehicle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Honda SH Mode"
+                    style="@style/AppCommonText"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_centerVertical="true"
+                    />
+                <TextView
+                    android:id="@+id/tv_place_vehicle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="59-S2 57301"
+                    style="@style/AppCommonText"
+                    android:layout_toEndOf="@+id/tv_name_vehicle"
+
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:padding="@dimen/_2sdp"
+                    android:background="@drawable/background_plate_vehicle"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_infor_driver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_infor_vehicle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                >
+                <ImageView
+                    android:id="@+id/image_driver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_ava_driver_sample"
+                    style="@style/AppCommonText"
+                    android:textSize="@dimen/_12ssp"
+
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toEndOf="@+id/image_driver"
+                    android:layout_marginStart="@dimen/_15sdp"
+
+                    >
+                    <TextView
+                        android:id="@+id/tv_name_driver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lý Tiểu Long"
+                        style="@style/AppCommonText"
+                        android:textSize="@dimen/_15ssp"
+                        />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tv_rating_driver"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4.9"
+                            style="@style/AppCommonText"
+                            android:textSize="@dimen/_12ssp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            />
+                        <RatingBar
+                            android:id="@+id/rating_bar_driver"
+                            android:layout_toEndOf="@id/tv_rating_driver"
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="wrap_content"
+                            android:rating="4.9"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            android:progressTint="#FDDA23"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_centerVertical="true"
+
+                            />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/background_account_profile"
+            android:layout_below="@+id/layout_main"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingTop="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_20sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:orientation="horizontal"
+
+            >
+            <ImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/chat"
+                android:scaleType="fitXY"
+                android:background="@drawable/background_plate_vehicle"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_10sdp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@drawable/btn_custom_enable"
+                android:enabled="true"
+
+                android:text="Gọi tài xế"
+                android:gravity="center"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:id="@+id/btn_continue"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

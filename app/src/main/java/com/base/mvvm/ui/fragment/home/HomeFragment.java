@@ -13,15 +13,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.mvvm.BR;
 import com.base.mvvm.R;
 
-import com.base.mvvm.data.model.api.address_by_placeid.Location;
-import com.base.mvvm.data.model.api.api_search.Prediction;
-import com.base.mvvm.data.model.api.api_search.SearchPlaceApi;
+import com.base.mvvm.data.model.api.response.map.address_by_placeid.Location;
+import com.base.mvvm.data.model.api.map_search.Prediction;
+import com.base.mvvm.data.model.api.map_search.SearchPlaceApi;
 import com.base.mvvm.data.service.DatabaseService;
 import com.base.mvvm.databinding.FragmentHomeBinding;
 import com.base.mvvm.di.component.FragmentComponent;

@@ -1,4 +1,4 @@
-package com.base.mvvm.data.model.api.api_search;
+package com.base.mvvm.data.model.api.map_search;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MatchedSubString {
-    private Integer length;
+public class Terms {
     private Integer offset;
+    private String value;
 }

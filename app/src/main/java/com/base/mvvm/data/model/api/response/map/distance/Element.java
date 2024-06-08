@@ -1,4 +1,4 @@
-package com.base.mvvm.data.model.api.distance;
+package com.base.mvvm.data.model.api.response.map.distance;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

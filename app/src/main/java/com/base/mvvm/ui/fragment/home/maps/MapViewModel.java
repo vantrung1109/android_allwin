@@ -1,9 +1,6 @@
 package com.base.mvvm.ui.fragment.home.maps;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -11,14 +8,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.base.mvvm.MVVMApplication;
 import com.base.mvvm.R;
 import com.base.mvvm.data.Repository;
-import com.base.mvvm.data.model.api.address_by_placeid.Location;
+import com.base.mvvm.data.model.api.response.map.address_by_placeid.Location;
 import com.base.mvvm.data.model.api.request.BookingCreateRequest;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 import com.base.mvvm.ui.base.BaseViewModel;
 import com.base.mvvm.ui.fragment.HomeCallBack;
-import com.base.mvvm.ui.fragment.home.discount.DiscountActivity;
 import com.base.mvvm.data.model.api.response.service.ServicePrice;
-import com.base.mvvm.ui.fragment.home.note.NoteActivity;
 import com.base.mvvm.ui.fragment.home.payment_method.PaymentMethodActivity;
 import com.base.mvvm.utils.NetworkUtils;
 import com.google.gson.Gson;
@@ -242,36 +237,37 @@ public class MapViewModel extends BaseViewModel {
 
     }
 
-//    public void getDirection (String origin, String destination){
-//        showLoading();
-//        compositeDisposable.add(repository.getApiService()
-//                .getDirection(origin,
-//                        destination,
-//                        application.getString(R.string.str_gg_api))
-//                .subscribeOn(Schedulers.io())
-//                .retryWhen(throwable ->{
-//                    return throwable.flatMap(new Function<Throwable, ObservableSource<?>>() {
-//                        @Override
-//                        public ObservableSource<?> apply(Throwable throwable) throws Throwable {
-//                            if (NetworkUtils.checkNetworkError(throwable)){
-//                                return application.showDialogNoInternetAccess();
-//                            } else
-//                                return Observable.error(throwable);
-//                        }
-//                    });
-//                })
-//                .subscribe(directionResponse -> {
-//                    if (directionResponse.getStatus().equals("OK")){
-//                        Log.e("getDirection", directionResponse.toString());
-//                        callBack.doSuccessGetData(directionResponse);
-//                    }
-//                    hideLoading();
-//                }, throwable -> {
-//                    showErrorMessage(application.getResources().getString(R.string.no_internet));
-//                    hideLoading();
-//                })
-//        );
-//    }
+    public void getDirection (String origin, String destination){
+        showLoading();
+        compositeDisposable.add(repository.getApiService()
+                .getMapDirection(origin,
+                        "driving",
+                        destination,
+                        application.getString(R.string.str_gg_api))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(throwable ->{
+                    return throwable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+                        @Override
+                        public ObservableSource<?> apply(Throwable throwable) throws Throwable {
+                            if (NetworkUtils.checkNetworkError(throwable)){
+                                return application.showDialogNoInternetAccess();
+                            } else
+                                return Observable.error(throwable);
+                        }
+                    });
+                })
+                .subscribe(directionResponse -> {
+                    Log.e("getDirection", directionResponse.toString());
+                    callBack.doSuccessGetData(directionResponse);
+                    hideLoading();
+                }, throwable -> {
+                    Log.e("getDirection", throwable.getMessage());
+                    showErrorMessage(application.getResources().getString(R.string.no_internet));
+                    hideLoading();
+                })
+        );
+    }
 
     public void navigateToPaymentMethod(){
         Intent intent = new Intent(application, PaymentMethodActivity.class);

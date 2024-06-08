@@ -2,7 +2,6 @@ package com.base.mvvm.ui.fragment.home.maps;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -21,8 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.mvvm.BR;
 import com.base.mvvm.R;
-import com.base.mvvm.data.model.api.address_by_placeid.AddressByPlaceId;
-import com.base.mvvm.data.model.api.distance.DistanceResponse;
+import com.base.mvvm.data.model.api.response.map.address_by_placeid.AddressByPlaceId;
+import com.base.mvvm.data.model.api.response.map.distance.DistanceResponse;
 import com.base.mvvm.data.model.api.response.discount.DiscountResponse;
 import com.base.mvvm.data.model.api.response.service.ServiceResponse;
 import com.base.mvvm.databinding.ActivityMapBinding;
@@ -38,6 +37,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -45,13 +45,14 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
-import okhttp3.internal.Util;
 
 public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         implements OnMapReadyCallback, FlexibleAdapter.OnItemClickListener, HomeCallBack {
@@ -244,32 +245,12 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             viewModel.locationDestination.observe(this, location2 -> {
                 if (location2 != null && location != null) {
                     LatLng origin = new LatLng(location.getLat(), location.getLng());
-
-                    // Zoom at the origin location
-                    myMap.addMarker(new MarkerOptions().position(origin).title("My Pickup Location"));
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
-                    googleMap.animateCamera(CameraUpdateFactory.zoomTo(16.0f));
-
                     LatLng destination = new LatLng(location2.getLat(), location2.getLng());
-                    MarkerOptions markerOrigin = new MarkerOptions().position(origin).title("Origin Location");
-                    MarkerOptions markerDestination = new MarkerOptions().position(destination).title("Destination Location");
 
-                    // Draw a line between the two markers
-                    PolylineOptions polylineOptions = new PolylineOptions()
-                            .add(markerOrigin.getPosition())
-                            .add(markerDestination.getPosition())
-                            .color(Color.RED)
-                            .width(5f);
-                    googleMap.addMarker(markerOrigin);
-                    googleMap.addMarker(markerDestination);
-                    googleMap.addPolyline(polylineOptions);
+                    String originStr = origin.latitude + "," + origin.longitude;
+                    String destinationStr = destination.latitude + "," + destination.longitude;
+                    viewModel.getDirection(originStr, destinationStr);
 
-                    // Adjust the camera to show both markers and the line
-                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                    builder.include(markerOrigin.getPosition());
-                    builder.include(markerDestination.getPosition());
-                    LatLngBounds bounds = builder.build();
-                    //googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
                 }
             });
         });
@@ -319,12 +300,31 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             mFlexibleAdapter.updateDataSet(serviceResponses);
             Log.e("MapActivity", "current: " + currentview);
         }
-        if (data instanceof AddressByPlaceId) {
-            AddressByPlaceId addressByPlaceId = (AddressByPlaceId) data;
+        else if (data instanceof JsonObject) {
+            JsonObject jsonObject = (JsonObject) data;
+            JsonArray routes = jsonObject.getAsJsonArray("routes");
+            if (routes.size() > 0) {
+                JsonObject route = routes.get(0).getAsJsonObject();
+                JsonObject polyline = route.getAsJsonObject("overview_polyline");
+                String points = polyline.get("points").getAsString();
+                List<LatLng> decodedPath = decodePoly(points);
 
-        }
-        if (data instanceof DistanceResponse) {
-            DistanceResponse distanceResponse = (DistanceResponse) data;
+                // Draw polyline on map
+                myMap.addPolyline(new PolylineOptions().addAll(decodedPath).color(Color.BLUE).width(10));
+                // Add marker to the start and end of the polyline
+                LatLng originLatLng = decodedPath.get(0);
+                LatLng destinationLatLng = decodedPath.get(decodedPath.size() - 1);
+                myMap.addMarker(new MarkerOptions().position(originLatLng).title("Pickup Location"))
+                        .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                myMap.addMarker(new MarkerOptions().position(destinationLatLng).title("Destination Location"));
+
+                myMap.getUiSettings().setZoomControlsEnabled(true);
+
+
+
+                // Move camera to the start of the polyline
+                myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 16.0f));
+            }
         }
 
     }
@@ -408,6 +408,39 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
                 Log.e("MapActivity", "data from noteActivity is null");
             }
         }
+    }
+
+    // Giải mã polyline
+    private List<LatLng> decodePoly(String encoded) {
+        List<LatLng> poly = new ArrayList<>();
+        int index = 0, len = encoded.length();
+        int lat = 0, lng = 0;
+
+        while (index < len) {
+            int b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+
+            shift = 0;
+            result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+
+            LatLng p = new LatLng((lat / 1E5), (lng / 1E5));
+            poly.add(p);
+        }
+
+        return poly;
     }
 
 }

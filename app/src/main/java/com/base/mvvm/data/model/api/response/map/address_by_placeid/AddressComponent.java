@@ -1,4 +1,4 @@
-package com.base.mvvm.data.model.api.address_by_placeid;
+package com.base.mvvm.data.model.api.response.map.address_by_placeid;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
