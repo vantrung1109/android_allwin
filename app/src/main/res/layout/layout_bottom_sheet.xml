@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_bottom_sheet_services"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:orientation="vertical"
     android:background="@drawable/background_account_profile"
     app:behavior_peekHeight="@dimen/_280sdp"
-    app:behavior_halfExpandedRatio="0.9"
     android:paddingTop="@dimen/_15sdp"
+    android:paddingBottom="@dimen/_100sdp"
+
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 

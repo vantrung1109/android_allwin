@@ -1,6 +1,7 @@
 package com.base.mvvm;
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Switch;
 
@@ -15,6 +16,7 @@ import com.base.mvvm.di.component.AppComponent;
 import com.base.mvvm.di.component.DaggerAppComponent;
 import com.base.mvvm.others.MyTimberDebugTree;
 import com.base.mvvm.others.MyTimberReleaseTree;
+import com.base.mvvm.ui.fragment.home.maps.MapActivity;
 import com.base.mvvm.utils.DialogUtils;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
@@ -107,10 +109,9 @@ public class MVVMApplication extends Application implements SocketListener {
                 switch (message.getCmd()){
                     case Command.COMMAND_DRIVER_ACCEPT:
                         Log.e("Socket", "Driver accepted");
+//                        Intent intent = new Intent(this, MapActivity.class);
+//                        intent
 
-                        getCurrentActivity().runOnUiThread(() -> {
-                            // Do something
-                        });
 
                         break;
                     default:

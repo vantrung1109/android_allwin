@@ -258,7 +258,6 @@ public class MapViewModel extends BaseViewModel {
                     });
                 })
                 .subscribe(directionResponse -> {
-                    Log.e("getDirection", directionResponse.toString());
                     callBack.doSuccessGetData(directionResponse);
                     hideLoading();
                 }, throwable -> {

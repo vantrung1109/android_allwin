@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,27 +113,9 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
         bottomSheetBehaviorWaiting.setHideable(true);
         bottomSheetBehaviorWaiting.setState(BottomSheetBehavior.STATE_HIDDEN);
 
-        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull @org.jetbrains.annotations.NotNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehaviorPayment.setHideable(true);
-                    bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_HIDDEN);
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehaviorPayment.setHideable(false);
-                    bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
-
-            }
-
-            @Override
-            public void onSlide(@NonNull @org.jetbrains.annotations.NotNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-
 
         //bottom sheet payment
+
         tvCash = findViewById(R.id.tv_cash);
         tvDiscount = findViewById(R.id.tv_discount);
         tvNote = findViewById(R.id.tv_note);
@@ -208,6 +191,29 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
 
         viewBinding.buttonBack.setOnClickListener(v -> {
             finish();
+        });
+
+//         set bottom sheet payment hideable or not
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull @org.jetbrains.annotations.NotNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setHalfExpandedRatio(0.7f);
+//                    bottomSheetBehaviorPayment.setHideable(true);
+//                    bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_HIDDEN);
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehavior.setPeekHeight(application.getApplicationContext().getResources().getDimensionPixelSize(R.dimen._280sdp));
+
+//                    bottomSheetBehaviorPayment.setHideable(false);
+//                    bottomSheetBehaviorPayment.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+
+            }
+
+            @Override
+            public void onSlide(@NonNull @org.jetbrains.annotations.NotNull View bottomSheet, float slideOffset) {
+
+            }
         });
 
     }
