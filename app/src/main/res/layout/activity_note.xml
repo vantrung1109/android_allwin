@@ -52,7 +52,8 @@
             android:hint="Ghi chú cho tài xế"
             android:paddingStart="@dimen/_15sdp"
             android:textSize="@dimen/_11ssp"
-            android:minLines="5"
+            android:minLines="2"
+            android:maxLines="10"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             />
@@ -71,7 +72,7 @@
                 android:background="@drawable/btn_custom_enable"
                 android:enabled="true"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Tiếp tục"
+                android:text="Xong"
                 android:gravity="center"
                 android:textSize="@dimen/_15ssp"
                 android:textColor="@color/white"

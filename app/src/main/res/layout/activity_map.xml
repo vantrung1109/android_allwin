@@ -19,15 +19,14 @@
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_370sdp"
-
+            android:layout_height="@dimen/_390sdp"
             />
 
         <RelativeLayout
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:background="@drawable/background_round"
-            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_5sdp"
 

@@ -112,7 +112,6 @@ public class MVVMApplication extends Application implements SocketListener {
                             // Do something
                         });
 
-
                         break;
                     default:
                         break;

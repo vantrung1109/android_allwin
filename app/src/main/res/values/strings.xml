@@ -41,4 +41,6 @@
     <string name="pickup_adderss_default_detail">150/17 Đinh Tiên Hoàng, Phường 26, Quận 3</string>
     <string name="code_default">Mã: 73570</string>
     <string name="str_gg_api">AIzaSyDQFJ-AGut2GL97rVRvf2q1SJLwABJjWOU</string>
+    <string name="apply_discount">Đã áp dụng</string>
+    <string name="str_use_discount">Dùng ngay</string>
 </resources>

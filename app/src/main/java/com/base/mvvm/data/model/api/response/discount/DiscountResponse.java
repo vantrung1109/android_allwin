@@ -82,6 +82,7 @@ public class DiscountResponse extends AbstractFlexibleItem<DiscountResponse.Disc
             for (IFlexible item : adapter.getCurrentItems()) {
                 ((DiscountResponse)item).setIsSelected(false);
             }
+            // Set the item selected
             this.setIsSelected(true);
             adapter.notifyDataSetChanged();
             currentPosition = position;
@@ -90,10 +91,14 @@ public class DiscountResponse extends AbstractFlexibleItem<DiscountResponse.Disc
         // Handle item selected
         if (isSelected != null && isSelected) {
             holder.itemView.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.background_vehicle_focus, null));
+            holder.btn_use_discount.setText(R.string.apply_discount);
+            holder.btn_use_discount.setEnabled(false);
         } else if (status == 1 &&
                 (isSelected == null
                 || (isSelected != null && !isSelected))) {
             holder.itemView.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.background_vehicle_normal, null));
+            holder.btn_use_discount.setText(R.string.str_use_discount);
+            holder.btn_use_discount.setEnabled(true);
         }
     }
 

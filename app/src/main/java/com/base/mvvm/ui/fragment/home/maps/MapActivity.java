@@ -9,6 +9,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
     private static final int REQUEST_CODE_NOTE = 2;
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap myMap;
+    private SupportMapFragment mapFragment;
 
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -196,6 +198,11 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             // Show the bottom sheet waiting
             bottomSheetBehaviorWaiting.setHideable(false);
             bottomSheetBehaviorWaiting.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+            // Raise the height of the map
+            ViewGroup.LayoutParams params = mapFragment.getView().getLayoutParams();
+            params.height = (int) application.getApplicationContext().getResources().getDimension(R.dimen._470sdp);
+            mapFragment.getView().setLayoutParams(params);
             viewModel.createBookingRequest();
         });
 
@@ -227,7 +234,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
             public void onSuccess(Location location) {
                 if (location != null) {
                     currentLocation = location;
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                    mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
                     mapFragment.getMapAsync(MapActivity.this);
                 }
             }
@@ -318,10 +325,6 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
                         .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
                 myMap.addMarker(new MarkerOptions().position(destinationLatLng).title("Destination Location"));
 
-                myMap.getUiSettings().setZoomControlsEnabled(true);
-
-
-
                 // Move camera to the start of the polyline
                 myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 16.0f));
             }
@@ -387,6 +390,8 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
                         mFlexibleAdapter.notifyDataSetChanged();
                         // Set the discount value on the textview chosen discount
                         tvDiscount.setText(DisplayUtils.custom_money_discount_map(currentDiscount.getDiscountValue()));
+                        tvDiscount.setTextColor(getResources().getColor(R.color.green_text, null));
+
                     }
                 }
             } else {
@@ -401,6 +406,7 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, MapViewModel>
                 if (note != null) {
                     tvNote.setText(note);
                     customerNote = note;
+                    tvNote.setTextColor(getResources().getColor(R.color.red, null));
                 } else if (note == "") {
                     tvNote.setText("Ghi chú");
                 }

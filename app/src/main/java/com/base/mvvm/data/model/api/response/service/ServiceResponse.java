@@ -68,7 +68,7 @@ public class ServiceResponse extends AbstractFlexibleItem<ServiceResponse.Servic
         // Handle tv that represents promotion price
         if (promotionPrice != null){
             serviceViewHolder.tvPromotionMoney.setPaintFlags(serviceViewHolder.tvPromotionMoney.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            serviceViewHolder.tvPromotionMoney.setText(DisplayUtils.custom_money(Double.parseDouble(promotionPrice)));
+            serviceViewHolder.tvPromotionMoney.setText(DisplayUtils.custom_money(Double.parseDouble(price)));
             serviceViewHolder.tvPromotionMoney.setVisibility(View.VISIBLE);
         } else
             serviceViewHolder.tvPromotionMoney.setVisibility(View.GONE);
