@@ -50,6 +50,9 @@
         <activity android:name=".ui.signup.SignUpActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.fragment.home.booking_done.BookingDoneActivity"
+            android:exported="true"
+            />
 
         <activity android:name=".ui.home.HomeActivity"
             android:exported="true"

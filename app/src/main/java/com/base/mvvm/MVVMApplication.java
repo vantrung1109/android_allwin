@@ -18,6 +18,7 @@ import com.base.mvvm.di.component.AppComponent;
 import com.base.mvvm.di.component.DaggerAppComponent;
 import com.base.mvvm.others.MyTimberDebugTree;
 import com.base.mvvm.others.MyTimberReleaseTree;
+import com.base.mvvm.ui.fragment.home.booking_done.BookingDoneActivity;
 import com.base.mvvm.ui.fragment.home.maps.MapActivity;
 import com.base.mvvm.utils.DialogUtils;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
@@ -120,6 +121,12 @@ public class MVVMApplication extends Application implements SocketListener {
                         intent.putExtras(bundle);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         currentActivity.startActivity(intent);
+                        break;
+                    case Command.COMMAND_DRIVER_DONE:
+                        Intent intent_driver_done = new Intent(currentActivity, BookingDoneActivity.class);
+                        Bundle bundle1 = new Bundle();
+                        currentActivity.startActivity(intent_driver_done);
+                        Log.e("Socket", "Driver cancel");
                         break;
                     default:
                         break;

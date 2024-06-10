@@ -10,6 +10,7 @@ import com.base.mvvm.ViewModelProviderFactory;
 import com.base.mvvm.data.Repository;
 import com.base.mvvm.di.scope.ActivityScope;
 import com.base.mvvm.ui.base.BaseActivity;
+import com.base.mvvm.ui.fragment.home.booking_done.BookingDoneViewModel;
 import com.base.mvvm.ui.fragment.home.cancel_trip.CancelTripViewModel;
 import com.base.mvvm.ui.fragment.home.cancel_trip.cancel_success.CancelTripSuccessViewModel;
 import com.base.mvvm.ui.fragment.home.discount.DiscountViewModel;
@@ -157,5 +158,13 @@ public class ActivityModule {
         Supplier<CancelTripSuccessViewModel> supplier = () -> new CancelTripSuccessViewModel(repository, (MVVMApplication)application);
         ViewModelProviderFactory<CancelTripSuccessViewModel> factory = new ViewModelProviderFactory<>(CancelTripSuccessViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(CancelTripSuccessViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    BookingDoneViewModel provideBookingDoneViewModel(Repository repository, Context application) {
+        Supplier<BookingDoneViewModel> supplier = () -> new BookingDoneViewModel(repository, (MVVMApplication)application);
+        ViewModelProviderFactory<BookingDoneViewModel> factory = new ViewModelProviderFactory<>(BookingDoneViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(BookingDoneViewModel.class);
     }
 }
