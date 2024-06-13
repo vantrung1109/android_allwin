@@ -126,7 +126,12 @@ public class MVVMApplication extends Application implements SocketListener {
                         Intent intent_driver_done = new Intent(currentActivity, BookingDoneActivity.class);
                         Bundle bundle1 = new Bundle();
                         currentActivity.startActivity(intent_driver_done);
-                        Log.e("Socket", "Driver cancel");
+                        break;
+                    case Command.COMMAND_DRIVER_ARRIVED:
+                        Log.e("Socket", "Driver Pick up success");
+                        Intent intent_driver_done2 = new Intent(currentActivity, BookingDoneActivity.class);
+                        Bundle bundle2 = new Bundle();
+                        currentActivity.startActivity(intent_driver_done2);
                         break;
                     default:
                         break;

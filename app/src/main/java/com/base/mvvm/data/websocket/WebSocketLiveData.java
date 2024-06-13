@@ -60,6 +60,10 @@ public class WebSocketLiveData implements Runnable{
     @Setter
     private List<String> codeBooking = new ArrayList<>();
 
+    @Getter
+    @Setter
+    private String driverId;
+
     public void setTimeout(long timeout) {
         this.timeout = timeout;
         Timber.d("SET TIMEOUT TO " + timeout);

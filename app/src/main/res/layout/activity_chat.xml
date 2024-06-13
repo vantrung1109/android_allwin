@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="vm"
+            type="com.base.mvvm.ui.fragment.home.booking_done.BookingDoneViewModel" />
+
+        <variable name="a"
+            type="com.base.mvvm.ui.fragment.home.booking_done.BookingDoneActivity" />
+    </data>
+    <RelativeLayout
+        android:onClick="@{()->a.hideKeyboard()}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
+        <RelativeLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingEnd="@dimen/_15sdp"
+            android:paddingTop="@dimen/_12sdp"
+            android:paddingBottom="@dimen/_12sdp"
+            android:background="@drawable/background_account_profile"
+            >
+            <TextView
+                android:id="@+id/tv_name_driver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lý Tiểu Long"
+                style="@style/AppTextTitle"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="normal"
+                android:layout_centerInParent="true"
+                />
+            <ImageView
+                android:id="@+id/button_back"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/back"
+                android:layout_centerVertical="true"
+                />
+
+            <ImageView
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/image_call"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

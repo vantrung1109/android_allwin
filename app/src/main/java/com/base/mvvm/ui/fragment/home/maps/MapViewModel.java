@@ -220,6 +220,7 @@ public class MapViewModel extends BaseViewModel {
                 .subscribe(response -> {
                     if (response.isResult()){
                         application.getMWebSocketLiveData().getCodeBooking().add(response.getData().getCode());
+
                         application.getMWebSocketLiveData().sendPing();
                         Log.e("createBooking", response.toString());
 
