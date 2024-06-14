@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,11 +18,10 @@ import com.base.mvvm.di.component.DaggerAppComponent;
 import com.base.mvvm.others.MyTimberDebugTree;
 import com.base.mvvm.others.MyTimberReleaseTree;
 import com.base.mvvm.ui.fragment.home.booking_done.BookingDoneActivity;
+import com.base.mvvm.ui.fragment.home.booking_pickup_success.BookingPickUpSuccessActivity;
 import com.base.mvvm.ui.fragment.home.maps.MapActivity;
 import com.base.mvvm.utils.DialogUtils;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-
-import java.io.Serializable;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.rxjava3.subjects.PublishSubject;
@@ -122,17 +120,18 @@ public class MVVMApplication extends Application implements SocketListener {
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         currentActivity.startActivity(intent);
                         break;
-                    case Command.COMMAND_DRIVER_DONE:
-                        Intent intent_driver_done = new Intent(currentActivity, BookingDoneActivity.class);
-                        Bundle bundle1 = new Bundle();
-                        currentActivity.startActivity(intent_driver_done);
-                        break;
                     case Command.COMMAND_DRIVER_ARRIVED:
                         Log.e("Socket", "Driver Pick up success");
-                        Intent intent_driver_done2 = new Intent(currentActivity, BookingDoneActivity.class);
-                        Bundle bundle2 = new Bundle();
-                        currentActivity.startActivity(intent_driver_done2);
+                        Intent intent_driver_pick_up_success = new Intent(currentActivity, BookingPickUpSuccessActivity.class);
+//                        Bundle bundle2 = new Bundle();
+                        currentActivity.startActivity(intent_driver_pick_up_success);
                         break;
+                    case Command.COMMAND_DRIVER_DONE:
+                        Intent intent_driver_done = new Intent(currentActivity, BookingDoneActivity.class);
+//                        Bundle bundle1 = new Bundle();
+                        currentActivity.startActivity(intent_driver_done);
+                        break;
+
                     default:
                         break;
                 }

@@ -62,6 +62,10 @@ public class WebSocketLiveData implements Runnable{
 
     @Getter
     @Setter
+    private String bookingId;
+
+    @Getter
+    @Setter
     private String driverId;
 
     public void setTimeout(long timeout) {
@@ -204,6 +208,8 @@ public class WebSocketLiveData implements Runnable{
             message.setData(new BookingCode(codeBooking));
             webSocket.send(message.getPayload());
             Timber.d("SEND: %s", message.getPayload());
+
+
 
             //Timber.d("Ping socket: %s", session);
         }

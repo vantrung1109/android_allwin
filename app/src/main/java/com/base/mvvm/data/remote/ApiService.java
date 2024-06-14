@@ -2,6 +2,7 @@ package com.base.mvvm.data.remote;
 
 import com.base.mvvm.data.model.api.ResponseListObj;
 import com.base.mvvm.data.model.api.ResponseWrapper;
+import com.base.mvvm.data.model.api.response.current_booking.CurrentBookingResponse;
 import com.base.mvvm.data.model.api.response.map.address_by_placeid.AddressByPlaceId;
 import com.base.mvvm.data.model.api.map_search.SearchPlaceApi;
 import com.base.mvvm.data.model.api.response.map.distance.DistanceResponse;
@@ -64,6 +65,10 @@ public interface ApiService {
                                                                                  @Query("page") Integer page,
                                                                                  @Query("size") Integer size,
                                                                                  @Query("state") Integer state);
+    @GET("/v1/booking/my-current-booking")
+    Observable<ResponseWrapper<ResponseListObj<CurrentBookingResponse>>> getMyCurrentBooking();
+
+
 
     @GET("/v1/promotion/client-list")
     @Headers({"IgnoreAuth: 1"})

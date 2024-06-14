@@ -3,6 +3,7 @@ package com.base.mvvm.di.component;
 import com.base.mvvm.di.module.ActivityModule;
 import com.base.mvvm.di.scope.ActivityScope;
 import com.base.mvvm.ui.fragment.home.booking_done.BookingDoneActivity;
+import com.base.mvvm.ui.fragment.home.booking_pickup_success.BookingPickUpSuccessActivity;
 import com.base.mvvm.ui.fragment.home.cancel_trip.CancelTripActivity;
 import com.base.mvvm.ui.fragment.home.cancel_trip.cancel_success.CancelTripSuccessActivity;
 import com.base.mvvm.ui.fragment.home.discount.DiscountActivity;
@@ -42,6 +43,7 @@ public interface ActivityComponent {
     void inject (NoteActivity activity);
     void inject (CancelTripActivity activity);
     void inject (CancelTripSuccessActivity viewModel);
+    void inject (BookingPickUpSuccessActivity activity);
     void inject (BookingDoneActivity activity);
 
 }

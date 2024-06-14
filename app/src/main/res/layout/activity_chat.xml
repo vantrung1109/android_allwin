@@ -4,10 +4,10 @@
     <data>
         <variable
             name="vm"
-            type="com.base.mvvm.ui.fragment.home.booking_done.BookingDoneViewModel" />
+            type="com.base.mvvm.ui.fragment.home.booking_pickup_success.BookingPickUpSuccessViewModel" />
 
         <variable name="a"
-            type="com.base.mvvm.ui.fragment.home.booking_done.BookingDoneActivity" />
+            type="com.base.mvvm.ui.fragment.home.booking_pickup_success.BookingPickUpSuccessActivity" />
     </data>
     <RelativeLayout
         android:onClick="@{()->a.hideKeyboard()}"
